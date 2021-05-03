@@ -1,0 +1,41 @@
+const User = require('../models/user');
+const { validationResult } = require('express-validator');
+
+exports.register = async (req, res, next) => {
+    try {
+        const { firstName, lastName, email, password, birthDate, faculty } = req.body;
+
+        //validiation
+        const errors = validationResult(req);
+        if(!errors.isEmpty()) {
+            const error = new Error('ข้อมูลไม่ถูกต้อง');
+            error.statusCode = 422;
+            error.validation = errors.array();
+            throw error;
+        }
+
+        //check email ซ้ำ
+        const existEmail = await User.findOne({email: email});
+        if (existEmail) {
+            const error = new Error('อีเมล์นี้ มีผู้ใช้แล้ว');
+            error.statusCode = 400;
+            throw error;
+        }
+
+        let user = new User();
+        user.firstName = firstName;
+        user.lastName = lastName;
+        user.email = email;
+        user.password = await user.encryptPassword(password);
+        user.birthDate = birthDate;
+        user.faculty = faculty;
+
+        await user.save();
+
+        return res.status(201).json({
+            message: 'ลงทะเบียนสำเร็จ'
+        });
+    } catch (error) {
+        next(error);
+    }
+};
