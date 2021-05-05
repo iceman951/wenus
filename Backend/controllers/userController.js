@@ -1,6 +1,27 @@
 const User = require('../models/user');
 const { validationResult } = require('express-validator');
 
+exports.show = async (req, res, next) => {
+    try {
+        const user = await User.find().select('-password');
+        if (!user) {
+            throw new Error('ไม่พบข้อมูลผู้ใช่');
+        }
+
+        res.status(200).json({
+            message: 'สำเร็จ',
+            data: user
+        });
+
+    } catch (error) {
+        res.status(400).json({
+            error: {
+                message: 'เกิดผิดพลาด ' + error.message
+            } 
+        });
+    }
+}
+
 exports.register = async (req, res, next) => {
     try {
         const { firstName, lastName, email, password, birthDate, faculty } = req.body;
