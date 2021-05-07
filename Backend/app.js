@@ -5,12 +5,16 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const passport = require('passport');
 
 //require config
 const config = require('./config/index');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+
+//import middleware
+const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
 

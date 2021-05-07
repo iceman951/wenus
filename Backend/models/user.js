@@ -6,7 +6,7 @@ const schema = new mongoose.Schema({
   lastName:  { type: String},
   email: { type: String},
   password: { type: String},
-  birthDate: { type: Date},
+  birthdate: { type: Date},
   faculty: { type: String},
   createDate:{ type:Date, default: Date.now }
 },{
