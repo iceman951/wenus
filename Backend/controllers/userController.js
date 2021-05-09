@@ -1,5 +1,44 @@
 const User = require('../models/user');
 const { validationResult } = require('express-validator');
+const jwt = require('jsonwebtoken');
+const config = require('../config/index');
+
+exports.login = async (req, res, next) => {
+    try {
+        const { email, password} = req.body;
+
+        const user = await User.findOne({email: email});
+        if (!user) {
+            const error = new Error('ไม่พบผู้ใช้งานในระบบ');
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const isValid = await user.checkPassword(password);
+        if (!isValid) {
+            const error = new Error('รหัสผ่านไม่ถูกต้อง');
+            error.statusCode = 401;
+            throw error;
+        }
+
+
+        //สร้าง Token
+        const token = await jwt.sign({
+            id: user._id
+        }, config.JWT_SECRET, { expiresIn: '5 days' } )
+
+        //decode วันหมดอายุ
+        const expires_in = jwt.decode(token);
+
+        return res.status(200).json({
+            access_token: token,
+            expires_in: expires_in.exp,
+            token_type: 'Bearer'
+        }); 
+    } catch (error) {
+        next(error);
+    }
+}
 
 exports.show = async (req, res, next) => {
     try {
@@ -24,7 +63,7 @@ exports.show = async (req, res, next) => {
 
 exports.register = async (req, res, next) => {
     try {
-        const { firstName, lastName, email, password, birthDate, faculty } = req.body;
+        const { firstName, lastName, email, password, birthdate, faculty } = req.body;
 
         //validiation
         const errors = validationResult(req);
@@ -48,7 +87,7 @@ exports.register = async (req, res, next) => {
         user.lastName = lastName;
         user.email = email;
         user.password = await user.encryptPassword(password);
-        user.birthDate = birthDate;
+        user.birthdate = birthdate;
         user.faculty = faculty;
 
         await user.save();
@@ -59,4 +98,4 @@ exports.register = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-};
+}

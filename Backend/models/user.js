@@ -6,7 +6,7 @@ const schema = new mongoose.Schema({
   lastName:  { type: String},
   email: { type: String},
   password: { type: String},
-  birthDate: { type: Date},
+  birthdate: { type: Date},
   faculty: { type: String},
   createDate:{ type:Date, default: Date.now }
 },{
@@ -14,10 +14,15 @@ const schema = new mongoose.Schema({
 });
 
 schema.methods.encryptPassword = async function(password) {
-    const salt = await bcrypt.genSalt(5);
-    const hashPassword = await bcrypt.hash(password, salt);
-    return hashPassword;
+  const salt = await bcrypt.genSalt(5);
+  const hashPassword = await bcrypt.hash(password, salt);
+  return hashPassword;
  }
+
+schema.methods.checkPassword = async function(password) {
+  const isValid = await bcrypt.compare(password, this.password);
+  return isValid;
+}
 
 const user = mongoose.model('User', schema);
 
