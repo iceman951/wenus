@@ -14,7 +14,7 @@ import axios from 'axios';
    return errors;
  };
 
- function LoginForm({ setToken }) {
+ function LoginForm({ setJwt }) {
 
    const formik = useFormik({
      initialValues: {
@@ -24,13 +24,16 @@ import axios from 'axios';
      validate,
      onSubmit: values => {
        alert(JSON.stringify(values, null, 2));
-       axios.post(`https://guarded-falls-57008.herokuapp.com/users/login`, values)
-      .then(res => {
-        console.log(res.data.access_token)
-        setToken(res.data.access_token);
-      });
+       axios
+       .post(`https://guarded-falls-57008.herokuapp.com/users/login`, values)
+        .then(res => {
+          console.log(res.data.access_token)
+          setJwt(res.data.access_token);
+          localStorage.setItem('token', res.data.access_token);
+       });
      },
    });
+
    return (
      <form onSubmit={formik.handleSubmit}>
        <label htmlFor="loginEmail">Email Address</label>

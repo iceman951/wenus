@@ -6,12 +6,15 @@ import { BrowserRouter } from "react-router-dom";
 import Routing from "./routes";
 
 function App() {
-  const [token, setToken] = useState();
+  const storedJwt = localStorage.getItem('token');
+  const [jwt, setJwt] = useState(storedJwt || null);
+  const [fetchError, setFetchError] = useState(null);
+  console.log("--------", storedJwt)
 
-  if (!token) {
+  if (!jwt) {
     return (
       <div>
-        <LoginForm setToken={setToken} />
+        <LoginForm setJwt={setJwt} />
         <RegisterForm />
       </div>
     );
