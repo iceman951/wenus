@@ -1,25 +1,24 @@
 import "./App.css";
 import React, { useState } from "react";
-import LoginForm from "./components/LoginForm";
-import RegisterForm from "./components/RegisterForm";
 import { BrowserRouter } from "react-router-dom";
 import Routing from "./routes";
 
+import LoginForm from "./components/LoginForm";
+import RegisterForm from "./components/RegisterForm";
+
 function App() {
-  const storedJwt = localStorage.getItem('token');
+  const storedJwt = localStorage.getItem("token");
   const [jwt, setJwt] = useState(storedJwt || null);
-  const [fetchError, setFetchError] = useState(null);
-  console.log("--------", storedJwt)
 
   if (!jwt) {
     return (
       <div>
-        <LoginForm setJwt={setJwt} />
-        <RegisterForm />
+        <LoginForm setJwt={setJwt} /> 
+        {/* <RegisterForm /> */}
       </div>
+
     );
-  }
-  else{
+  } else {
     return (
       <div className="App">
         <BrowserRouter>
@@ -28,7 +27,6 @@ function App() {
       </div>
     );
   }
-  }
-
+}
 
 export default App;
