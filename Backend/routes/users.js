@@ -2,9 +2,10 @@ const express = require('express');
 const { body } = require('express-validator');
 const router = express.Router();
 const userController = require('../controllers/userController');
+const passportJWT = require('../middleware/passportJWT');
 
 /* GET users listing. */
-router.get('/', userController.show);
+router.get('/', [passportJWT.isLogin], userController.show);
 
 /* http://localhost:3000/users/login */
 router.post('/login', userController.login);

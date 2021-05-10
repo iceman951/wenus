@@ -37,6 +37,9 @@ mongoose.connect(config.MONGODB_URI, {
   useFindAndModify: false
 });
 
+//init passport
+app.use(passport.initialize());
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
