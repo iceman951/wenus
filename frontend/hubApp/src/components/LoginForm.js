@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
-import axios from "axios";
+import { httpClient } from "./HttpClient";
 
 import {
   Grid,
@@ -33,13 +33,11 @@ function LoginForm({ setJwt }) {
     validate,
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
-      axios
-        .post(`https://guarded-falls-57008.herokuapp.com/users/login`, values)
-        .then((res) => {
-          console.log(res.data.access_token);
-          setJwt(res.data.access_token);
-          localStorage.setItem("token", res.data.access_token);
-        });
+      httpClient.post(`/users/login`, values).then((res) => {
+        console.log(res.data);
+        setJwt(res.data.access_token);
+        localStorage.setItem("token", res.data.access_token);
+      });
     },
   });
 
@@ -72,10 +70,10 @@ function LoginForm({ setJwt }) {
                   alignItems="center"
                   style={{ padding: 25 }}
                 >
-                  <FormControl variant="outlined" style={{marginBottom: 20}}>
-                    <InputLabel htmlFor="loginEmail">Email Address</InputLabel>
+                  <FormControl variant="outlined" style={{ marginBottom: 20 }}>
+                    <InputLabel htmlFor="email">Email Address</InputLabel>
                     <OutlinedInput
-                      id="loginEmail"
+                      id="email"
                       label="Email Address"
                       type="email"
                       autoFocus={true}
@@ -86,10 +84,10 @@ function LoginForm({ setJwt }) {
                   {formik.errors.email ? (
                     <div>{formik.errors.email}</div>
                   ) : null}
-                  <FormControl variant="outlined" style={{marginBottom: 20}}>
-                    <InputLabel htmlFor="loginPassword">Password</InputLabel>
+                  <FormControl variant="outlined" style={{ marginBottom: 20 }}>
+                    <InputLabel htmlFor="password">Password</InputLabel>
                     <OutlinedInput
-                      id="loginPassword"
+                      id="password"
                       label="Password"
                       type="password"
                       onChange={formik.handleChange}
@@ -105,10 +103,8 @@ function LoginForm({ setJwt }) {
               </form>
             </Grid>
             <h1>Register</h1>
-            <Divider />
-            <Grid container justify="center">
-              <RegisterForm />
-            </Grid>
+            <Divider style={{ marginBottom: "3%" }} />
+            <RegisterForm />
           </div>
         </Grid>
       </Grid>
