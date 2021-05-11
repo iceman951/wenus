@@ -39,7 +39,7 @@ function LoginForm({ setJwt }) {
       <Grid container style={{ minHeight: "100vh" }}>
         <Grid item xs={12} sm={6}>
           <img
-            src='/login.jpg'
+            src='/assets/images/login.jpg'
             style={{ width: "100%", height: "100%" }}
             alt="brand"
           />
@@ -52,7 +52,7 @@ function LoginForm({ setJwt }) {
             alignItems="center"
           >
             <Grid item xs={12} sm={6}>
-              <img src='/logo.png' style={{ width: "100%" }} alt="logo" />
+              <img src='/assets/logos/logo.png' style={{ width: "100%" }} alt="logo" />
               <form onSubmit={formik.handleSubmit}>
                 <Grid
                   container
