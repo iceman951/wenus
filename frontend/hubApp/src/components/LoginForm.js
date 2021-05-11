@@ -2,7 +2,16 @@ import React from "react";
 import { useFormik } from "formik";
 import axios from "axios";
 
-import { Grid, Button } from "@material-ui/core";
+import {
+  Grid,
+  Button,
+  FormControl,
+  OutlinedInput,
+  InputLabel,
+  Divider,
+} from "@material-ui/core";
+
+import RegisterForm from ".//RegisterForm";
 
 const validate = (values) => {
   const errors = {};
@@ -39,64 +48,62 @@ function LoginForm({ setJwt }) {
       <Grid container style={{ minHeight: "100vh" }}>
         <Grid item xs={12} sm={6}>
           <img
-            src='/assets/images/login.jpg'
+            src="/assets/images/login.jpg"
             style={{ width: "100%", height: "100%" }}
             alt="brand"
           />
         </Grid>
         <Grid container item xs={12} sm={6} style={{ padding: 50 }}>
-          <Grid
-            container
-            direction="column"
-            justify="center"
-            alignItems="center"
-          >
-            <Grid item xs={12} sm={6}>
-              <img src='/assets/logos/logo.png' style={{ width: "100%" }} alt="logo" />
+          <div>
+            <Grid container justify="center">
+              <img
+                src="/assets/logos/logo.png"
+                style={{ width: "50%" }}
+                alt="logo"
+              />
+            </Grid>
+            <h1>Login</h1>
+            <Divider />
+            <Grid container justify="center">
               <form onSubmit={formik.handleSubmit}>
                 <Grid
                   container
                   direction="column"
-                  justify="center"
                   alignItems="center"
                   style={{ padding: 25 }}
                 >
-                  <label htmlFor="loginEmail">Email Address</label>
-                  <input
-                    id="loginEmail"
-                    name="email"
-                    type="email"
-                    onChange={formik.handleChange}
-                    value={formik.values.email}
-                  />
+                  <FormControl variant="outlined">
+                    <InputLabel htmlFor="loginEmail">Email Address</InputLabel>
+                    <OutlinedInput
+                      id="loginEmail"
+                      label="Email Address"
+                      type="email"
+                      autoFocus={true}
+                      onChange={formik.handleChange}
+                      defaultValue={formik.values.email}
+                    />
+                  </FormControl>
                   {formik.errors.email ? (
                     <div>{formik.errors.email}</div>
                   ) : null}
                 </Grid>
-
-                <Grid
-                  container
-                  direction="column"
-                  justify="center"
-                  alignItems="center"
-                >
-                  <label htmlFor="loginPassword">Password</label>
-                  <input
-                    id="loginPassword"
-                    name="password"
-                    type="password"
-                    onChange={formik.handleChange}
-                    value={formik.values.password}
-                  />
+                <Grid container direction="column" alignItems="center">
+                  <FormControl variant="outlined">
+                    <InputLabel htmlFor="loginPassword">Password</InputLabel>
+                    <OutlinedInput
+                      id="loginPassword"
+                      label="Password"
+                      type="password"
+                      onChange={formik.handleChange}
+                    />
+                  </FormControl>
                   {formik.errors.password ? (
                     <div>{formik.errors.password}</div>
                   ) : null}
                 </Grid>
-
                 <Grid
                   container
                   direction="column"
-                  justify="center"
                   alignItems="center"
                   style={{ padding: 25 }}
                 >
@@ -106,12 +113,12 @@ function LoginForm({ setJwt }) {
                 </Grid>
               </form>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <h1>Register</h1>
+            <Divider />
+            <Grid container justify="center">
+              <RegisterForm />
             </Grid>
-          </Grid>
-          <Grid container justify="center">
-            <Grid item xs={12} sm={6}></Grid>
-          </Grid>
+          </div>
         </Grid>
       </Grid>
     </div>

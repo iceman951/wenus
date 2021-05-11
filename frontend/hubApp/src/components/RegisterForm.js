@@ -2,6 +2,15 @@ import React from "react";
 import { useFormik } from "formik";
 import axios from "axios";
 
+import {
+  Grid,
+  Button,
+  FormControl,
+  OutlinedInput,
+  InputLabel,
+  Divider,
+} from "@material-ui/core";
+
 const validate = (values) => {
   const errors = {};
   if (!values.firstName) {
@@ -51,67 +60,111 @@ const RegisterForm = () => {
   });
   return (
     <form onSubmit={formik.handleSubmit}>
-      <label htmlFor="firstName">First Name</label>
-      <input
-        id="firstName"
-        name="firstName"
-        type="text"
-        onChange={formik.handleChange}
-        value={formik.values.firstName}
-      />
-      {formik.errors.firstName ? <div>{formik.errors.firstName}</div> : null}
-
-      <label htmlFor="lastName">Last Name</label>
-      <input
-        id="lastName"
-        name="lastName"
-        type="text"
-        onChange={formik.handleChange}
-        value={formik.values.lastName}
-      />
-      {formik.errors.lastName ? <div>{formik.errors.lastName}</div> : null}
-
-      <label htmlFor="email">Email Address</label>
-      <input
-        id="email"
-        name="email"
-        type="email"
-        onChange={formik.handleChange}
-        value={formik.values.email}
-      />
-      {formik.errors.email ? <div>{formik.errors.email}</div> : null}
-
-      <label htmlFor="password">Password</label>
-      <input
-        id="password"
-        name="password"
-        type="password"
-        onChange={formik.handleChange}
-        value={formik.values.password}
-      />
-      {formik.errors.password ? <div>{formik.errors.password}</div> : null}
-
-      <label htmlFor="birthdate">birthdate</label>
-      <input
-        id="birthdate"
-        name="birthdate"
-        type="birthdate"
-        onChange={formik.handleChange}
-        value={formik.values.birthdate}
-      />
-      {formik.errors.birthdate ? <div>{formik.errors.birthdate}</div> : null}
-
-      <label htmlFor="faculty">faculty</label>
-      <input
-        id="faculty"
-        name="faculty"
-        type="faculty"
-        onChange={formik.handleChange}
-        value={formik.values.faculty}
-      />
-      {formik.errors.faculty ? <div>{formik.errors.faculty}</div> : null}
-
-      <button type="submit">Submit</button>
+      <Grid
+        container
+        direction="column"
+        alignItems="center"
+        style={{ padding: 25 }}
+      >
+        <FormControl variant="outlined">
+          <InputLabel htmlFor="firstName">firstName</InputLabel>
+          <OutlinedInput
+            id="firstName"
+            label="firstName"
+            type="text"
+            onChange={formik.handleChange}
+            defaultValue={formik.values.firstName}
+          />
+        </FormControl>
+        {formik.errors.firstName ? <div>{formik.errors.firstName}</div> : null}
+      </Grid>
+      <Grid container direction="column" alignItems="center">
+        <FormControl variant="outlined">
+          <InputLabel htmlFor="lastName">lastName</InputLabel>
+          <OutlinedInput
+            id="lastName"
+            label="lastName"
+            type="text"
+            onChange={formik.handleChange}
+            defaultValue={formik.values.lastName}
+          />
+        </FormControl>
+        {formik.errors.lastName ? <div>{formik.errors.lastName}</div> : null}
+      </Grid>
+      <Grid
+        container
+        direction="column"
+        alignItems="center"
+        style={{ padding: 25 }}
+      >
+        <FormControl variant="outlined">
+          <InputLabel htmlFor="resgisterEmail">Email Address</InputLabel>
+          <OutlinedInput
+            id="resgisterEmail"
+            label="Email Address"
+            type="email"
+            onChange={formik.handleChange}
+            defaultValue={formik.values.email}
+          />
+        </FormControl>
+        {formik.errors.email ? <div>{formik.errors.email}</div> : null}
+      </Grid>
+      <Grid container direction="column" alignItems="center">
+        <FormControl variant="outlined">
+          <InputLabel htmlFor="password">Password</InputLabel>
+          <OutlinedInput
+            id="password"
+            label="Password"
+            type="password"
+            onChange={formik.handleChange}
+            defaultValue={formik.values.password}
+          />
+        </FormControl>
+        {formik.errors.password ? <div>{formik.errors.password}</div> : null}
+      </Grid>
+      <Grid
+        container
+        direction="column"
+        alignItems="center"
+        style={{ padding: 25 }}
+      >
+        <FormControl variant="outlined">
+          <InputLabel htmlFor="birthdate" shrink>
+            Birthdate
+          </InputLabel>
+          <OutlinedInput
+            id="birthdate"
+            label="Birthdate"
+            type="date"
+            onChange={formik.handleChange}
+            defaultValue={formik.values.birthdate}
+          />
+        </FormControl>
+        {formik.errors.birthdate ? <div>{formik.errors.birthdate}</div> : null}
+      </Grid>
+      <Grid container direction="column" alignItems="center">
+        <FormControl variant="outlined">
+          <InputLabel htmlFor="faculty">Faculty</InputLabel>
+          <OutlinedInput
+            id="faculty"
+            label="Faculty"
+            type="text"
+            onChange={formik.handleChange}
+            defaultValue={formik.values.faculty}
+          />
+        </FormControl>
+        {formik.errors.faculty ? <div>{formik.errors.faculty}</div> : null}
+      </Grid>
+      <Grid
+        container
+        direction="column"
+        alignItems="center"
+        style={{ padding: 25 }}
+      >
+        <Button variant="contained" type="submit" color="primary">
+          Register
+        </Button>
+      </Grid>
     </form>
   );
 };
