@@ -72,7 +72,7 @@ function LoginForm({ setJwt }) {
                   alignItems="center"
                   style={{ padding: 25 }}
                 >
-                  <FormControl variant="outlined">
+                  <FormControl variant="outlined" style={{marginBottom: 20}}>
                     <InputLabel htmlFor="loginEmail">Email Address</InputLabel>
                     <OutlinedInput
                       id="loginEmail"
@@ -86,9 +86,7 @@ function LoginForm({ setJwt }) {
                   {formik.errors.email ? (
                     <div>{formik.errors.email}</div>
                   ) : null}
-                </Grid>
-                <Grid container direction="column" alignItems="center">
-                  <FormControl variant="outlined">
+                  <FormControl variant="outlined" style={{marginBottom: 20}}>
                     <InputLabel htmlFor="loginPassword">Password</InputLabel>
                     <OutlinedInput
                       id="loginPassword"
@@ -100,13 +98,6 @@ function LoginForm({ setJwt }) {
                   {formik.errors.password ? (
                     <div>{formik.errors.password}</div>
                   ) : null}
-                </Grid>
-                <Grid
-                  container
-                  direction="column"
-                  alignItems="center"
-                  style={{ padding: 25 }}
-                >
                   <Button variant="contained" type="submit" color="primary">
                     Login
                   </Button>

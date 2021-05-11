@@ -62,11 +62,10 @@ const RegisterForm = () => {
     <form onSubmit={formik.handleSubmit}>
       <Grid
         container
-        direction="column"
-        alignItems="center"
+        direction="row"
         style={{ padding: 25 }}
       >
-        <FormControl variant="outlined">
+        <FormControl variant="outlined" style={{marginRight: 20}}>
           <InputLabel htmlFor="firstName">firstName</InputLabel>
           <OutlinedInput
             id="firstName"
@@ -77,8 +76,6 @@ const RegisterForm = () => {
           />
         </FormControl>
         {formik.errors.firstName ? <div>{formik.errors.firstName}</div> : null}
-      </Grid>
-      <Grid container direction="column" alignItems="center">
         <FormControl variant="outlined">
           <InputLabel htmlFor="lastName">lastName</InputLabel>
           <OutlinedInput
@@ -91,13 +88,13 @@ const RegisterForm = () => {
         </FormControl>
         {formik.errors.lastName ? <div>{formik.errors.lastName}</div> : null}
       </Grid>
+
       <Grid
         container
-        direction="column"
-        alignItems="center"
+        direction="row"
         style={{ padding: 25 }}
       >
-        <FormControl variant="outlined">
+        <FormControl variant="outlined" style={{marginRight: 20}}>
           <InputLabel htmlFor="resgisterEmail">Email Address</InputLabel>
           <OutlinedInput
             id="resgisterEmail"
@@ -108,8 +105,6 @@ const RegisterForm = () => {
           />
         </FormControl>
         {formik.errors.email ? <div>{formik.errors.email}</div> : null}
-      </Grid>
-      <Grid container direction="column" alignItems="center">
         <FormControl variant="outlined">
           <InputLabel htmlFor="password">Password</InputLabel>
           <OutlinedInput
@@ -124,11 +119,21 @@ const RegisterForm = () => {
       </Grid>
       <Grid
         container
-        direction="column"
-        alignItems="center"
+        direction="row"
         style={{ padding: 25 }}
       >
-        <FormControl variant="outlined">
+        <FormControl variant="outlined" style={{marginRight: 20}}>
+          <InputLabel htmlFor="faculty">Faculty</InputLabel>
+          <OutlinedInput
+            id="faculty"
+            label="Faculty"
+            type="text"
+            onChange={formik.handleChange}
+            defaultValue={formik.values.faculty}
+          />
+        </FormControl>
+        {formik.errors.faculty ? <div>{formik.errors.faculty}</div> : null}
+        <FormControl variant="outlined" >
           <InputLabel htmlFor="birthdate" shrink>
             Birthdate
           </InputLabel>
@@ -141,19 +146,6 @@ const RegisterForm = () => {
           />
         </FormControl>
         {formik.errors.birthdate ? <div>{formik.errors.birthdate}</div> : null}
-      </Grid>
-      <Grid container direction="column" alignItems="center">
-        <FormControl variant="outlined">
-          <InputLabel htmlFor="faculty">Faculty</InputLabel>
-          <OutlinedInput
-            id="faculty"
-            label="Faculty"
-            type="text"
-            onChange={formik.handleChange}
-            defaultValue={formik.values.faculty}
-          />
-        </FormControl>
-        {formik.errors.faculty ? <div>{formik.errors.faculty}</div> : null}
       </Grid>
       <Grid
         container
