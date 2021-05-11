@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import clickImage from "../images/plus.png";
-import productImgae from "../images/img_snow.jpg";
 import Modal from "react-modal";
 import axios from "axios";
 
@@ -45,7 +43,7 @@ function ProductList() {
             <span className="float-start">{product.type}</span>
             <span className="float-end">{product.product_code}</span>
           </div>
-          <img src={productImgae} className="card-img-top" alt="productImage" />
+          <img src='/img_snow.jpg' className="card-img-top" alt="productImage" />
           <div className="card-body">
             <h3 className="card-title">{product.name}</h3>
             <p className="card-text">Brand: {product.brand}</p>
@@ -72,7 +70,7 @@ function ProductList() {
       cards.push(
         <div className="col-4 mr-auto">
           <img
-            src={clickImage}
+            src='/plus.png'
             onClick={() => handleOpenModal()}
             className="img-thumbnail click-image"
             alt="addProduct"

@@ -3,8 +3,6 @@ import { useFormik } from "formik";
 import axios from "axios";
 
 import { Grid, Button } from "@material-ui/core";
-import loginBG from "../images/login.jpg";
-import logo from "../images/logo.png";
 
 const validate = (values) => {
   const errors = {};
@@ -41,7 +39,7 @@ function LoginForm({ setJwt }) {
       <Grid container style={{ minHeight: "100vh" }}>
         <Grid item xs={12} sm={6}>
           <img
-            src={loginBG}
+            src='/login.jpg'
             style={{ width: "100%", height: "100%" }}
             alt="brand"
           />
@@ -54,7 +52,7 @@ function LoginForm({ setJwt }) {
             alignItems="center"
           >
             <Grid item xs={12} sm={6}>
-              <img src={logo} style={{ width: "100%" }} alt="logo" />
+              <img src='/logo.png' style={{ width: "100%" }} alt="logo" />
               <form onSubmit={formik.handleSubmit}>
                 <Grid
                   container
