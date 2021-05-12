@@ -56,7 +56,7 @@ exports.show = async (req, res, next) => {
         res.status(400).json({
             error: {
                 message: 'เกิดผิดพลาด ' + error.message
-            } 
+            }
         });
     }
 }
