@@ -62,7 +62,7 @@ const CreatePost = () => {
   const formik = useFormik({
     initialValues: {
       text: "",
-      tags: "ทั่วไป",
+      tag: "ทั่วไป",
     },
     validationSchema: validationPostSchema,
     onSubmit: (values) => {
@@ -101,11 +101,11 @@ const CreatePost = () => {
       />
       <form onSubmit={formik.handleSubmit}>
         <FormControl>
-          <InputLabel htmlFor="tags">Tags</InputLabel>
+          <InputLabel htmlFor="tag">Tags</InputLabel>
           <Select
-            id="tags"
-            value={formik.values.tags}
-            onChange={formik.handleChange("tags")}
+            id="tag"
+            value={formik.values.tag}
+            onChange={formik.handleChange("tag")}
             autoWidth
             className={classes.input}
           >
