@@ -44,7 +44,7 @@ exports.show = async (req, res, next) => {
     try {
         const user = await User.find().select('-password');
         if (!user) {
-            throw new Error('ไม่พบข้อมูลผู้ใช่');
+            throw new Error('ไม่พบข้อมูลผู้ใช้');
         }
 
         res.status(200).json({
