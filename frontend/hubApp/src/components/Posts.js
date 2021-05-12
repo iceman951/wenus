@@ -52,6 +52,19 @@ export default function Posts() {
   }, []);
 
   const classes = useStyles();
+  let image;
+
+  function ImageChecking(image) {
+    if (image) {
+      return (
+        <CardMedia
+          className={classes.media}
+          image="/static/images/cards/paella.jpg"
+          title="Paella dish"
+        />
+      );
+    }
+  }
 
   return (
     <Grid container style={{ padding: "5%" }}>
@@ -72,7 +85,7 @@ export default function Posts() {
                         <MoreVertIcon />
                       </IconButton>
                     }
-                    title="Shrimp and Chorizo Paella"
+                    title={post.author.firstName}
                   />
                 </Box>
                 <CardContent>
@@ -81,18 +94,9 @@ export default function Posts() {
                     color="textSecondary"
                     component="p"
                   >
-                    <Box color="#ffffff">
-                      This impressive paella is a perfect party dish and a fun
-                      meal to cook together with your guests. Add 1 cup of
-                      frozen peas along with the mussels, if you like.
-                    </Box>
+                    <Box color="#ffffff">{post.text}</Box>
                   </Typography>
                 </CardContent>
-                <CardMedia
-                  className={classes.media}
-                  image="/static/images/cards/paella.jpg"
-                  title="Paella dish"
-                />
                 <CardActions disableSpacing>
                   <IconButton aria-label="add to favorites">
                     <FavoriteIcon />
