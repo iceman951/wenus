@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, makeStyles } from "@material-ui/core/";
+import { TextField, makeStyles, Button } from "@material-ui/core/";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiTextField-root": {
@@ -36,6 +36,10 @@ export default function PostsInput({ token }) {
             className: classes.input,
           }}
         />
+        <br />
+        <Button color="primary" variant="contained" type="submit">
+          POST
+        </Button>
       </form>
     </div>
   );
