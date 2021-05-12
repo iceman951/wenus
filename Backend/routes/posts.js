@@ -12,6 +12,7 @@ router.get("/", [passportJWT.isLogin], postController.show);
 /* http://localhost:3000/posts */
 router.delete("/", [passportJWT.isLogin], postController.delete);
 
+/* http://localhost:3000/posts */
 router.patch("/", [passportJWT.isLogin], postController.edit);
 
 module.exports = router;
