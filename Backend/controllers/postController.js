@@ -33,22 +33,38 @@ exports.show = async (req, res, next) => {
       });
 
   } catch (error) {
-      res.status(400).json({
-          error: {
-              message: 'เกิดผิดพลาด ' + error.message
-          } 
-      });
+    next(error);  
   }
 }
 
 exports.delete = async (req, res, next) => {
   try {
-    await Post.deleteOne({"_id": req.body._id })
+    const { id } = req.body;
+    await Post.deleteOne({_id: id })
 
     res.status(200).json({
       message: 'ลบสำเร็จ',
   });
 
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.edit = async (req, res, next) => {
+  try {
+    const { id, text } = req.body;
+    const post = await Post.updateOne({_id: id},{
+      text: text,
+    });
+
+    if (post.nModified === 0) {
+      throw new Error('ไม่สามารถอัปเดตข้อมูลได้');
+    } else {
+      res.status(200).json({
+        message: 'แก้ไขข้อมูลเรียบร้อย'
+      });
+    }
   } catch (error) {
     next(error);
   }
