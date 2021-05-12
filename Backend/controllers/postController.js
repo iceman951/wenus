@@ -43,6 +43,11 @@ exports.show = async (req, res, next) => {
 
 exports.delete = async (req, res, next) => {
   try {
+    await Post.deleteOne({"_id": req.body._id })
+
+    res.status(200).json({
+      message: 'ลบสำเร็จ',
+  });
 
   } catch (error) {
     next(error);
