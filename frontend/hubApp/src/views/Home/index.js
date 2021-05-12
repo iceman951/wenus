@@ -1,9 +1,10 @@
 import React from "react";
 import AppBar from "./AppBar";
 import CreatePost from "./CreatePost";
-// import PostsInput from "./PostsInput";
+// import Posts from "../../components/Posts"
 
 const Home = () => {
+
   return (
     <div
       style={{

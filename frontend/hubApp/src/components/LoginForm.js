@@ -1,6 +1,7 @@
 import React from "react";
 import { useFormik } from "formik";
-import { httpClient } from "./HttpClient";
+
+import { Axios } from "../components/HttpClient"
 
 import {
   Grid,
@@ -11,7 +12,7 @@ import {
   Divider,
 } from "@material-ui/core";
 
-import RegisterForm from ".//RegisterForm";
+import RegisterForm from "./RegisterForm";
 
 const validate = (values) => {
   const errors = {};
@@ -32,12 +33,15 @@ function LoginForm({ setJwt }) {
     },
     validate,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-      httpClient.post(`/users/login`, values).then((res) => {
-        console.log(res.data);
+      Axios
+      .post(`/users/login`, values)
+      .then((res) => {
         setJwt(res.data.access_token);
         localStorage.setItem("token", res.data.access_token);
-      });
+      })
+      .catch((err) => {
+        console.log(err.response);
+      })
     },
   });
 
@@ -62,15 +66,13 @@ function LoginForm({ setJwt }) {
             </Grid>
             <h1>Login</h1>
             <Divider />
-            <Grid container justify="center">
               <form onSubmit={formik.handleSubmit}>
                 <Grid
-                  container
-                  direction="column"
-                  alignItems="center"
+                  container 
+                  justify="center"
                   style={{ padding: 25 }}
                 >
-                  <FormControl variant="outlined" style={{ marginBottom: 20 }}>
+                  <FormControl fullWidth variant="outlined" style={{ marginBottom: 20 }}>
                     <InputLabel htmlFor="email">Email Address</InputLabel>
                     <OutlinedInput
                       id="email"
@@ -84,7 +86,7 @@ function LoginForm({ setJwt }) {
                   {formik.errors.email ? (
                     <div>{formik.errors.email}</div>
                   ) : null}
-                  <FormControl variant="outlined" style={{ marginBottom: 20 }}>
+                  <FormControl fullWidth variant="outlined" style={{ marginBottom: 20 }}>
                     <InputLabel htmlFor="password">Password</InputLabel>
                     <OutlinedInput
                       id="password"
@@ -96,12 +98,13 @@ function LoginForm({ setJwt }) {
                   {formik.errors.password ? (
                     <div>{formik.errors.password}</div>
                   ) : null}
-                  <Button variant="contained" type="submit" color="primary">
+                  <Grid item xs={7}>
+                  <Button size="large" fullWidth variant="contained" type="submit" color="primary">
                     Login
                   </Button>
+                  </Grid>
                 </Grid>
               </form>
-            </Grid>
             <h1>Register</h1>
             <Divider style={{ marginBottom: "3%" }} />
             <RegisterForm />

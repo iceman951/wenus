@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { httpClient } from '../../components/HttpClient'
+import { Axios } from "../../components/HttpClient";
 import {
   Button,
   Divider,
@@ -12,6 +12,7 @@ import {
   TextField,
   Typography,
   FormControl,
+  InputLabel,
 } from "@material-ui/core/";
 
 const useStyles = makeStyles((theme) => ({
@@ -42,10 +43,10 @@ const useStyles = makeStyles((theme) => ({
     },
     color: "white",
   },
-//   formControl: {
-//     margin: theme.spacing(1),
-//     minWidth: 120,
-//   },
+  //   formControl: {
+  //     margin: theme.spacing(1),
+  //     minWidth: 120,
+  //   },
 }));
 
 const validationPostSchema = yup.object({
@@ -66,7 +67,7 @@ const CreatePost = () => {
     validationSchema: validationPostSchema,
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
-      httpClient.post(`/posts`, values).then((res) => {
+      Axios.post(`/posts`, values).then((res) => {
         console.log(res.data);
         console.log(res);
       });
@@ -100,12 +101,13 @@ const CreatePost = () => {
       />
       <form onSubmit={formik.handleSubmit}>
         <FormControl>
+          <InputLabel htmlFor="tags">Tags</InputLabel>
           <Select
-            labelId="demo-simple-select-autowidth-label"
-            id="demo-simple-select-autowidth"
+            id="tags"
             value={formik.values.tags}
-            onChange={formik.handleChange('tags')}
+            onChange={formik.handleChange("tags")}
             autoWidth
+            className={classes.input}
           >
             <MenuItem value="ทั่วไป">ทั่วไป</MenuItem>
             <MenuItem value="ความรัก">ความรัก</MenuItem>
@@ -120,8 +122,9 @@ const CreatePost = () => {
           fullWidth
           InputProps={{ className: classes.input }}
           value={formik.values.text}
-          onChange={formik.handleChange('text')}
+          onChange={formik.handleChange("text")}
           error={formik.touched.text && Boolean(formik.errors.text)}
+          helperText={formik.touched.text && formik.errors.text}
         />
         <Button
           fullWidth
