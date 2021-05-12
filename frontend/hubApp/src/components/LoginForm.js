@@ -33,12 +33,15 @@ function LoginForm({ setJwt }) {
     },
     validate,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-      Axios.post(`/users/login`, values).then((res) => {
-        console.log(res.data);
+      Axios
+      .post(`/users/login`, values)
+      .then((res) => {
         setJwt(res.data.access_token);
         localStorage.setItem("token", res.data.access_token);
-      });
+      })
+      .catch((err) => {
+        console.log(err.response);
+      })
     },
   });
 

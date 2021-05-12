@@ -1,12 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import AppBar from "./AppBar";
 import PostsInput from "./PostsInput";
+import Posts from "../../components/Posts"
 
 const Home = () => {
-  // Get Token
-  const storedJwt = localStorage.getItem("token");
-  const [jwt, setJwt] = useState(storedJwt || null);
-  
 
   return (
     <div
@@ -16,8 +13,9 @@ const Home = () => {
       }}
     >
       <AppBar />
-      <h1>Welcome Home Page</h1>
-      <PostsInput token={jwt}/>
+      {/* <h1>Welcome Home Page</h1> */}
+      {/* <PostsInput token={jwt}/> */}
+      <Posts />
     </div>
   );
 };
