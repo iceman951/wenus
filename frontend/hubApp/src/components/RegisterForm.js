@@ -16,20 +16,30 @@ const validate = (values) => {
   const errors = {};
   if (!values.firstName) {
     errors.firstName = "Required";
-  } else if (values.firstName.length > 15) {
-    errors.firstName = "Must be 15 characters or less";
+  } else if (values.firstName.length > 5) {
+    errors.firstName = "Must be 5 characters or less";
   }
 
   if (!values.lastName) {
     errors.lastName = "Required";
-  } else if (values.lastName.length > 20) {
-    errors.lastName = "Must be 20 characters or less";
+  } else if (values.lastName.length > 5) {
+    errors.lastName = "Must be 5 characters or less";
   }
 
   if (!values.email) {
     errors.email = "Required";
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
     errors.email = "Invalid email address";
+  }
+
+  if (!values.password) {
+    errors.password = "Required";
+  } else if (values.password.length > 5) {
+    errors.password = "Must be 5 characters or less";
+  }
+
+  if (!values.faculty) {
+    errors.faculty = "Required";
   }
 
   return errors;
@@ -64,6 +74,7 @@ const RegisterForm = () => {
                 <InputLabel htmlFor="firstName">FirstName</InputLabel>
                 <OutlinedInput
                   id="firstName"
+                  name="firstName"
                   label="FirstName"
                   type="text"
                   onChange={formik.handleChange}
@@ -83,6 +94,7 @@ const RegisterForm = () => {
                 <InputLabel htmlFor="lastName">LastName</InputLabel>
                 <OutlinedInput
                   id="lastName"
+                  name="lastName"
                   label="LastName"
                   type="text"
                   onChange={formik.handleChange}
@@ -102,7 +114,8 @@ const RegisterForm = () => {
               <FormControl fullWidth variant="outlined">
                 <InputLabel htmlFor="email">Email Address</InputLabel>
                 <OutlinedInput
-                  id="email"
+                  id="register-email"
+                  name="email"
                   label="Email Address"
                   type="email"
                   onChange={formik.handleChange}
@@ -119,7 +132,8 @@ const RegisterForm = () => {
               <FormControl fullWidth variant="outlined">
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <OutlinedInput
-                  id="password"
+                  id="register-password"
+                  name="password"
                   label="Password"
                   type="password"
                   onChange={formik.handleChange}
@@ -138,13 +152,11 @@ const RegisterForm = () => {
               <FormControl fullWidth variant="outlined">
                 <InputLabel htmlFor="faculty">Faculty</InputLabel>
                 <Select
+                  label="Faculty"
                   defaultValue={formik.values.faculty}
                   onChange={formik.handleChange}
-                  label="Faculty"
-                  inputProps={{
-                    name: "age",
-                    id: "faculty",
-                  }}
+                  id="faculty"
+                  name="faculty"
                 >
                   <MenuItem value={'Agro'}>Agro</MenuItem>
                   <MenuItem value={'Dentistry'}>Dentistry</MenuItem>
@@ -178,6 +190,7 @@ const RegisterForm = () => {
                 </InputLabel>
                 <OutlinedInput
                   id="birthdate"
+                  name="birthdate"
                   label="Birthdate"
                   type="date"
                   onChange={formik.handleChange}
