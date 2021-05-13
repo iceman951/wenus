@@ -1,4 +1,5 @@
 const Post = require("../models/post");
+const Comment = require("../models/comment");
 
 exports.create = async (req, res, next) => {
   try {
@@ -49,8 +50,9 @@ exports.show = async (req, res, next) => {
 exports.delete = async (req, res, next) => {
   try {
     const { id } = req.body;
+    let post = await Post.findById({ _id: id});
+    await Comment.deleteMany({ _id: { $in: post.comments}});
     await Post.deleteOne({ _id: id });
-
     res.status(200).json({
       success: true,
       message: "ลบสำเร็จ",
