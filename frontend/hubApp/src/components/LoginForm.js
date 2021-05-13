@@ -91,7 +91,12 @@ function LoginForm({ setJwt }) {
                     onChange={LoginForm.handleChange}
                     defaultValue={LoginForm.values.email}
                   />
-                  <FormHelperText error id="email">
+                  <FormHelperText
+                    error={
+                      LoginForm.touched.email && Boolean(LoginForm.errors.email)
+                    }
+                    id="login-email"
+                  >
                     {LoginForm.touched.email && LoginForm.errors.email}
                   </FormHelperText>
                 </FormControl>
@@ -112,7 +117,7 @@ function LoginForm({ setJwt }) {
                     error={
                       LoginForm.touched.password && Boolean(LoginForm.errors.password)
                     }
-                    id="email"
+                    id="login-password"
                   >
                     {LoginForm.touched.password && LoginForm.errors.password}
                   </FormHelperText>
