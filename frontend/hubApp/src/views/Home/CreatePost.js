@@ -13,7 +13,13 @@ import {
   Typography,
   FormControl,
   InputLabel,
+  Avatar,
+  Card,
+  CardContent,
+  Container,
 } from "@material-ui/core/";
+import { red } from "@material-ui/core/colors";
+import Swal from "sweetalert2";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -24,11 +30,8 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
     width: "70vh",
-    // backgroundColor: theme.palette.background.paper,
     backgroundColor: "#4d4d4d",
-    // border: "1px solid #000",
     borderRadius: "10px 10px 10px 10px",
-    // boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 3, 2),
   },
   typography: {
@@ -43,10 +46,17 @@ const useStyles = makeStyles((theme) => ({
     },
     color: "white",
   },
-  //   formControl: {
-  //     margin: theme.spacing(1),
-  //     minWidth: 120,
-  //   },
+  card: {
+    marginTop: "3%",
+    backgroundColor: "rgba(255,255,255,0.1)",
+  },
+  details: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  avatar: {
+    backgroundColor: red[500],
+  },
 }));
 
 const validationPostSchema = yup.object({
@@ -56,21 +66,50 @@ const validationPostSchema = yup.object({
     .required("Text is required"),
 });
 
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
+
 const CreatePost = () => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+
   const formik = useFormik({
     initialValues: {
       text: "",
       tag: "ทั่วไป",
     },
     validationSchema: validationPostSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-      Axios.post(`/posts`, values).then((res) => {
-        console.log(res.data);
-        console.log(res);
-      });
+    onSubmit: (values, actions) => {
+      // alert(JSON.stringify(values, null, 2));
+      Axios.post(`/posts`, values)
+        .then((res) => {
+          console.log(res.data);
+          console.log(res);
+          if (res.status === 201) {
+            Toast.fire({
+              icon: "success",
+              title: "สร้างโพสต์สำเร็จ",
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          Toast.fire({
+            icon: "error",
+            title: "สร้างโพสต์ไม่สำเร็จ, กรุณาลองใหม่อีกครั้ง",
+          });
+        });
+      handleClose();
+      actions.resetForm();
     },
   });
 
@@ -84,12 +123,6 @@ const CreatePost = () => {
 
   const modalBody = (
     <div className={classes.paper}>
-      {/* init commented */}
-      {/* <h2 id="simple-modal-title">Text in a modal</h2>
-      <p id="simple-modal-description">
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-      </p>
-      <SimpleModal /> */}
       <Typography align="center" variant="h6" className={classes.typography}>
         สร้างโพสต์
       </Typography>
@@ -116,7 +149,7 @@ const CreatePost = () => {
         </FormControl>
         <TextField
           id="text"
-          placeholder="Type someting here..."
+          placeholder="คุณอยากโพสต์อะไร?"
           multiline
           rows={6}
           fullWidth
@@ -128,8 +161,11 @@ const CreatePost = () => {
         />
         <Button
           fullWidth
-          style={{ backgroundColor: "blue", color: "white" }}
+          // style={{ backgroundColor: "blue", color: "white" }}
           type="submit"
+          variant="contained"
+          color="primary"
+          disabled={!formik.values.text}
         >
           โพสต์
         </Button>
@@ -138,24 +174,38 @@ const CreatePost = () => {
   );
 
   return (
-    <div>
-      <button
-        type="button"
-        onClick={handleOpen}
-        style={{ marginTop: "2%", width: "70vh", fontSize: "20px" }}
-      >
-        คุณอยากโพสต์อะไร
-      </button>
-      <Modal
-        className={classes.modal}
-        open={open}
-        onClose={handleClose}
-        // aria-labelledby="simple-modal-title"
-        // aria-describedby="simple-modal-description"
-      >
+    <>
+      <Container maxWidth="sm">
+        <Card className={classes.card} variant="outlined">
+          <CardContent>
+            <div className={classes.details}>
+              <Avatar className={classes.avatar}>PR</Avatar>
+              <Button
+                variant="contained"
+                // color="primary"
+                disableElevation
+                onClick={handleOpen}
+                fullWidth
+                style={{
+                  marginLeft: "2%",
+                  borderRadius: "50px",
+                  backgroundColor: "rgba(255,255,255,0.15)",
+                  color: "rgba(255,255,255,0.7)",
+                  fontSize: "16px",
+                  justifyContent: "flex-start",
+                  textTransform: "none",
+                }}
+              >
+                {!formik.values.text ? "คุณอยากโพสต์อะไร?" : formik.values.text}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </Container>
+      <Modal className={classes.modal} open={open} onClose={handleClose}>
         {modalBody}
       </Modal>
-    </div>
+    </>
   );
 };
 
