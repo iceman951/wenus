@@ -17,6 +17,7 @@ const commentsRouter = require('./routes/comments');
 
 //import middleware
 const errorHandler = require('./middleware/errorHandler');
+const passportJWT = require('./middleware/passportJWT');
 
 const app = express();
 
@@ -44,8 +45,8 @@ app.use(passport.initialize());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/posts', postsRouter);
-app.use('/comments', commentsRouter);
+app.use('/posts', [passportJWT.isLogin], postsRouter);
+app.use('/comments', [passportJWT.isLogin], commentsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

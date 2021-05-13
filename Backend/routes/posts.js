@@ -1,18 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const postController = require('../controllers/postController');
-const passportJWT = require('../middleware/passportJWT');
 
 /* http://localhost:3000/posts */
-router.post("/", [passportJWT.isLogin], postController.create);
+router.post("/", postController.create);
 
 /* http://localhost:3000/posts */
-router.get("/", [passportJWT.isLogin], postController.show);
+router.get("/", postController.show);
 
 /* http://localhost:3000/posts */
-router.delete("/", [passportJWT.isLogin], postController.delete);
+router.delete("/", postController.delete);
 
 /* http://localhost:3000/posts */
-router.patch("/", [passportJWT.isLogin], postController.edit);
+router.patch("/", postController.edit);
 
 module.exports = router;
