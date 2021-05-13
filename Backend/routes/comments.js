@@ -6,11 +6,8 @@ const passportJWT = require('../middleware/passportJWT');
 /* http://localhost:3000/comments */
 router.post("/", [passportJWT.isLogin], commentController.create);
 
-// /* http://localhost:3000/comments */
-// router.get("/", [passportJWT.isLogin], commentController.show);
-
-// /* http://localhost:3000/comments */
-// router.delete("/", [passportJWT.isLogin], commentController.delete);
+/* http://localhost:3000/comments */
+router.delete("/", [passportJWT.isLogin], commentController.delete);
 
 // /* http://localhost:3000/comments */
 // router.patch("/", [passportJWT.isLogin], commentController.edit);

@@ -31,6 +31,7 @@ exports.login = async (req, res, next) => {
         const expires_in = jwt.decode(token);
 
         return res.status(200).json({
+            success: true,
             access_token: token,
             expires_in: expires_in.exp,
             token_type: 'Bearer'
@@ -48,6 +49,7 @@ exports.show = async (req, res, next) => {
         }
 
         res.status(200).json({
+            success: true,
             message: 'สำเร็จ',
             data: user
         });
@@ -93,6 +95,7 @@ exports.register = async (req, res, next) => {
         await user.save();
 
         return res.status(201).json({
+            success: true,
             message: 'ลงทะเบียนสำเร็จ'
         });
     } catch (error) {
