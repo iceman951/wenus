@@ -14,25 +14,23 @@ import {
   Avatar,
   Typography,
   IconButton,
+  Box,
 } from "@material-ui/core/";
 import { Grid } from "@material-ui/core";
-import { red } from '@material-ui/core/colors';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import ShareIcon from '@material-ui/icons/Share';
-
+import { red } from "@material-ui/core/colors";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import ShareIcon from "@material-ui/icons/Share";
 
 const useStyles = makeStyles({
   card: {
-    marginBottom: "1%",
+    marginBottom: "3%",
+    backgroundColor: "#616161",
   },
   media: {
     height: 0,
-    paddingTop: '20%', // 16:9
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
+    paddingTop: "20%", // 16:9
   },
   avatar: {
     backgroundColor: red[500],
@@ -54,6 +52,19 @@ export default function Posts() {
   }, []);
 
   const classes = useStyles();
+  let image;
+
+  function ImageChecking(image) {
+    if (image) {
+      return (
+        <CardMedia
+          className={classes.media}
+          image="/static/images/cards/paella.jpg"
+          title="Paella dish"
+        />
+      );
+    }
+  }
 
   return (
     <Grid container style={{ padding: "5%" }}>
@@ -62,34 +73,28 @@ export default function Posts() {
           <Grid container justify="center">
             <Grid item xs={6}>
               <Card key={post._id} className={classes.card}>
-                <CardHeader
-                  avatar={
-                    <Avatar aria-label="recipe" className={classes.avatar}>
-                      R
-                    </Avatar>
-                  }
-                  action={
-                    <IconButton aria-label="settings">
-                      <MoreVertIcon />
-                    </IconButton>
-                  }
-                  title="Shrimp and Chorizo Paella"
-                  subheader="September 14, 2016"
-                />
-                <CardMedia
-                  className={classes.media}
-                  image="/static/images/cards/paella.jpg"
-                  title="Paella dish"
-                />
+                <Box color="#ffffff">
+                  <CardHeader
+                    avatar={
+                      <Avatar aria-label="recipe" className={classes.avatar}>
+                        R
+                      </Avatar>
+                    }
+                    action={
+                      <IconButton aria-label="settings">
+                        <MoreVertIcon />
+                      </IconButton>
+                    }
+                    title={post.author.firstName}
+                  />
+                </Box>
                 <CardContent>
                   <Typography
                     variant="body2"
                     color="textSecondary"
                     component="p"
                   >
-                    This impressive paella is a perfect party dish and a fun
-                    meal to cook together with your guests. Add 1 cup of frozen
-                    peas along with the mussels, if you like.
+                    <Box color="#ffffff">{post.text}</Box>
                   </Typography>
                 </CardContent>
                 <CardActions disableSpacing>

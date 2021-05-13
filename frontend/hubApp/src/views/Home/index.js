@@ -1,6 +1,7 @@
 import React from "react";
 import AppBar from "./AppBar";
-// import Posts from "../../components/Posts"
+import CreatePost from "./CreatePost";
+import Posts from "../../components/Posts"
 
 const Home = () => {
 
@@ -13,6 +14,7 @@ const Home = () => {
     >
       <AppBar />
       <CreatePost />
+      <Posts />
     </div>
   );
 };
