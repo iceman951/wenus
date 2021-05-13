@@ -262,7 +262,7 @@ const RegisterForm = () => {
                 type="submit"
                 color="primary"
               >
-                Register
+                SIGN UP
               </Button>
             </Grid>
           </Grid>
