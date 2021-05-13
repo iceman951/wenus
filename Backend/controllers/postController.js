@@ -13,6 +13,7 @@ exports.create = async (req, res, next) => {
     await post.save();
 
     res.status(201).json({
+      success: true,
       message: "เพิ่มโพสต์เรียบร้อย",
     });
   } catch (error) {
@@ -25,11 +26,11 @@ exports.show = async (req, res, next) => {
     const posts = await Post.find()
       .populate("author", "_id firstName lastName")
       .populate({
-        path: 'comments',
+        path: "comments",
         populate: {
-          path: 'author',
-          select: '_id firstName lastName'
-        }
+          path: "author",
+          select: "_id firstName lastName",
+        },
       });
     if (!posts) {
       throw new Error("ไม่พบข้อมูลโพสต์");
