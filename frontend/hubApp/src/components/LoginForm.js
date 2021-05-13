@@ -1,12 +1,14 @@
 import React from "react";
 import { useFormik } from "formik";
+import * as yup from "yup";
 
-import { Axios } from "../components/HttpClient"
+import { Axios } from "../components/HttpClient";
 
 import {
   Grid,
   Button,
   FormControl,
+  FormHelperText,
   OutlinedInput,
   InputLabel,
   Divider,
@@ -14,34 +16,40 @@ import {
 
 import RegisterForm from "./RegisterForm";
 
-const validate = (values) => {
-  const errors = {};
-  if (!values.email) {
-    errors.email = "Required";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = "Invalid email address";
-  }
-
-  return errors;
-};
-
 function LoginForm({ setJwt }) {
-  const formik = useFormik({
+  const validationSchema = yup.object({
+    email: yup
+      .string("Enter your email")
+      .email("Enter a valid email")
+      .required("Email is required"),
+    password: yup
+      .string("Enter your password")
+      .min(5, "Password should be of minimum 6 characters length")
+      .required("Password is required"),
+  });
+
+  const LoginForm = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
-    validate,
-    onSubmit: (values) => {
-      Axios
-      .post(`/users/login`, values)
-      .then((res) => {
-        setJwt(res.data.access_token);
-        localStorage.setItem("token", res.data.access_token);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      })
+    validationSchema: validationSchema,
+    onSubmit: (values, actions) => {
+      Axios.post(`/users/login`, values)
+        .then((res) => {
+          setJwt(res.data.access_token);
+          localStorage.setItem("token", res.data.access_token);
+        })
+        .catch((err) => {
+          if (err.response.status === 404){
+            actions.setFieldError('email', 'บัญชีนี้ไม่ได้รับการลงเทียน')
+          }
+          else if (err.response.status === 401) {
+            actions.setFieldError('password', 'รหัสผ่านไม่ถูกต้อง')
+          }
+          
+          // console.error(err.response);
+        });
     },
   });
 
@@ -66,45 +74,62 @@ function LoginForm({ setJwt }) {
             </Grid>
             <h1>Login</h1>
             <Divider />
-              <form onSubmit={formik.handleSubmit}>
-                <Grid
-                  container 
-                  justify="center"
-                  style={{ padding: 25 }}
+            <form onSubmit={LoginForm.handleSubmit}>
+              <Grid container justify="center" style={{ padding: 25 }}>
+                <FormControl
+                  fullWidth
+                  variant="outlined"
+                  style={{ marginBottom: 20 }}
                 >
-                  <FormControl fullWidth variant="outlined" style={{ marginBottom: 20 }}>
-                    <InputLabel htmlFor="email">Email Address</InputLabel>
-                    <OutlinedInput
-                      id="email"
-                      label="Email Address"
-                      type="email"
-                      autoFocus={true}
-                      onChange={formik.handleChange}
-                      defaultValue={formik.values.email}
-                    />
-                  </FormControl>
-                  {formik.errors.email ? (
-                    <div>{formik.errors.email}</div>
-                  ) : null}
-                  <FormControl fullWidth variant="outlined" style={{ marginBottom: 20 }}>
-                    <InputLabel htmlFor="password">Password</InputLabel>
-                    <OutlinedInput
-                      id="password"
-                      label="Password"
-                      type="password"
-                      onChange={formik.handleChange}
-                    />
-                  </FormControl>
-                  {formik.errors.password ? (
-                    <div>{formik.errors.password}</div>
-                  ) : null}
-                  <Grid item xs={7}>
-                  <Button size="large" fullWidth variant="contained" type="submit" color="primary">
+                  <InputLabel htmlFor="email">Email Address</InputLabel>
+                  <OutlinedInput
+                    id="login-email"
+                    name="email"
+                    label="Email Address"
+                    type="email"
+                    autoFocus={true}
+                    onChange={LoginForm.handleChange}
+                    defaultValue={LoginForm.values.email}
+                  />
+                  <FormHelperText error id="email">
+                    {LoginForm.touched.email && LoginForm.errors.email}
+                  </FormHelperText>
+                </FormControl>
+                <FormControl
+                  fullWidth
+                  variant="outlined"
+                  style={{ marginBottom: 20 }}
+                >
+                  <InputLabel htmlFor="password">Password</InputLabel>
+                  <OutlinedInput
+                    id="login-password"
+                    name="password"
+                    label="Password"
+                    type="password"
+                    onChange={LoginForm.handleChange}
+                  />
+                  <FormHelperText
+                    error={
+                      LoginForm.touched.password && Boolean(LoginForm.errors.password)
+                    }
+                    id="email"
+                  >
+                    {LoginForm.touched.password && LoginForm.errors.password}
+                  </FormHelperText>
+                </FormControl>
+                <Grid item xs={7}>
+                  <Button
+                    size="large"
+                    fullWidth
+                    variant="contained"
+                    type="submit"
+                    color="primary"
+                  >
                     Login
                   </Button>
-                  </Grid>
                 </Grid>
-              </form>
+              </Grid>
+            </form>
             <h1>Register</h1>
             <Divider style={{ marginBottom: "3%" }} />
             <RegisterForm />

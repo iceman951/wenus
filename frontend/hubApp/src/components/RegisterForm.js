@@ -8,26 +8,38 @@ import {
   FormControl,
   OutlinedInput,
   InputLabel,
+  MenuItem,
+  Select,
 } from "@material-ui/core";
 
 const validate = (values) => {
   const errors = {};
   if (!values.firstName) {
     errors.firstName = "Required";
-  } else if (values.firstName.length > 15) {
-    errors.firstName = "Must be 15 characters or less";
+  } else if (values.firstName.length > 5) {
+    errors.firstName = "Must be 5 characters or less";
   }
 
   if (!values.lastName) {
     errors.lastName = "Required";
-  } else if (values.lastName.length > 20) {
-    errors.lastName = "Must be 20 characters or less";
+  } else if (values.lastName.length > 5) {
+    errors.lastName = "Must be 5 characters or less";
   }
 
   if (!values.email) {
     errors.email = "Required";
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
     errors.email = "Invalid email address";
+  }
+
+  if (!values.password) {
+    errors.password = "Required";
+  } else if (values.password.length > 5) {
+    errors.password = "Must be 5 characters or less";
+  }
+
+  if (!values.faculty) {
+    errors.faculty = "Required";
   }
 
   return errors;
@@ -47,8 +59,8 @@ const RegisterForm = () => {
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
       Axios.post(`/users/register`, values).then((res) => {
-        console.log(res.data);
-        console.log(res);
+        // console.log(res.data);
+        // console.log(res);
       });
     },
   });
@@ -59,10 +71,11 @@ const RegisterForm = () => {
           <Grid container justify="center">
             <Grid item xs={10}>
               <FormControl fullWidth variant="outlined">
-                <InputLabel htmlFor="firstName">firstName</InputLabel>
+                <InputLabel htmlFor="firstName">FirstName</InputLabel>
                 <OutlinedInput
                   id="firstName"
-                  label="firstName"
+                  name="firstName"
+                  label="FirstName"
                   type="text"
                   onChange={formik.handleChange}
                   defaultValue={formik.values.firstName}
@@ -78,10 +91,11 @@ const RegisterForm = () => {
           <Grid container justify="center">
             <Grid item xs={10}>
               <FormControl fullWidth variant="outlined">
-                <InputLabel htmlFor="lastName">lastName</InputLabel>
+                <InputLabel htmlFor="lastName">LastName</InputLabel>
                 <OutlinedInput
                   id="lastName"
-                  label="lastName"
+                  name="lastName"
+                  label="LastName"
                   type="text"
                   onChange={formik.handleChange}
                   defaultValue={formik.values.lastName}
@@ -100,7 +114,8 @@ const RegisterForm = () => {
               <FormControl fullWidth variant="outlined">
                 <InputLabel htmlFor="email">Email Address</InputLabel>
                 <OutlinedInput
-                  id="email"
+                  id="register-email"
+                  name="email"
                   label="Email Address"
                   type="email"
                   onChange={formik.handleChange}
@@ -117,7 +132,8 @@ const RegisterForm = () => {
               <FormControl fullWidth variant="outlined">
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <OutlinedInput
-                  id="password"
+                  id="register-password"
+                  name="password"
                   label="Password"
                   type="password"
                   onChange={formik.handleChange}
@@ -135,13 +151,29 @@ const RegisterForm = () => {
             <Grid item xs={10}>
               <FormControl fullWidth variant="outlined">
                 <InputLabel htmlFor="faculty">Faculty</InputLabel>
-                <OutlinedInput
-                  id="faculty"
+                <Select
                   label="Faculty"
-                  type="text"
-                  onChange={formik.handleChange}
                   defaultValue={formik.values.faculty}
-                />
+                  onChange={formik.handleChange}
+                  id="faculty"
+                  name="faculty"
+                >
+                  <MenuItem value={'Agro'}>Agro</MenuItem>
+                  <MenuItem value={'Dentistry'}>Dentistry</MenuItem>
+                  <MenuItem value={'Economics'}>Economics</MenuItem>
+                  <MenuItem value={'Engineering'}>Engineering</MenuItem>
+                  <MenuItem value={'Environmental Management'}>Environmental Management</MenuItem>
+                  <MenuItem value={'Liberal Arts'}>LiberalArts</MenuItem>
+                  <MenuItem value={'Management Sciences'}>Management Sciences</MenuItem>
+                  <MenuItem value={'Medical Technology'}>Medical Technology</MenuItem>
+                  <MenuItem value={'Medicine'}>Medicine</MenuItem>
+                  <MenuItem value={'Natural Resources'}>Natural Resources</MenuItem>
+                  <MenuItem value={'Nursing'}>Nursing</MenuItem>
+                  <MenuItem value={'Pharmaceutical Sciences'}>Pharmaceutical Sciences</MenuItem>
+                  <MenuItem value={'Science'}>Science</MenuItem>
+                  <MenuItem value={'Traditional Thai Medicine'}>Traditional Thai Medicine</MenuItem>
+                  <MenuItem value={'Veterinary Science'}>Veterinary Science</MenuItem>
+                </Select>
               </FormControl>
               {formik.errors.faculty ? (
                 <div>{formik.errors.faculty}</div>
@@ -158,6 +190,7 @@ const RegisterForm = () => {
                 </InputLabel>
                 <OutlinedInput
                   id="birthdate"
+                  name="birthdate"
                   label="Birthdate"
                   type="date"
                   onChange={formik.handleChange}
