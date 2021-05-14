@@ -1,5 +1,4 @@
 const Post = require("../models/post");
-const Comment = require("../models/comment");
 
 exports.create = async (req, res, next) => {
   try {
@@ -25,6 +24,7 @@ exports.create = async (req, res, next) => {
 exports.show = async (req, res, next) => {
   try {
     const posts = await Post.find()
+      .sort("-createDate")
       .populate("author", "_id firstName lastName")
       .populate({
         path: "comments",
@@ -33,8 +33,11 @@ exports.show = async (req, res, next) => {
           select: "_id firstName lastName",
         },
       });
+
     if (!posts) {
-      throw new Error("ไม่พบข้อมูลโพสต์");
+      const error = new Error("ไม่พบข้อมูลโพสต์");
+      error.statusCode = 404;
+      throw error;
     }
 
     res.status(200).json({
@@ -49,10 +52,17 @@ exports.show = async (req, res, next) => {
 
 exports.delete = async (req, res, next) => {
   try {
-    const { id } = req.body;
-    let post = await Post.findById({ _id: id});
-    await Comment.deleteMany({ _id: { $in: post.comments}});
-    await Post.deleteOne({ _id: id });
+    const { post_id } = req.body;
+    let post = await Post.findById({ _id: post_id });
+
+    if (!post) {
+      const error = new Error("ไม่พบข้อมูลโพสต์ที่ต้องการลบ");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    await post.delete();
+
     res.status(200).json({
       success: true,
       message: "ลบสำเร็จ",
@@ -64,13 +74,17 @@ exports.delete = async (req, res, next) => {
 
 exports.edit = async (req, res, next) => {
   try {
-    const { id, text } = req.body;
-    const post = await Post.updateOne(
-      { _id: id },
-      {
-        text: text,
-      }
-    );
+    const { post_id, text } = req.body;
+
+    let post = await Post.findById({ _id: post_id });
+
+    if (!post) {
+      const error = new Error("ไม่พบข้อมูลโพสต์ที่ต้องการแก้ไข");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    await post.updateOne({text: text});
 
     if (post.nModified === 0) {
       throw new Error("ไม่สามารถอัปเดตข้อมูลได้");
