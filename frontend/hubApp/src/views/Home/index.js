@@ -2,6 +2,7 @@ import React from "react";
 import AppBar from "./AppBar";
 import CreatePost from "./CreatePost";
 import Posts from "../../components/Posts"
+import TagsBar from "./TagsBar";
 
 const Home = () => {
 
@@ -13,6 +14,7 @@ const Home = () => {
       }}
     >
       <AppBar />
+      <TagsBar />
       <CreatePost />
       <Posts />
     </div>
