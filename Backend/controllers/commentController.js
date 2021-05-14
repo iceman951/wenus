@@ -33,7 +33,9 @@ exports.delete = async (req, res, next) => {
   try {
     const { comment_id } = req.body;
 
-    let post = await Post.findOne({comments: {$elemMatch: {_id: comment_id}}});
+    let post = await Post.findOne({
+      comments: { $elemMatch: { _id: comment_id } },
+    });
 
     if (!post) {
       const error = new Error("ไม่พบข้อมูลคอมเมนต์ที่ต้องการลบ");
@@ -41,8 +43,11 @@ exports.delete = async (req, res, next) => {
       throw error;
     }
 
-    await post.comments.pull({_id: comment_id});
+    await post.comments.pull({ _id: comment_id });
     await post.save();
+
+    // post.comments = post.comments.filter((comment) => comment._id != comment_id)
+    // post.save()
 
     res.status(200).json({
       success: true,
@@ -56,7 +61,9 @@ exports.delete = async (req, res, next) => {
 exports.edit = async (req, res, next) => {
   try {
     const { comment_id, text } = req.body;
-    let post = await Post.findOne({comments: {$elemMatch: {_id: comment_id}}});
+    const query = { comments: { $elemMatch: { _id: comment_id } } };
+    // let post = await Post.findOneAndUpdate(query, {$set: {'comments.$.text': text}});z
+    let post = await Post.findOne(query);
 
     if (!post) {
       const error = new Error("ไม่พบข้อมูลคอมเมนต์ที่ต้องการแก้ไข");
@@ -64,8 +71,7 @@ exports.edit = async (req, res, next) => {
       throw error;
     }
 
-    console.log(post);
-    // await post.save();
+    await Post.findOneAndUpdate(query, { $set: { "comments.$.text": text } });
 
     if (post.nModified === 0) {
       throw new Error("ไม่สามารถอัปเดตข้อมูลได้");
@@ -75,21 +81,6 @@ exports.edit = async (req, res, next) => {
         message: "แก้ไขข้อมูลเรียบร้อย",
       });
     }
-  } catch (error) {
-    next(error);
-  }
-};
-
-exports.show = async (req, res, next) => {
-  try {
-    const { id } = req.body;
-    const posts = await Post.find({comments: {$elemMatch: {_id: id}}});
-
-    res.status(200).json({
-      success: true,
-      message: "สำเร็จ",
-      data: posts,
-    });
   } catch (error) {
     next(error);
   }
