@@ -1,38 +1,19 @@
 import React from "react";
-import AppBar from "./AppBar";
+import NavBar from "../../components/NavBar";
 import CreatePost from "./CreatePost";
-import Posts from "../../components/Posts"
+import Posts from "../../components/Posts";
 
-import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
-import {
-  Grid,
-  Button,
-  FormControl,
-  FormHelperText,
-  OutlinedInput,
-  InputLabel,
-  Divider,
-  Card,
-  CardContent,
-  ThemeProvider,
-} from "@material-ui/core";
-
-
-let theme = createMuiTheme({
-  typography: {
-    fontSize: 25,
-    color: "#000000",
-  },
-});
+import { Grid, } from '@material-ui/core'
 
 const Home = () => {
-
   return (
-    <ThemeProvider theme={theme}>
-      <AppBar />
+    <div>
+      <NavBar />
+      <Grid container>
       <CreatePost />
       <Posts />
-    </ThemeProvider>
+      </Grid>
+    </div>
   );
 };
 
