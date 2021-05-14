@@ -16,6 +16,8 @@ import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 
+import { Link } from "react-router-dom";
+
 const useStyles = makeStyles((theme) => ({
   header: {
     backgroundColor: "#212121",
@@ -106,8 +108,7 @@ export default function PrimarySearchAppBar() {
 
   const handleLogOut = () => {
     localStorage.removeItem('token')
-    setAnchorEl(null);
-    handleMobileMenuClose();
+    window.location.reload(false);
   };
 
   const handleMobileMenuOpen = (event) => {
@@ -158,7 +159,7 @@ export default function PrimarySearchAppBar() {
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem onClick={handleProfileMenuOpen} component={Link} to='/'>
         <IconButton
           aria-label="account of current user"
           aria-controls="primary-search-account-menu"
