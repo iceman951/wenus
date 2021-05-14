@@ -82,7 +82,7 @@ function LoginForm({ setJwt }) {
               />
             </Grid>
             <Grid container justify="center" style={{ marginBottom: "3%"}}>
-              <Grid item xs={7}>
+              <Grid item xs={10}>
                 <Card variant="outlined">
                   <CardContent>
                     <h1>LOGIN</h1>
@@ -147,7 +147,7 @@ function LoginForm({ setJwt }) {
                             type="submit"
                             color="primary"
                           >
-                            Login
+                            Sign in
                           </Button>
                         </Grid>
                       </Grid>
