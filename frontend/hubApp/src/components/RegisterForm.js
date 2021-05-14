@@ -12,6 +12,9 @@ import {
   MenuItem,
   Select,
   FormHelperText,
+  Card,
+  CardContent,
+  Divider,
 } from "@material-ui/core";
 
 const RegisterForm = () => {
@@ -54,14 +57,14 @@ const RegisterForm = () => {
       // alert(JSON.stringify(values, null, 2));
       Axios.post(`/users/register`, values)
         .then((res) => {
-          if (res.data.success){
-            actions.resetForm()
+          if (res.data.success) {
+            actions.resetForm();
           }
           // console.log(res.data);
           // console.log(res);
         })
         .catch((err) => {
-          actions.setFieldError("email", "อีเมลนี้ได้ลงทะเบียนแล้ว")
+          actions.setFieldError("email", "อีเมลนี้ได้ลงทะเบียนแล้ว");
           // console.error(err);
         });
     },
@@ -134,9 +137,7 @@ const RegisterForm = () => {
                   value={formik.values.email}
                 />
                 <FormHelperText
-                  error={
-                    formik.touched.email && Boolean(formik.errors.email)
-                  }
+                  error={formik.touched.email && Boolean(formik.errors.email)}
                   id="register-email"
                 >
                   {formik.touched.email && formik.errors.email}
@@ -182,7 +183,7 @@ const RegisterForm = () => {
                   value={formik.values.faculty}
                   onChange={formik.handleChange}
                 >
-                  <MenuItem value={''}>None</MenuItem>
+                  <MenuItem value={""}>None</MenuItem>
                   <MenuItem value={"Agro"}>Agro</MenuItem>
                   <MenuItem value={"Dentistry"}>Dentistry</MenuItem>
                   <MenuItem value={"Economics"}>Economics</MenuItem>
@@ -252,19 +253,17 @@ const RegisterForm = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} style={{ marginBottom: "1%" }}>
-          <Grid container justify="center">
-            <Grid item xs={6}>
-              <Button
-                size="large"
-                fullWidth
-                variant="contained"
-                type="submit"
-                color="primary"
-              >
-                SIGN UP
-              </Button>
-            </Grid>
+        <Grid container justify="center">
+          <Grid item xs={6}>
+            <Button
+              size="large"
+              fullWidth
+              variant="contained"
+              type="submit"
+              color="primary"
+            >
+              SIGN UP
+            </Button>
           </Grid>
         </Grid>
       </Grid>

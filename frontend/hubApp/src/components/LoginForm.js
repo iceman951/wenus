@@ -11,13 +11,7 @@ import {
   FormHelperText,
   OutlinedInput,
   InputLabel,
-  Divider,
-  Card,
-  CardContent,
-  ThemeProvider,
 } from "@material-ui/core";
-
-import RegisterForm from "./RegisterForm";
 
 let theme = createMuiTheme({
   typography: {
@@ -63,114 +57,54 @@ function LoginForm({ setJwt }) {
   });
 
   return (
-    <ThemeProvider theme={theme}>
-      <Grid container style={{ minHeight: "100vh" }}>
-        <Grid item xs={12} sm={6}>
-          <img
-            src="/assets/images/login.jpg"
-            style={{ width: "100%", height: "100%" }}
-            alt="brand"
-          />
-        </Grid>
-        <Grid container item xs={12} sm={6} style={{ padding: 50 }}>
-          <div>
-            <Grid container justify="center" style={{ padding: 50 }}>
-              <img
-                src="/assets/logos/logo.png"
-                style={{ width: "50%" }}
-                alt="logo"
-              />
-            </Grid>
-            <Grid container justify="center" style={{ marginBottom: "3%"}}>
-              <Grid item xs={10}>
-                <Card variant="outlined">
-                  <CardContent>
-                    <h1>LOGIN</h1>
-                    <Divider />
-                    <form onSubmit={LoginForm.handleSubmit}>
-                      <Grid container justify="center" style={{ padding: 25 }}>
-                        <FormControl
-                          fullWidth
-                          variant="outlined"
-                          style={{ marginBottom: 20 }}
-                        >
-                          <InputLabel htmlFor="email">Email Address</InputLabel>
-                          <OutlinedInput
-                            id="login-email"
-                            name="email"
-                            label="Email Address"
-                            type="email"
-                            autoFocus={true}
-                            onChange={LoginForm.handleChange}
-                            defaultValue={LoginForm.values.email}
-                            size="normal"
-                          />
-                          <FormHelperText
-                            error={
-                              LoginForm.touched.email &&
-                              Boolean(LoginForm.errors.email)
-                            }
-                            id="login-email"
-                          >
-                            {LoginForm.touched.email && LoginForm.errors.email}
-                          </FormHelperText>
-                        </FormControl>
-                        <FormControl
-                          fullWidth
-                          variant="outlined"
-                          style={{ marginBottom: 20 }}
-                        >
-                          <InputLabel htmlFor="password">Password</InputLabel>
-                          <OutlinedInput
-                            id="login-password"
-                            name="password"
-                            label="Password"
-                            type="password"
-                            onChange={LoginForm.handleChange}
-                          />
-                          <FormHelperText
-                            error={
-                              LoginForm.touched.password &&
-                              Boolean(LoginForm.errors.password)
-                            }
-                            id="login-password"
-                          >
-                            {LoginForm.touched.password &&
-                              LoginForm.errors.password}
-                          </FormHelperText>
-                        </FormControl>
-                        <Grid item xs={6}>
-                          <Button
-                            size="large"
-                            fullWidth
-                            variant="contained"
-                            type="submit"
-                            color="primary"
-                          >
-                            Sign in
-                          </Button>
-                        </Grid>
-                      </Grid>
-                    </form>
-                  </CardContent>
-                </Card>
-              </Grid>
-            </Grid>
-            <Grid container justify="center">
-              <Grid item xs={10}>
-                <Card variant="outlined">
-                  <CardContent>
-                    <h1>Register</h1>
-                    <Divider style={{ marginBottom: "3%" }} />
-                    <RegisterForm />
-                  </CardContent>
-                </Card>
-              </Grid>
-            </Grid>
-          </div>
-        </Grid>
-      </Grid>
-    </ThemeProvider>
+    <form onSubmit={LoginForm.handleSubmit}>
+      <FormControl fullWidth variant="outlined" style={{ marginBottom: 20 }}>
+        <InputLabel htmlFor="email">Email Address</InputLabel>
+        <OutlinedInput
+          id="login-email"
+          name="email"
+          label="Email Address"
+          type="email"
+          autoFocus={true}
+          onChange={LoginForm.handleChange}
+          defaultValue={LoginForm.values.email}
+          size="normal"
+        />
+        <FormHelperText
+          error={LoginForm.touched.email && Boolean(LoginForm.errors.email)}
+          id="login-email"
+        >
+          {LoginForm.touched.email && LoginForm.errors.email}
+        </FormHelperText>
+      </FormControl>
+      <FormControl fullWidth variant="outlined" style={{ marginBottom: 20 }}>
+        <InputLabel htmlFor="password">Password</InputLabel>
+        <OutlinedInput
+          id="login-password"
+          name="password"
+          label="Password"
+          type="password"
+          onChange={LoginForm.handleChange}
+        />
+        <FormHelperText
+          error={
+            LoginForm.touched.password && Boolean(LoginForm.errors.password)
+          }
+          id="login-password"
+        >
+          {LoginForm.touched.password && LoginForm.errors.password}
+        </FormHelperText>
+      </FormControl>
+      <Button
+        size="large"
+        fullWidth
+        variant="contained"
+        type="submit"
+        color="primary"
+      >
+        Sign in
+      </Button>
+    </form>
   );
 }
 
