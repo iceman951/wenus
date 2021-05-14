@@ -12,16 +12,16 @@ var theme = createMuiTheme({
   },
   palette: {
     primary: {
-      light: '#96766b',
-      main: '#674a40',
-      dark: '#3b2219',
-      contrastText: '#fff',
+      light: "#96766b",
+      main: "#674a40",
+      dark: "#3b2219",
+      contrastText: "#fff",
     },
     secondary: {
-      light: '#ffe16a',
-      main: '#fcaf38',
-      dark: '#c48000',
-      contrastText: '#000',
+      light: "#ffe16a",
+      main: "#fcaf38",
+      dark: "#c48000",
+      contrastText: "#000",
     },
   },
 });
@@ -31,9 +31,11 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <Routing />
-        </BrowserRouter>
+        <div style={{ background: "#f8f4f4", minHeight: "100vh" }}>
+          <BrowserRouter>
+            <Routing />
+          </BrowserRouter>
+        </div>
       </ThemeProvider>
     </div>
   );
