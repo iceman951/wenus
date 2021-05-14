@@ -15,6 +15,7 @@ import {
   Typography,
   IconButton,
   Box,
+  Container,
 } from "@material-ui/core/";
 import { Grid } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -48,44 +49,21 @@ export default function Posts() {
   }
 
   return (
-    <Grid container style={{ padding: "5%" }}>
+    <Container>
       {posts.map((post) => (
-        <Grid item xs={12}>
-          <Grid container justify="center">
-            <Grid item xs={6}>
-              <Card key={post._id} >
-                <Box>
-                  <CardHeader
-                    avatar={
-                      <Avatar aria-label="recipe" >
-                        R
-                      </Avatar>
-                    }
-                    action={
-                      <IconButton aria-label="settings">
-                        <MoreVertIcon />
-                      </IconButton>
-                    }
-                  />
-                </Box>
-                <CardContent>
-                  <Typography>
-                    <Box>{post.text}</Box>
-                  </Typography>
-                </CardContent>
-                <CardActions disableSpacing>
-                  <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
-                  </IconButton>
-                  <IconButton aria-label="share">
-                    <ShareIcon />
-                  </IconButton>
-                </CardActions>
-              </Card>
+        <Card key={post._id}>
+          <CardContent>
+            <Grid container>
+              <Avatar></Avatar>
+              <Box minWidth={1}>
+                <Typography style={{ wordWrap: "break-word" }}>
+                  {post.text}
+                </Typography>
+              </Box>
             </Grid>
-          </Grid>
-        </Grid>
+          </CardContent>
+        </Card>
       ))}
-    </Grid>
+    </Container>
   );
 }

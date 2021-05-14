@@ -50,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     marginTop: "3%",
-    backgroundColor: "rgba(255,255,255,0.1)",
   },
   details: {
     display: "flex",
@@ -191,22 +190,19 @@ const CreatePost = () => {
 
   return (
     <>
-      <Container maxWidth="sm">
-        <Card className={classes.card} variant="outlined">
+      <Container>
+        <Card className={classes.card}>
           <CardContent>
             <div className={classes.details}>
-              <Avatar className={classes.avatar}>PR</Avatar>
+              <Avatar className={classes.avatar}></Avatar>
               <Button
                 variant="contained"
-                // color="primary"
                 disableElevation
                 onClick={handleOpen}
                 fullWidth
                 style={{
                   marginLeft: "2%",
                   borderRadius: "50px",
-                  backgroundColor: "rgba(255,255,255,0.15)",
-                  color: "rgba(255,255,255,0.7)",
                   fontSize: "16px",
                   justifyContent: "flex-start",
                   textTransform: "none",

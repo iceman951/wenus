@@ -10,7 +10,7 @@ import {
   Button,
 } from "@material-ui/core";
 
-import LoginForm from "../../components/LoginForm";
+import LoginForm from "../../forms/LoginForm";
 export default function LoginPage({ setJwt }) {
   return (
     <Grid container style={{ minHeight: "100vh" }}>
