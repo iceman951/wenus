@@ -1,20 +1,16 @@
 const mongoose = require("mongoose");
+const Comment = require("./comment");
 
-const Schema = new mongoose.Schema({
-  text: { type: String },
+const schema = new mongoose.Schema({
+  text: { type: String ,required: true},
   image: { type: String },
   createDate: { type: Date, default: Date.now },
-  tag: { type: String},
+  tag: { type: String, default: 'ทั่วไป' },
   author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
   },
-  comments: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Comment",
-    },
-  ],
+  comments: [Comment.schema],
   liked_users: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -24,6 +20,6 @@ const Schema = new mongoose.Schema({
 },{
   collection: 'posts'
 });
-const post = mongoose.model("Post", Schema);
+const post = mongoose.model("Post", schema);
 
 module.exports = post;

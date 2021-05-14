@@ -1,30 +1,42 @@
 import "./App.css";
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import Routing from "./routes";
+import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/core";
 
-import LoginForm from "./components/LoginForm";
+var theme = createMuiTheme({
+  typography: {
+    fontFamily: ["-apple-system"].join(","),
+    fontSize: 25,
+  },
+  palette: {
+    primary: {
+      light: '#96766b',
+      main: '#674a40',
+      dark: '#3b2219',
+      contrastText: '#fff',
+    },
+    secondary: {
+      light: '#ffe16a',
+      main: '#fcaf38',
+      dark: '#c48000',
+      contrastText: '#000',
+    },
+  },
+});
+theme = responsiveFontSizes(theme);
 
 function App() {
-  const storedJwt = localStorage.getItem("token");
-  const [jwt, setJwt] = useState(storedJwt || null);
-
-  if (!jwt) {
-    return (
-      <div>
-        <LoginForm setJwt={setJwt} /> 
-      </div>
-
-    );
-  } else {
-    return (
-      <div className="App">
+  return (
+    <div className="App">
+      <ThemeProvider theme={theme}>
         <BrowserRouter>
           <Routing />
         </BrowserRouter>
-      </div>
-    );
-  }
+      </ThemeProvider>
+    </div>
+  );
 }
 
 export default App;

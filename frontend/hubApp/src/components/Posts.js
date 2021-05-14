@@ -17,25 +17,10 @@ import {
   Box,
 } from "@material-ui/core/";
 import { Grid } from "@material-ui/core";
-import { red } from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ShareIcon from "@material-ui/icons/Share";
-
-const useStyles = makeStyles({
-  card: {
-    marginBottom: "3%",
-    backgroundColor: "#616161",
-  },
-  media: {
-    height: 0,
-    paddingTop: "20%", // 16:9
-  },
-  avatar: {
-    backgroundColor: red[500],
-  },
-});
 
 export default function Posts() {
   const [posts, setPosts] = useState([]);
@@ -51,14 +36,10 @@ export default function Posts() {
     });
   }, []);
 
-  const classes = useStyles();
-  let image;
-
   function ImageChecking(image) {
     if (image) {
       return (
         <CardMedia
-          className={classes.media}
           image="/static/images/cards/paella.jpg"
           title="Paella dish"
         />
@@ -72,11 +53,11 @@ export default function Posts() {
         <Grid item xs={12}>
           <Grid container justify="center">
             <Grid item xs={6}>
-              <Card key={post._id} className={classes.card}>
-                <Box color="#ffffff">
+              <Card key={post._id} >
+                <Box>
                   <CardHeader
                     avatar={
-                      <Avatar aria-label="recipe" className={classes.avatar}>
+                      <Avatar aria-label="recipe" >
                         R
                       </Avatar>
                     }
@@ -85,16 +66,11 @@ export default function Posts() {
                         <MoreVertIcon />
                       </IconButton>
                     }
-                    title={post.author.firstName}
                   />
                 </Box>
                 <CardContent>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                  >
-                    <Box color="#ffffff">{post.text}</Box>
+                  <Typography>
+                    <Box>{post.text}</Box>
                   </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
