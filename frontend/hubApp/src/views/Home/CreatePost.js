@@ -17,6 +17,8 @@ import {
   Card,
   CardContent,
   Container,
+  Backdrop,
+  CircularProgress,
 } from "@material-ui/core/";
 import { red } from "@material-ui/core/colors";
 import Swal from "sweetalert2";
@@ -57,6 +59,10 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: red[500],
   },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
+  },
 }));
 
 const validationPostSchema = yup.object({
@@ -81,6 +87,7 @@ const Toast = Swal.mixin({
 const CreatePost = () => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -95,6 +102,7 @@ const CreatePost = () => {
           console.log(res.data);
           console.log(res);
           if (res.status === 201) {
+            handleCloseBackDrop();
             Toast.fire({
               icon: "success",
               title: "สร้างโพสต์สำเร็จ",
@@ -103,22 +111,30 @@ const CreatePost = () => {
         })
         .catch((err) => {
           console.log(err);
+          handleCloseBackDrop();
           Toast.fire({
             icon: "error",
             title: "สร้างโพสต์ไม่สำเร็จ, กรุณาลองใหม่อีกครั้ง",
           });
         });
       handleClose();
+      handleToggle();
       actions.resetForm();
     },
   });
-
+  // Modal
   const handleOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
+  };
+  // BackDrop
+  const handleCloseBackDrop = () => {
+    setIsLoading(false);
+  };
+  const handleToggle = () => {
+    setIsLoading(!isLoading);
   };
 
   const modalBody = (
@@ -205,6 +221,9 @@ const CreatePost = () => {
       <Modal className={classes.modal} open={open} onClose={handleClose}>
         {modalBody}
       </Modal>
+      <Backdrop className={classes.backdrop} open={isLoading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </>
   );
 };
