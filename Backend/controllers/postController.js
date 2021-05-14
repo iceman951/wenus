@@ -83,8 +83,9 @@ exports.edit = async (req, res, next) => {
       error.statusCode = 404;
       throw error;
     }
-
-    await post.updateOne({text: text});
+    post.text = text;
+    await post.save();
+    // await post.updateOne({text: text});
 
     if (post.nModified === 0) {
       throw new Error("ไม่สามารถอัปเดตข้อมูลได้");
