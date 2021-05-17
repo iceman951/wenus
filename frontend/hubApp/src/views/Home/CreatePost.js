@@ -22,6 +22,8 @@ import {
 } from "@material-ui/core/";
 import { red } from "@material-ui/core/colors";
 import Swal from "sweetalert2";
+//redux
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -47,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
       borderBottom: "none",
     },
     color: "white",
+    fontSize: "16px",
   },
   card: {
     marginTop: theme.spacing(2),
@@ -87,6 +90,9 @@ const CreatePost = () => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
+
+  //redux
+  const tags = useSelector((state) => state.tagReducer.tags);
 
   const formik = useFormik({
     initialValues: {
@@ -157,9 +163,17 @@ const CreatePost = () => {
             autoWidth
             className={classes.input}
           >
-            <MenuItem value="ทั่วไป">ทั่วไป</MenuItem>
-            <MenuItem value="ความรัก">ความรัก</MenuItem>
-            <MenuItem value="การศึกษา">การศึกษา</MenuItem>
+            {tags.map((tag, index) => (
+              <MenuItem
+                key={index}
+                value={tag}
+                style={{
+                  fontSize: "16px",
+                }}
+              >
+                {tag}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
         <TextField
