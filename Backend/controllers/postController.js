@@ -32,6 +32,10 @@ exports.show = async (req, res, next) => {
           path: "author",
           select: "_id firstName lastName",
         },
+        populate: {
+          path: "liked_users",
+          select: "_id firstName lastName",
+        }
       })
       .populate({ path: "liked_users", select: "_id firstName lastName" });
 
@@ -106,7 +110,7 @@ exports.like = async (req, res, next) => {
     const { post_id } = req.body;
     const user_id = req.user.id;
 
-    let post = await Post.findById({ _id: post_id })
+    let post = await Post.findById({ _id: post_id });
 
     if (!post) {
       const error = new Error("ไม่พบข้อมูลโพสต์");
