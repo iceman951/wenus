@@ -31,8 +31,8 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     position: "absolute",
-    width: "70vh",
-    backgroundColor: "#4d4d4d",
+    width: "50vw",
+    backgroundColor: theme.palette.primary.dark,
     borderRadius: "10px 10px 10px 10px",
     padding: theme.spacing(2, 3, 2),
   },
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
   },
   card: {
-    marginTop: "3%",
+    marginTop: theme.spacing(2),
   },
   details: {
     display: "flex",

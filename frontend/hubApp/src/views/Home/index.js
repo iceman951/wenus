@@ -4,13 +4,14 @@ import CreatePost from "./CreatePost";
 import Posts from "../../components/Posts"
 import TagsBar from "./TagsBar";
 
-import { Grid, Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 
 const Home = () => {
   return (
     <>
       <NavBar />
       <Grid container>
+        <TagsBar />
         <CreatePost />
         <Posts />
       </Grid>
