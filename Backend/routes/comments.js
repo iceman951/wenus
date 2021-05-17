@@ -11,4 +11,7 @@ router.delete("/", commentController.delete);
 /* http://localhost:3000/comments */
 router.patch("/", commentController.edit);
 
+/* http://localhost:3000/comments/like */
+router.patch("/like", commentController.like);
+
 module.exports = router;
