@@ -22,6 +22,8 @@ import {
 } from "@material-ui/core/";
 import { red } from "@material-ui/core/colors";
 import Swal from "sweetalert2";
+import { useDispatch, useSelector } from "react-redux";
+import { createPost } from "../../store/actions/postAction";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -87,6 +89,8 @@ const CreatePost = () => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
+  const dispatch = useDispatch()
+  const loading = useSelector(state => state.post.loading)
 
   const formik = useFormik({
     initialValues: {
@@ -96,28 +100,10 @@ const CreatePost = () => {
     validationSchema: validationPostSchema,
     onSubmit: (values, actions) => {
       // alert(JSON.stringify(values, null, 2));
-      Axios.post(`/posts`, values)
-        .then((res) => {
-          console.log(res.data);
-          console.log(res);
-          if (res.status === 201) {
-            handleCloseBackDrop();
-            Toast.fire({
-              icon: "success",
-              title: "สร้างโพสต์สำเร็จ",
-            });
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          handleCloseBackDrop();
-          Toast.fire({
-            icon: "error",
-            title: "สร้างโพสต์ไม่สำเร็จ, กรุณาลองใหม่อีกครั้ง",
-          });
-        });
+      dispatch({type:"isLoading"})
+      createPost(dispatch, values)
       handleClose();
-      handleToggle();
+      // handleToggle();
       actions.resetForm();
     },
   });
@@ -217,7 +203,7 @@ const CreatePost = () => {
       <Modal className={classes.modal} open={open} onClose={handleClose}>
         {modalBody}
       </Modal>
-      <Backdrop className={classes.backdrop} open={isLoading}>
+      <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
     </>

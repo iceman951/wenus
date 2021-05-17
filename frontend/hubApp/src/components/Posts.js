@@ -22,19 +22,15 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ShareIcon from "@material-ui/icons/Share";
+import { getAllPost } from "../store/actions/postAction";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Posts() {
-  const [posts, setPosts] = useState([]);
+  const dispatch = useDispatch();
+  const posts = useSelector((state) => state.post.posts);
 
   useEffect(() => {
-    Axios.get("/posts/").then((res) => {
-      // console.log(res)
-      if (res.status === 200) {
-        // console.log(res.data.data)
-        setPosts(res.data.data);
-        // console.log(posts)
-      }
-    });
+    getAllPost(dispatch);
   }, []);
 
   function ImageChecking(image) {
