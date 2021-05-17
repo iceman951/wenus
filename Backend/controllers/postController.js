@@ -32,7 +32,8 @@ exports.show = async (req, res, next) => {
           path: "author",
           select: "_id firstName lastName",
         },
-      });
+      })
+      .populate({ path: "liked_users", select: "_id firstName lastName" });
 
     if (!posts) {
       const error = new Error("ไม่พบข้อมูลโพสต์");
@@ -95,6 +96,40 @@ exports.edit = async (req, res, next) => {
         message: "แก้ไขข้อมูลเรียบร้อย",
       });
     }
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.like = async (req, res, next) => {
+  try {
+    const { post_id } = req.body;
+    const user_id = req.user.id;
+
+    let post = await Post.findById({ _id: post_id })
+
+    if (!post) {
+      const error = new Error("ไม่พบข้อมูลโพสต์");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    let user = post.liked_users.find((user) => {
+      return user._id == user_id;
+    });
+
+    if (!user) {
+      post.liked_users.push(user_id);
+    } else {
+      post.liked_users.pull(user_id);
+    }
+
+    await post.save();
+
+    res.status(200).json({
+      success: true,
+      message: "กด like สำเร็จ",
+    });
   } catch (error) {
     next(error);
   }

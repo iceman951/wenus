@@ -62,16 +62,13 @@ exports.edit = async (req, res, next) => {
   try {
     const { comment_id, text } = req.body;
     const query = { comments: { $elemMatch: { _id: comment_id } } };
-    // let post = await Post.findOneAndUpdate(query, {$set: {'comments.$.text': text}});z
-    let post = await Post.findOne(query);
+    let post = await Post.findOneAndUpdate(query, {$set: {'comments.$.text': text}});
 
     if (!post) {
       const error = new Error("ไม่พบข้อมูลคอมเมนต์ที่ต้องการแก้ไข");
       error.statusCode = 404;
       throw error;
     }
-
-    await Post.findOneAndUpdate(query, { $set: { "comments.$.text": text } });
 
     if (post.nModified === 0) {
       throw new Error("ไม่สามารถอัปเดตข้อมูลได้");
