@@ -3,22 +3,13 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 import { Axios } from "../components/HttpClient";
-import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
 import {
-  Grid,
   Button,
   FormControl,
   FormHelperText,
   OutlinedInput,
   InputLabel,
 } from "@material-ui/core";
-
-let theme = createMuiTheme({
-  typography: {
-    fontSize: 25,
-  },
-});
-theme = responsiveFontSizes(theme);
 
 function LoginForm({ setJwt }) {
   const validationSchema = yup.object({

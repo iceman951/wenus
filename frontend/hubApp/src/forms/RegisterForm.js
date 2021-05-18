@@ -12,9 +12,6 @@ import {
   MenuItem,
   Select,
   FormHelperText,
-  Card,
-  CardContent,
-  Divider,
 } from "@material-ui/core";
 
 const RegisterForm = () => {

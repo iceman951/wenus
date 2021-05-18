@@ -162,7 +162,7 @@ const CreatePost = () => {
 
   return (
     <>
-      <Container>
+      <Container style={{ marginBottom: "1%"}}>
         <Card className={classes.card}>
           <CardContent>
             <div className={classes.details}>
