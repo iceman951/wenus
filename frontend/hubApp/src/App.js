@@ -2,8 +2,6 @@ import "./App.css";
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import Routing from "./routes";
-import { Provider } from "react-redux";
-import store from "./store";
 import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/core";
 
@@ -33,13 +31,11 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        <Provider store={store}>
           <div style={{ background: "#f8f4f4", minHeight: "100vh" }}>
             <BrowserRouter>
               <Routing />
             </BrowserRouter>
           </div>
-        </Provider>
       </ThemeProvider>
     </div>
   );
