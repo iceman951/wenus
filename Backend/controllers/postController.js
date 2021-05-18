@@ -1,3 +1,9 @@
+const fs = require('fs');
+const path = require('path');
+const uuidv4 = require('uuid');
+const { promisify } = require('util');
+const writeFileAsync = promisify(fs.writeFile);
+
 const Post = require("../models/post");
 
 exports.create = async (req, res, next) => {
@@ -138,3 +144,22 @@ exports.like = async (req, res, next) => {
     next(error);
   }
 };
+
+async function saveImage(baseImage) {
+  const projectPath = path.resolve('./') ;
+  const uploadPath = `${projectPath}/public/images/`;
+  const ext = baseImage.substring(baseImage.indexOf("/")+1, baseImage.indexOf(";base64"));
+
+  //สุ่มชื่อไฟล์ใหม่
+  let filename = '';
+  if (ext === 'svg+xml') {
+      filename = `${uuidv4.v4()}.svg`;
+  } else {
+      filename = `${uuidv4.v4()}.${ext}`;
+  }
+
+  let image = decodeBase64Image(baseImage);
+
+  await writeFileAsync(uploadPath+filename, image.data, 'base64');
+  return filename;
+}
