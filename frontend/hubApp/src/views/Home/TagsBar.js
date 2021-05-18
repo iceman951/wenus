@@ -1,5 +1,8 @@
 import { Chip, Container, makeStyles, Paper } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+// redux
+import { useSelector, useDispatch } from "react-redux";
+import { setSelectTag } from "../../store/actions/tagAction";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -26,22 +29,16 @@ const useStyles = makeStyles((theme) => ({
 
 const TagsBar = () => {
   const classes = useStyles();
-  const [tags, setTags] = useState([
-    "ทั่วไป",
-    "ความรัก",
-    "การศึกษา",
-    "ไอดอล",
-    "ปรึกษา",
-    "เกม/กีฬา",
-    "สุขภาพ",
-    "สังคม",
-    "นิยาย",
-    "บิ้วตี้",
-    "หนัง/ซีรีย์",
-    "อาหาร",
-  ]);
-  const [selectTag, setSelectTag] = useState("ทั่วไป");
-  
+
+  //redux
+  const tags = useSelector((state) => state.tag.tags)
+  const selectedTag = useSelector((state) => state.tag.selectedTag);
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    console.log(selectedTag);
+  }, [selectedTag]);
+
   return (
     <Container className={classes.tagsbar}>
       <Paper className={classes.paper}>
@@ -52,9 +49,10 @@ const TagsBar = () => {
               className={classes.tags}
               label={tag}
               color="primary"
-              variant={tag === selectTag ? "default" : "outlined"}
+              variant={tag === selectedTag ? "default" : "outlined"}
               onClick={(e) => {
-                setSelectTag(e.target.innerText);
+                //update state (Redux)
+                dispatch(setSelectTag(e.target.innerText));
               }}
             />
           );

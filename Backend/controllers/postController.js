@@ -35,7 +35,7 @@ exports.show = async (req, res, next) => {
         populate: {
           path: "liked_users",
           select: "_id firstName lastName",
-        }
+        },
       })
       .populate({ path: "liked_users", select: "_id firstName lastName" });
 

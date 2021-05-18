@@ -73,8 +73,11 @@ const validationPostSchema = yup.object({
 
 const CreatePost = () => {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+
+  //redux
   const dispatch = useDispatch()
+  const tags = useSelector((state) => state.tag.tags);
   const loading = useSelector(state => state.post.loading)
 
   const formik = useFormik({
@@ -84,22 +87,20 @@ const CreatePost = () => {
     },
     validationSchema: validationPostSchema,
     onSubmit: (values, actions) => {
-      // alert(JSON.stringify(values, null, 2));
       dispatch({type:"isLoading"})
       createPost(dispatch, values)
-      handleClose();
-      // handleToggle();
+      handleCloseModal();
       actions.resetForm();
     },
   });
+  
   // Modal
-  const handleOpen = () => {
-    setOpen(true);
+  const handleOpenModal = () => {
+    setOpenModal(true);
   };
-  const handleClose = () => {
-    setOpen(false);
+  const handleCloseModal = () => {
+    setOpenModal(false);
   };
-
   const modalBody = (
     <div className={classes.paper}>
       <Typography align="center" variant="h6" className={classes.typography}>
@@ -121,9 +122,17 @@ const CreatePost = () => {
             autoWidth
             className={classes.input}
           >
-            <MenuItem value="ทั่วไป">ทั่วไป</MenuItem>
-            <MenuItem value="ความรัก">ความรัก</MenuItem>
-            <MenuItem value="การศึกษา">การศึกษา</MenuItem>
+            {tags.map((tag, index) => (
+              <MenuItem
+                key={index}
+                value={tag}
+                style={{
+                  fontSize: "16px",
+                }}
+              >
+                {tag}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
         <TextField
@@ -140,7 +149,6 @@ const CreatePost = () => {
         />
         <Button
           fullWidth
-          // style={{ backgroundColor: "blue", color: "white" }}
           type="submit"
           variant="contained"
           color="primary"
@@ -162,7 +170,7 @@ const CreatePost = () => {
               <Button
                 variant="contained"
                 disableElevation
-                onClick={handleOpen}
+                onClick={handleOpenModal}
                 fullWidth
                 style={{
                   marginLeft: "2%",
@@ -178,7 +186,7 @@ const CreatePost = () => {
           </CardContent>
         </Card>
       </Container>
-      <Modal className={classes.modal} open={open} onClose={handleClose}>
+      <Modal className={classes.modal} open={openModal} onClose={handleCloseModal}>
         {modalBody}
       </Modal>
       <Backdrop className={classes.backdrop} open={loading}>

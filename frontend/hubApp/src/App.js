@@ -31,11 +31,11 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        <div style={{ background: "#f8f4f4", minHeight: "100vh" }}>
-          <BrowserRouter>
-            <Routing />
-          </BrowserRouter>
-        </div>
+          <div style={{ background: "#f8f4f4", minHeight: "100vh" }}>
+            <BrowserRouter>
+              <Routing />
+            </BrowserRouter>
+          </div>
       </ThemeProvider>
     </div>
   );

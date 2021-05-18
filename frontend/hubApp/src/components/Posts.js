@@ -46,11 +46,11 @@ export default function Posts() {
               </Grid>
               <Grid item xs={2}>
                 <Grid container justify="center">
-                  <IconButton>
-                    <DeleteIcon
-                      id={`iconButton-${post._id}`}
-                      onClick={() => handleDeletePost(post._id)}
-                    ></DeleteIcon>
+                  <IconButton
+                    id={`iconButton-${post._id}`}
+                    onClick={() => handleDeletePost(post._id)}
+                  >
+                    <DeleteIcon></DeleteIcon>
                   </IconButton>
                 </Grid>
               </Grid>
