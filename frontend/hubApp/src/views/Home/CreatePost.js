@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { Axios } from "../../components/HttpClient";
 import {
   Button,
   Divider,
@@ -21,7 +20,6 @@ import {
   CircularProgress,
 } from "@material-ui/core/";
 import { red } from "@material-ui/core/colors";
-import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost } from "../../store/actions/postAction";
 
@@ -49,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
       borderBottom: "none",
     },
     color: "white",
-    fontSize: "16px",
   },
   card: {
     marginTop: theme.spacing(2),
@@ -74,27 +71,14 @@ const validationPostSchema = yup.object({
     .required("Text is required"),
 });
 
-const Toast = Swal.mixin({
-  toast: true,
-  position: "top-end",
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.addEventListener("mouseenter", Swal.stopTimer);
-    toast.addEventListener("mouseleave", Swal.resumeTimer);
-  },
-});
-
 const CreatePost = () => {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const dispatch = useDispatch()
-  const loading = useSelector(state => state.post.loading)
+  const [openModal, setOpenModal] = useState(false);
 
   //redux
+  const dispatch = useDispatch()
   const tags = useSelector((state) => state.tag.tags);
+  const loading = useSelector(state => state.post.loading)
 
   const formik = useFormik({
     initialValues: {
@@ -103,29 +87,20 @@ const CreatePost = () => {
     },
     validationSchema: validationPostSchema,
     onSubmit: (values, actions) => {
-      // alert(JSON.stringify(values, null, 2));
       dispatch({type:"isLoading"})
       createPost(dispatch, values)
-      handleClose();
-      // handleToggle();
+      handleCloseModal();
       actions.resetForm();
     },
   });
+  
   // Modal
-  const handleOpen = () => {
-    setOpen(true);
+  const handleOpenModal = () => {
+    setOpenModal(true);
   };
-  const handleClose = () => {
-    setOpen(false);
+  const handleCloseModal = () => {
+    setOpenModal(false);
   };
-  // BackDrop
-  const handleCloseBackDrop = () => {
-    setIsLoading(false);
-  };
-  const handleToggle = () => {
-    setIsLoading(!isLoading);
-  };
-
   const modalBody = (
     <div className={classes.paper}>
       <Typography align="center" variant="h6" className={classes.typography}>
@@ -174,7 +149,6 @@ const CreatePost = () => {
         />
         <Button
           fullWidth
-          // style={{ backgroundColor: "blue", color: "white" }}
           type="submit"
           variant="contained"
           color="primary"
@@ -196,7 +170,7 @@ const CreatePost = () => {
               <Button
                 variant="contained"
                 disableElevation
-                onClick={handleOpen}
+                onClick={handleOpenModal}
                 fullWidth
                 style={{
                   marginLeft: "2%",
@@ -212,7 +186,7 @@ const CreatePost = () => {
           </CardContent>
         </Card>
       </Container>
-      <Modal className={classes.modal} open={open} onClose={handleClose}>
+      <Modal className={classes.modal} open={openModal} onClose={handleCloseModal}>
         {modalBody}
       </Modal>
       <Backdrop className={classes.backdrop} open={loading}>
