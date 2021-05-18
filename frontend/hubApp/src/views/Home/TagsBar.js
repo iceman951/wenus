@@ -1,5 +1,5 @@
 import { Chip, Container, makeStyles, Paper } from "@material-ui/core";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -41,10 +41,7 @@ const TagsBar = () => {
     "อาหาร",
   ]);
   const [selectTag, setSelectTag] = useState("ทั่วไป");
-
-  //   useEffect(() => {
-  //       console.log(selectTag);
-  //   }, [selectTag])
+  
   return (
     <Container className={classes.tagsbar}>
       <Paper className={classes.paper}>

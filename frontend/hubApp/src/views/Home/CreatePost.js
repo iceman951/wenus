@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { Axios } from "../../components/HttpClient";
 import {
   Button,
   Divider,
@@ -21,7 +20,6 @@ import {
   CircularProgress,
 } from "@material-ui/core/";
 import { red } from "@material-ui/core/colors";
-import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost } from "../../store/actions/postAction";
 
@@ -73,22 +71,9 @@ const validationPostSchema = yup.object({
     .required("Text is required"),
 });
 
-const Toast = Swal.mixin({
-  toast: true,
-  position: "top-end",
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.addEventListener("mouseenter", Swal.stopTimer);
-    toast.addEventListener("mouseleave", Swal.resumeTimer);
-  },
-});
-
 const CreatePost = () => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [isLoading, setIsLoading] = React.useState(false);
   const dispatch = useDispatch()
   const loading = useSelector(state => state.post.loading)
 
@@ -113,13 +98,6 @@ const CreatePost = () => {
   };
   const handleClose = () => {
     setOpen(false);
-  };
-  // BackDrop
-  const handleCloseBackDrop = () => {
-    setIsLoading(false);
-  };
-  const handleToggle = () => {
-    setIsLoading(!isLoading);
   };
 
   const modalBody = (
@@ -176,7 +154,7 @@ const CreatePost = () => {
 
   return (
     <>
-      <Container>
+      <Container style={{ marginBottom: "1%"}}>
         <Card className={classes.card}>
           <CardContent>
             <div className={classes.details}>

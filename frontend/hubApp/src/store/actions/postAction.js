@@ -12,9 +12,20 @@ export const getAllPost = (dispatch) => {
 export const createPost = (dispatch, values) => {
   Axios.post(`/posts`, values)
     .then((res) => {
-        getAllPost(dispatch)
+      getAllPost(dispatch);
     })
     .catch((err) => {
       console.log(err);
+    });
+};
+export const deletePost = (dispatch, id) => {
+  const value = { data: { post_id: id } };
+  Axios.delete(`/posts`, value)
+    .then((res) => {
+      // console.log("res", res.data);
+      getAllPost(dispatch);
+    })
+    .catch((err) => {
+      console.log(err.response);
     });
 };
