@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Switch, Route } from "react-router-dom";
 
-import Home from "../views/Home";
+import Home from "../views/Home/index";
 import Login from "../views/LoginPage";
 import Register from "../views/RegisterPage";
 

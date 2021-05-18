@@ -62,16 +62,15 @@ exports.edit = async (req, res, next) => {
   try {
     const { comment_id, text } = req.body;
     const query = { comments: { $elemMatch: { _id: comment_id } } };
-    // let post = await Post.findOneAndUpdate(query, {$set: {'comments.$.text': text}});z
-    let post = await Post.findOne(query);
+    let post = await Post.findOneAndUpdate(query, {
+      $set: { "comments.$.text": text },
+    });
 
     if (!post) {
       const error = new Error("ไม่พบข้อมูลคอมเมนต์ที่ต้องการแก้ไข");
       error.statusCode = 404;
       throw error;
     }
-
-    await Post.findOneAndUpdate(query, { $set: { "comments.$.text": text } });
 
     if (post.nModified === 0) {
       throw new Error("ไม่สามารถอัปเดตข้อมูลได้");
@@ -81,6 +80,52 @@ exports.edit = async (req, res, next) => {
         message: "แก้ไขข้อมูลเรียบร้อย",
       });
     }
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.like = async (req, res, next) => {
+  try {
+    const { comment_id } = req.body;
+    const user_id = req.user.id;
+    const query = { comments: { $elemMatch: { _id: comment_id } } };
+
+    let post = await Post.findOne(query);
+
+    if (!post) {
+      const error = new Error("ไม่พบข้อมูลโพสต์");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    let comment = post.comments.find((comment) => {
+      return comment._id == comment_id;
+    });
+
+    if (!comment) {
+      const error = new Error("ไม่พบข้อมูลคอมเมนต์");
+      error.statusCode = 404;
+      throw error;
+    }
+    let index = post.comments.findIndex((comment) => comment._id == comment_id);
+
+    let user = comment.liked_users.find((user) => {
+      return user._id == user_id;
+    });
+
+    if (!user) {
+      post.comments[index].liked_users.push(user_id);
+    } else {
+      post.comments[index].liked_users.pull(user_id);
+    }
+
+    await post.save();
+
+    res.status(200).json({
+      success: true,
+      message: "กด like สำเร็จ",
+    });
   } catch (error) {
     next(error);
   }
