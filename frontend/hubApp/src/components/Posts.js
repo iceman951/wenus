@@ -27,21 +27,6 @@ export default function Posts() {
   };
 
   return (
-    // <Container>
-    //   <Grid container direction="row" justify="center" alignItems="center">
-    //     <Grid item xs={2}>
-    //       LLLL
-    //     </Grid>
-    //     <Grid item xs={8}>
-    //       LLLLCenter awdawdawdaw awdawdawdawawda awdawdawdawawdaawda adwadawdawd
-    //       awdawdawd awddddddddddddddddd dddddddddddddddddddddddddd
-    //       ddddddddddddddddddd ddddddddddddddddddd
-    //     </Grid>
-    //     <Grid item xs={2}>
-    //       LLLL
-    //     </Grid>
-    //   </Grid>
-    // </Container>
     <Container>
       {posts.map((post) => (
         <Card key={post._id} style={{ marginBottom: "1%" }}>
