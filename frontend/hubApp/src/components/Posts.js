@@ -22,16 +22,23 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ShareIcon from "@material-ui/icons/Share";
-import { getAllPost } from "../store/actions/postAction";
+import { getAllPost, filterPost } from "../store/actions/postAction";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Posts() {
   const dispatch = useDispatch();
+  const allPosts = useSelector((state) => state.post.allPosts);
   const posts = useSelector((state) => state.post.posts);
+  const selectedTag = useSelector((state) => state.tag.selectedTag);
 
   useEffect(() => {
     getAllPost(dispatch);
   }, []);
+
+  useEffect(() => {
+    // dispatch({ type: "isLoading" });
+    filterPost(dispatch, selectedTag);
+  }, [allPosts, selectedTag]);
 
   function ImageChecking(image) {
     if (image) {

@@ -36,7 +36,7 @@ const TagsBar = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log(selectedTag);
+    // console.log(selectedTag);
   }, [selectedTag]);
 
   return (
