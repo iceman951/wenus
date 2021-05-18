@@ -94,7 +94,7 @@ const CreatePost = () => {
   const loading = useSelector(state => state.post.loading)
 
   //redux
-  const tags = useSelector((state) => state.tagReducer.tags);
+  const tags = useSelector((state) => state.tag.tags);
 
   const formik = useFormik({
     initialValues: {

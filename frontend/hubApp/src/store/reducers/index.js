@@ -1,7 +1,9 @@
 import { combineReducers } from "redux";
-import tagReducer from './tagReducer'
+import tagReducer from './tagReducer';
+import postReducer from './postReducer';
 const rootReducer = combineReducers({
-    tagReducer,
+    tag : tagReducer,
+    post: postReducer,
 });
 
 export default rootReducer;

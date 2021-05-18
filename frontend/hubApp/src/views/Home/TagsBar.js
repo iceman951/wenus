@@ -31,8 +31,8 @@ const TagsBar = () => {
   const classes = useStyles();
 
   //redux
-  const tags = useSelector((state) => state.tagReducer.tags)
-  const selectedTag = useSelector((state) => state.tagReducer.selectedTag);
+  const tags = useSelector((state) => state.tag.tags)
+  const selectedTag = useSelector((state) => state.tag.selectedTag);
   const dispatch = useDispatch()
 
   useEffect(() => {

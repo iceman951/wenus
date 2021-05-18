@@ -19,11 +19,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "redux": "^4.1.0",
-<<<<<<< HEAD
     "redux-devtools-extension": "^2.13.9",
-=======
     "redux-thunk": "^2.3.0",
->>>>>>> d1fdcb48dcbd9b416377c8078f0735ee454c90f2
     "sweetalert2": "^10.16.7",
     "url-join": "^4.0.1",
     "web-vitals": "^1.1.1",
