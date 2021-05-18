@@ -34,15 +34,28 @@ export default function Posts() {
   };
 
   return (
+    // <Container>
+    //   <Grid container direction="row" justify="center" alignItems="center">
+    //     <Grid item xs={2}>
+    //       LLLL
+    //     </Grid>
+    //     <Grid item xs={8}>
+    //       LLLLCenter awdawdawdaw awdawdawdawawda awdawdawdawawdaawda adwadawdawd
+    //       awdawdawd awddddddddddddddddd dddddddddddddddddddddddddd
+    //       ddddddddddddddddddd ddddddddddddddddddd
+    //     </Grid>
+    //     <Grid item xs={2}>
+    //       LLLL
+    //     </Grid>
+    //   </Grid>
+    // </Container>
     <Container>
       {posts.map((post) => (
         <Card key={post._id} style={{ marginBottom: "1%" }}>
           <CardContent>
-            <Grid container justify="space-between">
+            <Grid container justify="center" alignItems="flex-start">
               <Grid item xs={2}>
-                <Grid container justify="center">
-                  <Avatar></Avatar>
-                </Grid>
+                <Avatar></Avatar>
               </Grid>
               <Grid item xs={8}>
                 <Box minWidth={1}>
@@ -52,14 +65,12 @@ export default function Posts() {
                 </Box>
               </Grid>
               <Grid item xs={2}>
-                <Grid container justify="center">
-                  <IconButton
-                    id={`iconButton-${post._id}`}
-                    onClick={() => handleDeletePost(post._id)}
-                  >
-                    <DeleteIcon></DeleteIcon>
-                  </IconButton>
-                </Grid>
+                <IconButton
+                  size="small"
+                  onClick={() => handleDeletePost(post._id)}
+                >
+                  <DeleteIcon></DeleteIcon>
+                </IconButton>
               </Grid>
             </Grid>
           </CardContent>
