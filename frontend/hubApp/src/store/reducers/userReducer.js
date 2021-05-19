@@ -9,8 +9,8 @@ const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case "LOGIN":
       return {
-        user: action.res.data.user,
-        token: action.res.data.access_token,
+        user: action.res.user,
+        token: action.res.access_token,
         loggedIn: true,
       };
     case "LOGOUT":
@@ -19,6 +19,10 @@ const userReducer = (state = initialState, action) => {
         token: null,
         loggedIn: false,
       };
+    case "TOKEN_TIMEOUT":
+      return{
+        loggedIn: false
+      }
     default:
       return state;
   }

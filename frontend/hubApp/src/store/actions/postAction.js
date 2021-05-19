@@ -30,9 +30,6 @@ export const createPost = (dispatch, values) => {
       }
         
     })
-    .catch((err) => {
-      // console.log(err);
-    });
 };
 export const deletePost = (dispatch, id) => {
   const value = { data: { post_id: id } };
@@ -43,7 +40,4 @@ export const deletePost = (dispatch, id) => {
       getAllPost(dispatch);
       alertSuccessToast(res.data.message)
     })
-    .catch((err) => {
-      console.log(err.response);
-    });
 };
