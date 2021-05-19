@@ -39,7 +39,9 @@ export const deletePost = (dispatch, id) => {
   Axios.delete(`/posts`, value)
     .then((res) => {
       // console.log("res", res.data);
+      
       getAllPost(dispatch);
+      alertSuccessToast(res.data.message)
     })
     .catch((err) => {
       console.log(err.response);

@@ -1,4 +1,4 @@
-import { SET_TAGS, SET_SELECTTEG } from "../actions/tagAction";
+import { SET_TAGS, SET_SELECTED_TAG } from "../actions/tagAction";
 
 const initState = {
   tags: [
@@ -25,7 +25,7 @@ const tagReducer = (state = initState, action) => {
         ...state,
         tags: action.payload.tags,
       };
-    case SET_SELECTTEG:
+    case SET_SELECTED_TAG:
       return {
         ...state,
         selectedTag: action.payload.selectedTag,

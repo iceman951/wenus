@@ -2,7 +2,7 @@ import { Chip, Container, makeStyles, Paper } from "@material-ui/core";
 import React, { useEffect } from "react";
 // redux
 import { useSelector, useDispatch } from "react-redux";
-import { setSelectTag } from "../../store/actions/tagAction";
+import { setSelectedTag } from "../../store/actions/tagAction";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -52,7 +52,7 @@ const TagsBar = () => {
               variant={tag === selectedTag ? "default" : "outlined"}
               onClick={(e) => {
                 //update state (Redux)
-                dispatch(setSelectTag(e.target.innerText));
+                dispatch(setSelectedTag(e.target.innerText));
               }}
             />
           );
