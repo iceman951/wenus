@@ -27,13 +27,16 @@ export const createPost = (dispatch, values) => {
       }
       else{
         alertErrorToast(res.data.message)
+        dispatch({ type: "NOT_LOADING" })
       }
         
     })
     .catch((err) => {
-      // console.log(err);
+      alertErrorToast(err)
+      dispatch({ type: "NOT_LOADING" })
     });
 };
+
 export const deletePost = (dispatch, id) => {
   const value = { data: { post_id: id } };
   Axios.delete(`/posts`, value)
@@ -46,4 +49,18 @@ export const deletePost = (dispatch, id) => {
     .catch((err) => {
       console.log(err.response);
     });
+};
+
+export const editPost = (dispatch, values) => {
+  Axios.patch(`/posts`, values)
+    .then(async (res) => {
+      // console.log("res", res.data);
+      
+      await getAllPost(dispatch);
+      alertSuccessToast(res.data.message)
+    })
+    .catch((err) => {
+      console.log(err.response);
+    });
+  console.log(values);
 };

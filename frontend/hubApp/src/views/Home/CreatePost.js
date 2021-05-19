@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
 
 const validationPostSchema = yup.object({
   text: yup
-    .string("Enter your email")
+    .string("Enter your text")
     .min(1, "Should be of minimum 1 characters length")
     .required("Text is required"),
 });
