@@ -6,11 +6,9 @@ import {
 
 export const getAllPost = (dispatch) => {
   Axios.get("/posts/").then((res) => {
-    if (res.status === 200) {
-      dispatch({ type: "FETCH_ALL_POST", res });
-      // console.log(res.data.data)
-      // console.log(posts)
-    }
+    dispatch({ type: "FETCH_ALL_POST", res });
+    // console.log(res.data.data)
+    // console.log(posts)
   });
 };
 
@@ -23,14 +21,9 @@ export const createPost = (dispatch, values) => {
     .then((res) => {
       // console.log(res)
       // console.log(res.data.message)
-      if (res.data.success) {
-        // fetch new post
-        getAllPost(dispatch);
-        alertSuccessToast(res.data.message);
-      } else {
-        alertErrorToast(res.data.message);
-        dispatch({ type: "NOT_LOADING" });
-      }
+      // fetch new post
+      getAllPost(dispatch);
+      alertSuccessToast(res.message);
     })
     .catch((err) => {
       alertErrorToast(err);
@@ -43,7 +36,7 @@ export const deletePost = (dispatch, id) => {
   Axios.delete(`/posts`, value).then((res) => {
     // console.log("res", res.data);
     getAllPost(dispatch);
-    alertSuccessToast(res.data.message);
+    alertSuccessToast(res.message);
   });
 };
 
@@ -52,7 +45,7 @@ export const editPost = (dispatch, values) => {
     .then((res) => {
       // console.log("res", res.data);
       getAllPost(dispatch);
-      alertSuccessToast(res.data.message);
+      alertSuccessToast(res.message);
     })
     .catch((err) => {
       console.log(err.response);

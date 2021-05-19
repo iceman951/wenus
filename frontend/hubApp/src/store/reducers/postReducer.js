@@ -7,7 +7,7 @@ const initState = {
 const postReducer = (state = initState, action) => {
   switch (action.type) {
     case "FETCH_ALL_POST":
-      var data = action.res.data.data;
+      var data = action.res.data;
       // console.log(data)
       // console.log(action.res.data.data)
       return {
