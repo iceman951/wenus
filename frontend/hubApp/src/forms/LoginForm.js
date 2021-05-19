@@ -35,19 +35,7 @@ function LoginForm({ setJwt }) {
     },
     validationSchema: validationSchema,
     onSubmit: (values, actions) => {
-      Login(dispatch, values);
-      // Axios.post(`/users/login`, values)
-      //   .then((res) => {
-      //     setJwt(res.data.access_token);
-      //     localStorage.setItem("token", res.data.access_token);
-      //   })
-      //   .catch((err) => {
-      //     if (err.response.status === 404) {
-      //       actions.setFieldError("email", "บัญชีนี้ไม่ได้รับการลงเทียน");
-      //     } else if (err.response.status === 401) {
-      //       actions.setFieldError("password", "รหัสผ่านไม่ถูกต้อง");
-      //     }
-      //   });
+      Login(dispatch, actions, values);
     },
   });
 
