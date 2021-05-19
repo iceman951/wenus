@@ -13,6 +13,7 @@ exports.me = async (req, res, next) => {
       lastName: lastName,
       email: email,
       birthdate: birthdate,
+      createDate: createDate,
       faculty: faculty
     }
   })

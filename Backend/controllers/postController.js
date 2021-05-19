@@ -14,7 +14,7 @@ exports.create = async (req, res, next) => {
       text: text,
       tag: tag,
       author: req.user._id,
-      image: await saveImage(image)
+      // image: await saveImage(image)
     });
 
     await post.save();
