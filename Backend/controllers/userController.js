@@ -53,6 +53,15 @@ exports.login = async (req, res, next) => {
       access_token: token,
       expires_in: expires_in.exp,
       token_type: "Bearer",
+      user: {
+        _id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        createDate: user.createDate,
+        birthdate: user.birthdate,
+        faculty: user.faculty
+      }
     });
   } catch (error) {
     next(error);

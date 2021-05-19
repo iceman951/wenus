@@ -31,6 +31,7 @@ export default function Posts() {
 
   const handleDeletePost = (post_id) => {
     deletePost(dispatch, post_id);
+    dispatch({ type: "isLoading" });
   };
 
   return (

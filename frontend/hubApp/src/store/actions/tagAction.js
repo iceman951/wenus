@@ -1,5 +1,5 @@
 export const SET_TAGS = "SET_TAGS";
-export const SET_SELECTTEG = "SET_SELECTTAG";
+export const SET_SELECTED_TAG = "SET_SELECTED_TAG";
 
 export const setTags = (tags) => {
   return {
@@ -10,9 +10,9 @@ export const setTags = (tags) => {
   };
 };
 
-export const setSelectTag = (tag) => {
+export const setSelectedTag = (tag) => {
   return {
-    type: SET_SELECTTEG,
+    type: SET_SELECTED_TAG,
     payload: {
       selectedTag: tag,
     },
