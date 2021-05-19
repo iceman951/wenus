@@ -1,5 +1,8 @@
 import { Axios } from "../../components/HttpClient";
-import { alertSuccessToast, alertErrorToast } from '../../utils/sweetAlertToast'
+import {
+  alertSuccessToast,
+  alertErrorToast,
+} from "../../utils/sweetAlertToast";
 
 export const getAllPost = (dispatch) => {
   Axios.get("/posts/").then((res) => {
@@ -12,32 +15,47 @@ export const getAllPost = (dispatch) => {
 };
 
 export const filterPost = (dispatch, selectedTag) => {
-  dispatch({ type: "FILTER_POST_BY_TAG", selectedTag })
-}
+  dispatch({ type: "FILTER_POST_BY_TAG", selectedTag });
+};
 
 export const createPost = (dispatch, values) => {
   Axios.post(`/posts`, values)
     .then((res) => {
       // console.log(res)
       // console.log(res.data.message)
-      if (res.data.success){
+      if (res.data.success) {
         // fetch new post
-        getAllPost(dispatch)
-        alertSuccessToast(res.data.message)
+        getAllPost(dispatch);
+        alertSuccessToast(res.data.message);
+      } else {
+        alertErrorToast(res.data.message);
+        dispatch({ type: "NOT_LOADING" });
       }
-      else{
-        alertErrorToast(res.data.message)
-      }
-        
     })
+    .catch((err) => {
+      alertErrorToast(err);
+      dispatch({ type: "NOT_LOADING" });
+    });
 };
+
 export const deletePost = (dispatch, id) => {
   const value = { data: { post_id: id } };
-  Axios.delete(`/posts`, value)
+  Axios.delete(`/posts`, value).then((res) => {
+    // console.log("res", res.data);
+    getAllPost(dispatch);
+    alertSuccessToast(res.data.message);
+  });
+};
+
+export const editPost = (dispatch, values) => {
+  Axios.patch(`/posts`, values)
     .then((res) => {
       // console.log("res", res.data);
-      
       getAllPost(dispatch);
-      alertSuccessToast(res.data.message)
+      alertSuccessToast(res.data.message);
     })
+    .catch((err) => {
+      console.log(err.response);
+    });
+  // console.log(values);
 };

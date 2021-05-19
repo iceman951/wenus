@@ -18,7 +18,9 @@ const postReducer = (state = initState, action) => {
 
     case "FILTER_POST_BY_TAG":
       // console.log(action.selectedTag)
-      let filteredPosts = state.allPosts.filter(post => post.tag === action.selectedTag);
+      let filteredPosts = state.allPosts.filter(
+        post => post.tag === action.selectedTag
+      );
       // console.log(data);
 
       return {
@@ -30,6 +32,11 @@ const postReducer = (state = initState, action) => {
       return {
         ...state,
         loading: true,
+      };
+    case "NOT_LOADING":
+      return {
+        ...state,
+        loading: false,
       };
     default:
       return state;
