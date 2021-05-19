@@ -11,12 +11,12 @@ export default function Posts() {
   const selectedTag = useSelector((state) => state.tag.selectedTag);
 
   useEffect(() => {
-    console.log('effect1')
+    // console.log('effect1')
     getAllPost(dispatch);
   }, [dispatch]);
 
   useEffect(() => {
-    console.log('effect2')
+    // console.log('effect2')
     filterPost(dispatch, selectedTag);
   }, [dispatch, allPosts, selectedTag]);
 

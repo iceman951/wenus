@@ -42,7 +42,6 @@ export const deletePost = (dispatch, id) => {
   Axios.delete(`/posts`, value)
     .then((res) => {
       // console.log("res", res.data);
-      
       getAllPost(dispatch);
       alertSuccessToast(res.data.message)
     })
@@ -53,14 +52,13 @@ export const deletePost = (dispatch, id) => {
 
 export const editPost = (dispatch, values) => {
   Axios.patch(`/posts`, values)
-    .then(async (res) => {
+    .then((res) => {
       // console.log("res", res.data);
-      
-      await getAllPost(dispatch);
+      getAllPost(dispatch);
       alertSuccessToast(res.data.message)
     })
     .catch((err) => {
       console.log(err.response);
     });
-  console.log(values);
+  // console.log(values);
 };
