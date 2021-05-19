@@ -1,8 +1,10 @@
 import axios from "axios";
 import join from "url-join";
+import { useDispatch } from "react-redux";
 
 function ErrorHandler() {
   localStorage.clear();
+  window.location.reload(false);
 }
 axios.interceptors.request.use(async (config) => {
   const jwtToken = await localStorage.getItem("token");

@@ -1,4 +1,4 @@
-import { Axios } from "../../components/HttpClient";
+import Axios from "axios";
 
 export const Login = (dispatch, formActions, values) => {
   Axios.post(`/users/login`, values)
@@ -8,12 +8,11 @@ export const Login = (dispatch, formActions, values) => {
       dispatch({ type: "LOGIN", res });
     })
     .catch((error) => {
-      // if (error.response.status === 404) {
-      //   formActions.setFieldError("email", "บัญชีนี้ไม่ได้รับการลงทะเบียน");
-      // } else if (error.response.status === 401) {
-      //   formActions.setFieldError("password", "รหัสผ่านไม่ถูกต้อง");
-      // }
-      // console.error(error.response);
+      if (error.response.status === 404) {
+        formActions.setFieldError("email", "บัญชีนี้ไม่ได้รับการลงทะเบียน");
+      } else if (error.response.status === 401) {
+        formActions.setFieldError("password", "รหัสผ่านไม่ถูกต้อง");
+      }
     });
 };
 

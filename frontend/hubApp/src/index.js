@@ -4,6 +4,9 @@ import "./index.css";
 import App from "./App";
 import { Provider } from "react-redux";
 import store from "./store";
+import Interceptor from './components/Interceptor'
+
+Interceptor(store)
 
 ReactDOM.render(
   <Provider store={store}>

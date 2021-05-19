@@ -1,4 +1,5 @@
-import { Axios } from "../../components/HttpClient";
+// import { Axios } from "../../components/HttpClient";
+import Axios from 'axios';
 import {
   alertSuccessToast,
   alertErrorToast,
