@@ -10,6 +10,8 @@ import {
   OutlinedInput,
   InputLabel,
 } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import { Login } from "../store/actions/userAction";
 
 function LoginForm({ setJwt }) {
   const validationSchema = yup.object({
@@ -23,6 +25,9 @@ function LoginForm({ setJwt }) {
       .required("Password is required"),
   });
 
+  const dispatch = useDispatch();
+  
+
   const LoginForm = useFormik({
     initialValues: {
       email: "",
@@ -30,20 +35,7 @@ function LoginForm({ setJwt }) {
     },
     validationSchema: validationSchema,
     onSubmit: (values, actions) => {
-      Axios.post(`/users/login`, values)
-        .then((res) => {
-          setJwt(res.data.access_token);
-          localStorage.setItem("token", res.data.access_token);
-        })
-        .catch((err) => {
-          if (err.response.status === 404) {
-            actions.setFieldError("email", "บัญชีนี้ไม่ได้รับการลงเทียน");
-          } else if (err.response.status === 401) {
-            actions.setFieldError("password", "รหัสผ่านไม่ถูกต้อง");
-          }
-
-          // console.error(err.response);
-        });
+      Login(dispatch, actions, values);
     },
   });
 

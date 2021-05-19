@@ -1,7 +1,8 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { Axios } from "../components/HttpClient";
+import { Register } from "../store/actions/userAction";
+import { useDispatch } from "react-redux";
 
 import {
   Grid,
@@ -40,6 +41,7 @@ const RegisterForm = () => {
       .required("Faculty is required"),
   });
 
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -51,19 +53,7 @@ const RegisterForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values, actions) => {
-      // alert(JSON.stringify(values, null, 2));
-      Axios.post(`/users/register`, values)
-        .then((res) => {
-          if (res.data.success) {
-            actions.resetForm();
-          }
-          // console.log(res.data);
-          // console.log(res);
-        })
-        .catch((err) => {
-          actions.setFieldError("email", "อีเมลนี้ได้ลงทะเบียนแล้ว");
-          // console.error(err);
-        });
+      Register(dispatch, actions, values);
     },
   });
   return (

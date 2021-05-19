@@ -8,12 +8,13 @@ const Post = require("../models/post");
 
 exports.create = async (req, res, next) => {
   try {
-    const { text, tag } = req.body;
+    const { text, tag, image } = req.body;
 
     let post = new Post({
       text: text,
       tag: tag,
       author: req.user._id,
+      // image: await saveImage(image)
     });
 
     await post.save();
@@ -147,13 +148,14 @@ exports.like = async (req, res, next) => {
 
 async function saveImage(baseImage) {
   const projectPath = path.resolve('./') ;
+  //โฟลเดอร์และ path ของการอัปโหลด
   const uploadPath = `${projectPath}/public/images/`;
   const ext = baseImage.substring(baseImage.indexOf("/")+1, baseImage.indexOf(";base64"));
 
   //สุ่มชื่อไฟล์ใหม่
   let filename = '';
-  if (ext === 'svg+xml') {
-      filename = `${uuidv4.v4()}.svg`;
+  if (ext === 'png+xml') {
+      filename = `${uuidv4.v4()}.png`;
   } else {
       filename = `${uuidv4.v4()}.${ext}`;
   }
@@ -162,4 +164,17 @@ async function saveImage(baseImage) {
 
   await writeFileAsync(uploadPath+filename, image.data, 'base64');
   return filename;
+}
+
+function decodeBase64Image(base64Str) {
+  var matches = base64Str.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+  var image = {};
+  if (!matches || matches.length !== 3) {
+      throw new Error('Invalid base64 string');
+  }
+
+  image.type = matches[1];
+  image.data = matches[2];
+
+  return image;
 }
