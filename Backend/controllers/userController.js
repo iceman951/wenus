@@ -43,7 +43,7 @@ exports.login = async (req, res, next) => {
         id: user._id,
       },
       config.JWT_SECRET,
-      { expiresIn: "5 days" }
+      { expiresIn: "1 days" }
     );
 
     //decode วันหมดอายุ

@@ -30,8 +30,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors());
-app.options('*',cors());
+
+
+const corsOptions={
+  origin: ["http://127.0.0.1:3000", "http://localhost:3000"],
+  methods:"GET,HEAD,PUT,PATCH,POST,DELETE"
+};
+app.use(cors(corsOptions));
+
 
 mongoose.connect(config.MONGODB_URI, {
   useNewUrlParser: true, 

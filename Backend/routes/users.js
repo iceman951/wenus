@@ -5,7 +5,7 @@ const userController = require("../controllers/userController");
 const passportJWT = require("../middleware/passportJWT");
 
 /* GET users listing. */
-router.get("/", [passportJWT.isLogin], userController.show);
+router.get("/", userController.show);
 
 /* http://localhost:3000/users/me */
 router.get("/me", [passportJWT.isLogin], userController.me);
