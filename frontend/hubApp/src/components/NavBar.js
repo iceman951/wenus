@@ -7,6 +7,9 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
+import { Logout } from '../store/actions/userAction'
+import { useDispatch } from 'react-redux';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -20,9 +23,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function NavBar() {
   const classes = useStyles();
+  const dispatch =  useDispatch()
   const handleLogOut = () =>{
-    localStorage.removeItem('token')
-    window.location.reload(false)
+    Logout(dispatch)
   }
 
   return (

@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 
 import LoginForm from "../../forms/LoginForm";
-export default function LoginPage({ setJwt }) {
+export default function LoginPage() {
   return (
     <Grid container style={{ minHeight: "100vh" }}>
       <Grid item xs={12} lg={6}>
@@ -38,7 +38,7 @@ export default function LoginPage({ setJwt }) {
                     <Typography variant="h4">LOGIN</Typography>
                     <Divider />
                     <Grid container justify="center" style={{ padding: 25 }}>
-                      <LoginForm setJwt={setJwt} />
+                      <LoginForm />
                       <Typography variant="h5" style={{ padding: 20 }}>
                         OR
                       </Typography>
