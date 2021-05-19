@@ -8,7 +8,6 @@ const initialState = user
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case "LOGIN":
-      console.log("login")
       return {
         user: action.res.data.user,
         token: action.res.data.access_token,

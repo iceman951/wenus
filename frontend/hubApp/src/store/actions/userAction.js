@@ -2,7 +2,6 @@ import { Axios } from "../../components/HttpClient";
 
 export const Login = (dispatch, values) => {
   Axios.post(`/users/login`, values).then((res) => {
-    console.log("res", res);
     localStorage.setItem("token", res.data.access_token);
     localStorage.setItem("user", res.data.user);
     dispatch({ type: "LOGIN", res });
