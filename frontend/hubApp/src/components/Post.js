@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-<<<<<<< HEAD
-=======
 // Mui
->>>>>>> 29bd517d7be361c5f6b1bf1147fe52dee1dedb43
 import {
   Avatar,
   Typography,
