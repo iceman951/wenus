@@ -68,7 +68,8 @@ const validationPostSchema = yup.object({
 const Post = ({ post }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
-
+  const current_user = useSelector((state) => state.user.user);
+  const isAuthor = current_user._id === post.author._id;
   //Kebab
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -146,7 +147,11 @@ const Post = ({ post }) => {
       </form>
     </div>
   );
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> 33fdc7aa503b3d49c7aa167444ef2cafabeeb0ac
   return (
     <>
       <Paper className={classes.root}>
@@ -162,7 +167,11 @@ const Post = ({ post }) => {
                 </Typography>
               </Box>
             </Grid>
+<<<<<<< HEAD
             <Grid item xs={1}>
+=======
+            <Grid item xs={2}>
+>>>>>>> 33fdc7aa503b3d49c7aa167444ef2cafabeeb0ac
               <IconButton
                 aria-label="more"
                 aria-controls="post-menu"
@@ -179,15 +188,15 @@ const Post = ({ post }) => {
                 onClose={handleClose}
                 PaperProps={{
                   style: {
-                    width: "20ch",
+                    width: "25ch",
                   },
                 }}
               >
-                <MenuItem onClick={() => handleOpenModal()}>
+                <MenuItem disabled={isAuthor} onClick={() => handleOpenModal()}>
                   <EditIcon fontSize="small" />
                   <Typography variant="inherit">แก้ไขโพสต์</Typography>
                 </MenuItem>
-                <MenuItem onClick={() => handleDeletePost(post._id)}>
+                <MenuItem disabled={isAuthor} onClick={() => handleDeletePost(post._id)}>
                   <DeleteIcon fontSize="small" />
                   <Typography variant="inherit">ลบโพสต์</Typography>
                 </MenuItem>

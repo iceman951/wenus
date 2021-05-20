@@ -4,9 +4,9 @@ export const Login = (dispatch, formActions, values) => {
   Axios.post(`/users/login`, values)
     .then((res) => {
       localStorage.setItem("token", res.access_token);
-      console.log("loginUser", res.user)
       localStorage.setItem("user", JSON.stringify(res.user));
       dispatch({ type: "LOGIN", res });
+      // console.log("loginUser", res.user)
     })
     .catch((error) => {
       if (error.response.status === 404) {

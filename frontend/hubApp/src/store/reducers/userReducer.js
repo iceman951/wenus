@@ -1,4 +1,4 @@
-let user = localStorage.getItem("user");
+let user = JSON.parse(localStorage.getItem("user"));
 let token = localStorage.getItem("token");
 
 const initialState = user
