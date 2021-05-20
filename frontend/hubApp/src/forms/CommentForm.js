@@ -12,26 +12,28 @@ export default function CommentForm({ post_id }) {
   const formik = useFormik({
     initialValues: {
       text: "",
+      post_id: post_id,
     },
     validationSchema: validationPostSchema,
     onSubmit: (values, actions) => {
-      createComment(dispatch, { ...values, post_id: post_id });
+      console.log("onsubmit");
+      createComment(dispatch, values);
       actions.resetForm();
     },
   });
   return (
-    <form onSubmit={formik.handleSubmit} style={{marginBottom: 10}}>
-        <TextField
-          id="text"
-          placeholder="แสดงความคิดเห็น......"
-          size="small"
-          rows={6}
-          fullWidth
-          value={formik.values.text}
-          onChange={formik.handleChange("text")}
-          error={formik.touched.text && Boolean(formik.errors.text)}
-          helperText={formik.touched.text && formik.errors.text}
-        />
+    <form onSubmit={formik.handleSubmit} style={{ marginBottom: 10 }}>
+      <TextField
+        id={`comment-${post_id}`}
+        placeholder="แสดงความคิดเห็น......"
+        size="small"
+        rows={6}
+        fullWidth
+        value={formik.values.text}
+        onChange={formik.handleChange("text")}
+        error={formik.touched.text && Boolean(formik.errors.text)}
+        helperText={formik.touched.text && formik.errors.text}
+      />
     </form>
   );
 }

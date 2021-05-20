@@ -1,5 +1,5 @@
 // import { Axios } from "../../components/HttpClient";
-import Axios from 'axios';
+import Axios from "axios";
 import {
   alertSuccessToast,
   alertErrorToast,
@@ -55,11 +55,9 @@ export const editPost = (dispatch, values) => {
 };
 
 export const likePost = (id) => {
-  const values = {post_id: id};
-  Axios.patch(`/posts/like`, values).then((res)=> {
-
-  }) 
-}
+  const values = { post_id: id };
+  Axios.patch(`/posts/like`, values);
+};
 export const createComment = (dispatch, values) => {
   Axios.post(`/comments`, values)
     .then((res) => {

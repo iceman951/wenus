@@ -106,7 +106,6 @@ const Post = ({ post }) => {
     setLiked(!liked);
   };
 
-  console.log("----", isAuthor);
   //Kebab
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -263,27 +262,12 @@ const Post = ({ post }) => {
             <Typography>แสดงความคิดเห็น</Typography>
           </Button>
         </CardActions>
+        {post.comments.map((comment) => (
+          <Comment key={comment._id} comment={comment} />
+        ))}
+        < CommentForm post_id={post._id} />
       </Card>
-      <Grid container xs direction="row">
-        <Grid item xs={2}>
-          <Button>LIKE</Button>
-        </Grid>
-        <Grid item xs={10}></Grid>
-      </Grid>
-      {post.comments.map((comment) => (
-        <Grid item container xs direction="row">
-          <Grid item xs={12}>
-            <Comment comment={comment} />
-          </Grid>
-        </Grid>
-      ))}
-      {post.comments.map((comment) => (
-        <Grid item container xs direction="row">
-          <Grid item xs={12}>
-            <Comment comment={comment} />
-          </Grid>
-        </Grid>
-      ))}
+
       <Modal
         className={classes.modal}
         open={openModal}
