@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 //component
 import Comment from "./Comment";
 import CreatePost from "../views/Home/CreateComment";
@@ -7,7 +7,7 @@ import {
   Avatar,
   Typography,
   IconButton,
-  Box,
+  // Box,
   Menu,
   MenuItem,
   Modal,
@@ -15,15 +15,23 @@ import {
   Divider,
   Button,
   makeStyles,
-  Grid,
-  Paper,
+  // Grid,
+  // Paper,
+  Card,
+  CardContent,
+  CardHeader,
+  CardActions,
+  Container,
 } from "@material-ui/core/";
 // Icon
 import DeleteIcon from "@material-ui/icons/Delete";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import EditIcon from "@material-ui/icons/Edit";
+import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+import ThumbUpOutlinedIcon from "@material-ui/icons/ThumbUpOutlined";
+import MessageOutlinedIcon from "@material-ui/icons/MessageOutlined";
 // Redux
-import { deletePost, editPost } from "../store/actions/postAction";
+import { deletePost, editPost, likePost } from "../store/actions/postAction";
 import { useDispatch, useSelector } from "react-redux";
 // Formik
 import { useFormik } from "formik";
@@ -55,11 +63,15 @@ const useStyles = makeStyles((theme) => ({
     },
     color: "white",
   },
-  root: {
+  post: {
     borderRadius: "20px",
     padding: theme.spacing(2, 2, 1),
     marginBottom: theme.spacing(2),
   },
+  numbar: {
+    display: "flex",
+    flexDirection: "row",
+  }
 }));
 
 const validationPostSchema = yup.object({
@@ -74,6 +86,30 @@ const Post = ({ post }) => {
   const classes = useStyles();
   const current_user = useSelector((state) => state.user.user);
   const isAuthor = current_user._id === post.author._id;
+<<<<<<< HEAD
+=======
+
+  //liked
+  const [nLike, setNLike] = useState(0);
+  const [liked, setLiked] = useState(null);
+
+  useEffect(() => {
+    setLiked(post.liked_users.some((luser) => luser._id === current_user._id));
+    setNLike(post.liked_users.length);
+  }, [current_user._id, post.liked_users]);
+
+  const handleClickLike = () => {
+    if (liked) {
+      setNLike(nLike - 1);
+    } else {
+      setNLike(nLike + 1);
+    }
+    likePost(post._id);
+    setLiked(!liked);
+  };
+
+  console.log("----", isAuthor);
+>>>>>>> 16d77adb31a2869d8a140401aaedb2ee6a9a389c
   //Kebab
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -153,22 +189,12 @@ const Post = ({ post }) => {
   );
   return (
     <>
-      <Paper className={classes.root}>
-        <Grid container spacing={2} direction="column">
-          <Grid item container justify="center" alignItems="flex-start">
-            <Grid item xs={1}>
-              <Avatar></Avatar>
-            </Grid>
-            <Grid item xs={10}>
-              <Box minWidth={1}>
-                <Typography style={{ wordWrap: "break-word" }}>
-                  {post.text}
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={1}>
+      <Card className={classes.post}>
+        <CardHeader
+          avatar={<Avatar />}
+          action={
+            <>
               <IconButton
-                aria-label="more"
                 aria-controls="post-menu"
                 aria-haspopup="true"
                 onClick={handleClickOpen}
@@ -202,9 +228,45 @@ const Post = ({ post }) => {
                   <Typography variant="inherit">ลบโพสต์</Typography>
                 </MenuItem>
               </Menu>
-            </Grid>
-          </Grid>
-          <Grid item container xs direction="row">
+            </>
+          }
+          title="Shrimp and Chorizo Paella"
+          subheader="September 14, 2016"
+        />
+        <CardContent>
+          {/* <Box minWidth={1}> */}
+          <Typography paragraph style={{ wordWrap: "break-word", textAlign: "left" }}>
+            {post.text}
+          </Typography>
+          {/* </Box> */}
+          <Container className={classes.numbar}>
+            <Typography>ถูกใจ: {nLike}</Typography>
+            <Typography>คอมเม้น: {nLike}</Typography>
+          </Container>
+        </CardContent>
+        <CardActions>
+          <Button
+            color={liked ? "secondary" : "default"}
+            fullWidth
+            onClick={() => handleClickLike()}
+          >
+            {liked ? (
+              <ThumbUpIcon fontSize="small" />
+            ) : (
+              <ThumbUpOutlinedIcon fontSize="small" />
+            )}
+            {/* {nLike} */}
+            <Typography>ถูกใจ</Typography>
+          </Button>
+          <Button
+            fullWidth
+          >
+            <MessageOutlinedIcon fontSize="small" />
+            <Typography>แสดงความคิดเห็น</Typography>
+          </Button>
+        </CardActions>
+      </Card>
+          <Grid container xs direction="row">
             <Grid item xs={2}>
               <Button>LIKE</Button>
             </Grid>
@@ -218,6 +280,7 @@ const Post = ({ post }) => {
               </Grid>
             </Grid>
           ))}
+<<<<<<< HEAD
           <Grid item container xs direction="row">
             <Grid item xs={12}>
               <CommentForm />
@@ -225,6 +288,8 @@ const Post = ({ post }) => {
           </Grid>
         </Grid>
       </Paper>
+=======
+>>>>>>> 16d77adb31a2869d8a140401aaedb2ee6a9a389c
       <Modal
         className={classes.modal}
         open={openModal}
