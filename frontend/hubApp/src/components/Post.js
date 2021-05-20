@@ -21,7 +21,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import EditIcon from "@material-ui/icons/Edit";
 // Redux
 import { deletePost, editPost } from "../store/actions/postAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // Formik
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -147,11 +147,6 @@ const Post = ({ post }) => {
       </form>
     </div>
   );
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> 33fdc7aa503b3d49c7aa167444ef2cafabeeb0ac
   return (
     <>
       <Paper className={classes.root}>
@@ -167,11 +162,7 @@ const Post = ({ post }) => {
                 </Typography>
               </Box>
             </Grid>
-<<<<<<< HEAD
             <Grid item xs={1}>
-=======
-            <Grid item xs={2}>
->>>>>>> 33fdc7aa503b3d49c7aa167444ef2cafabeeb0ac
               <IconButton
                 aria-label="more"
                 aria-controls="post-menu"
