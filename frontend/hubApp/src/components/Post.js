@@ -1,28 +1,28 @@
-import React, { isValidElement, useState } from "react";
+import React, { useState } from "react";
+// Mui
 import {
-  Card,
-  CardContent,
   Avatar,
   Typography,
   IconButton,
   Box,
   Menu,
   MenuItem,
-} from "@material-ui/core/";
-import { Grid } from "@material-ui/core";
-import { deletePost, editPost } from "../store/actions/postAction";
-import { useDispatch, useSelector } from "react-redux";
-import DeleteIcon from "@material-ui/icons/Delete";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import EditIcon from "@material-ui/icons/Edit";
-
-import {
   Modal,
   TextField,
   Divider,
   Button,
   makeStyles,
+  Grid,
+  Paper,
 } from "@material-ui/core/";
+// Icon
+import DeleteIcon from "@material-ui/icons/Delete";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import EditIcon from "@material-ui/icons/Edit";
+// Redux
+import { deletePost, editPost } from "../store/actions/postAction";
+import { useDispatch } from "react-redux";
+// Formik
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     width: "50vw",
     backgroundColor: theme.palette.primary.dark,
-    borderRadius: "10px 10px 10px 10px",
+    borderRadius: "10px",
     padding: theme.spacing(2, 3, 2),
   },
   typography: {
@@ -51,6 +51,11 @@ const useStyles = makeStyles((theme) => ({
     },
     color: "white",
   },
+  root: {
+    borderRadius: "20px",
+    padding: theme.spacing(2, 2, 1),
+    marginBottom: theme.spacing(2),
+  },
 }));
 
 const validationPostSchema = yup.object({
@@ -62,7 +67,6 @@ const validationPostSchema = yup.object({
 
 const Post = ({ post }) => {
   const dispatch = useDispatch();
-  const current_user = useSelector((state) => state.user.user);
   const classes = useStyles();
 
   //Kebab
@@ -143,39 +147,30 @@ const Post = ({ post }) => {
     </div>
   );
 
-  let setting_button;
-  if (current_user._id === post.author._id) {
-    setting_button = (
-      <IconButton
-        aria-label="more"
-        aria-controls="post-menu"
-        aria-haspopup="true"
-        onClick={handleClickOpen}
-      >
-        <MoreVertIcon fontSize="small" />
-      </IconButton>
-    );
-  } else {
-    setting_button = <></>;
-  }
-
   return (
     <>
-      <Card key={post._id} style={{ marginBottom: "1%" }}>
-        <CardContent>
-          <Grid container justify="center" alignItems="flex-start">
-            <Grid item xs={2}>
+      <Paper className={classes.root}>
+        <Grid container spacing={2} direction="column">
+          <Grid item container justify="center" alignItems="flex-start">
+            <Grid item xs={1}>
               <Avatar></Avatar>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={10}>
               <Box minWidth={1}>
                 <Typography style={{ wordWrap: "break-word" }}>
                   {post.text}
                 </Typography>
               </Box>
             </Grid>
-            <Grid item xs={2}>
-              {setting_button}
+            <Grid item xs={1}>
+              <IconButton
+                aria-label="more"
+                aria-controls="post-menu"
+                aria-haspopup="true"
+                onClick={handleClickOpen}
+              >
+                <MoreVertIcon fontSize="small" />
+              </IconButton>
               <Menu
                 id="post-menu"
                 anchorEl={anchorEl}
@@ -199,8 +194,16 @@ const Post = ({ post }) => {
               </Menu>
             </Grid>
           </Grid>
-        </CardContent>
-      </Card>
+          <Grid item container xs direction='row'>
+            <Grid item xs={6}>
+              <Button>LIKE</Button>
+            </Grid>
+            <Grid item xs={6}>
+              <Button>Comment</Button>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Paper>
       <Modal
         className={classes.modal}
         open={openModal}
