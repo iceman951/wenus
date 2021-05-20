@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { isValidElement, useState } from "react";
 import {
   Card,
   CardContent,
@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core/";
 import { Grid } from "@material-ui/core";
 import { deletePost, editPost } from "../store/actions/postAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DeleteIcon from "@material-ui/icons/Delete";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import EditIcon from "@material-ui/icons/Edit";
@@ -62,6 +62,7 @@ const validationPostSchema = yup.object({
 
 const Post = ({ post }) => {
   const dispatch = useDispatch();
+  const current_user = useSelector((state) => state.user.user);
   const classes = useStyles();
 
   //Kebab
@@ -142,6 +143,22 @@ const Post = ({ post }) => {
     </div>
   );
 
+  let setting_button;
+  if (current_user._id === post.author._id) {
+    setting_button = (
+      <IconButton
+        aria-label="more"
+        aria-controls="post-menu"
+        aria-haspopup="true"
+        onClick={handleClickOpen}
+      >
+        <MoreVertIcon fontSize="small" />
+      </IconButton>
+    );
+  } else {
+    setting_button = <></>;
+  }
+
   return (
     <>
       <Card key={post._id} style={{ marginBottom: "1%" }}>
@@ -158,14 +175,7 @@ const Post = ({ post }) => {
               </Box>
             </Grid>
             <Grid item xs={2}>
-              <IconButton
-                aria-label="more"
-                aria-controls="post-menu"
-                aria-haspopup="true"
-                onClick={handleClickOpen}
-              >
-                <MoreVertIcon fontSize="small" />
-              </IconButton>
+              {setting_button}
               <Menu
                 id="post-menu"
                 anchorEl={anchorEl}
