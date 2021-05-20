@@ -13,7 +13,6 @@ const Interceptor = (store) => {
       config.headers = { Authorization: `Bearer ${jwtToken}` };
     }
     config.url = join("http://128.199.126.152/", config.url);
-    console.log("request config", config);
     return config;
   });
 

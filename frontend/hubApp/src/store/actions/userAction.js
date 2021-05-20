@@ -3,8 +3,9 @@ import Axios from "axios";
 export const Login = (dispatch, formActions, values) => {
   Axios.post(`/users/login`, values)
     .then((res) => {
-      localStorage.setItem("token", res.access_token);
-      localStorage.setItem("user", res.user);
+      localStorage.setItem("token", JSON.stringify(res.access_token));
+      console.log("loginUser", res.user)
+      localStorage.setItem("user", JSON.stringify(res.user));
       dispatch({ type: "LOGIN", res });
     })
     .catch((error) => {
