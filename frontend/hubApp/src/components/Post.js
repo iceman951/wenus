@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 //component
 import Comment from "./Comment";
-import CreatePost from "../views/Home/CreateComment";
 // Mui
 import {
   Avatar,
@@ -22,6 +21,7 @@ import {
   CardHeader,
   CardActions,
   Container,
+  List,
 } from "@material-ui/core/";
 // Icon
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -195,7 +195,7 @@ const Post = ({ post }) => {
                 aria-haspopup="true"
                 onClick={handleClickOpen}
               >
-                <MoreVertIcon fontSize="small" />
+                <MoreVertIcon />
               </IconButton>
               <Menu
                 id="post-menu"
@@ -262,10 +262,14 @@ const Post = ({ post }) => {
             <Typography>แสดงความคิดเห็น</Typography>
           </Button>
         </CardActions>
-        {post.comments.map((comment) => (
-          <Comment key={comment._id} comment={comment} />
-        ))}
-        < CommentForm post_id={post._id} />
+        <List>
+          {post.comments.map((comment) => (
+            <Comment key={comment._id} comment={comment} />
+          ))}
+        </List>
+        <CardContent>
+          <CommentForm post_id={post._id} />
+        </CardContent>
       </Card>
 
       <Modal
