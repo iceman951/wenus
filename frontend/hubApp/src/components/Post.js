@@ -15,7 +15,7 @@ import {
   Divider,
   Button,
   makeStyles,
-  // Grid,
+  Grid,
   // Paper,
   Card,
   CardContent,
@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
   numbar: {
     display: "flex",
     flexDirection: "row",
-  }
+  },
 }));
 
 const validationPostSchema = yup.object({
@@ -86,8 +86,6 @@ const Post = ({ post }) => {
   const classes = useStyles();
   const current_user = useSelector((state) => state.user.user);
   const isAuthor = current_user._id === post.author._id;
-<<<<<<< HEAD
-=======
 
   //liked
   const [nLike, setNLike] = useState(0);
@@ -109,7 +107,6 @@ const Post = ({ post }) => {
   };
 
   console.log("----", isAuthor);
->>>>>>> 16d77adb31a2869d8a140401aaedb2ee6a9a389c
   //Kebab
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -235,7 +232,10 @@ const Post = ({ post }) => {
         />
         <CardContent>
           {/* <Box minWidth={1}> */}
-          <Typography paragraph style={{ wordWrap: "break-word", textAlign: "left" }}>
+          <Typography
+            paragraph
+            style={{ wordWrap: "break-word", textAlign: "left" }}
+          >
             {post.text}
           </Typography>
           {/* </Box> */}
@@ -258,14 +258,13 @@ const Post = ({ post }) => {
             {/* {nLike} */}
             <Typography>ถูกใจ</Typography>
           </Button>
-          <Button
-            fullWidth
-          >
+          <Button fullWidth>
             <MessageOutlinedIcon fontSize="small" />
             <Typography>แสดงความคิดเห็น</Typography>
           </Button>
         </CardActions>
       </Card>
+<<<<<<< HEAD
           <Grid container xs direction="row">
             <Grid item xs={2}>
               <Button>LIKE</Button>
@@ -290,6 +289,15 @@ const Post = ({ post }) => {
       </Paper>
 =======
 >>>>>>> 16d77adb31a2869d8a140401aaedb2ee6a9a389c
+=======
+      {post.comments.map((comment) => (
+        <Grid item container xs direction="row">
+          <Grid item xs={12}>
+            <Comment comment={comment} />
+          </Grid>
+        </Grid>
+      ))}
+>>>>>>> fa568cc55856e4c92e44d9aa2018bf19b90a42ed
       <Modal
         className={classes.modal}
         open={openModal}
