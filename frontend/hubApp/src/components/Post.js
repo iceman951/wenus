@@ -264,32 +264,12 @@ const Post = ({ post }) => {
           </Button>
         </CardActions>
       </Card>
-<<<<<<< HEAD
-          <Grid container xs direction="row">
-            <Grid item xs={2}>
-              <Button>LIKE</Button>
-            </Grid>
-            <Grid item xs={10}>
-            </Grid>
-          </Grid>
-          {post.comments.map((comment) => (
-            <Grid item container xs direction="row">
-              <Grid item xs={12}>
-                <Comment comment={comment} />
-              </Grid>
-            </Grid>
-          ))}
-<<<<<<< HEAD
-          <Grid item container xs direction="row">
-            <Grid item xs={12}>
-              <CommentForm />
-            </Grid>
-          </Grid>
+      <Grid container xs direction="row">
+        <Grid item xs={2}>
+          <Button>LIKE</Button>
         </Grid>
-      </Paper>
-=======
->>>>>>> 16d77adb31a2869d8a140401aaedb2ee6a9a389c
-=======
+        <Grid item xs={10}></Grid>
+      </Grid>
       {post.comments.map((comment) => (
         <Grid item container xs direction="row">
           <Grid item xs={12}>
@@ -297,7 +277,13 @@ const Post = ({ post }) => {
           </Grid>
         </Grid>
       ))}
->>>>>>> fa568cc55856e4c92e44d9aa2018bf19b90a42ed
+      {post.comments.map((comment) => (
+        <Grid item container xs direction="row">
+          <Grid item xs={12}>
+            <Comment comment={comment} />
+          </Grid>
+        </Grid>
+      ))}
       <Modal
         className={classes.modal}
         open={openModal}
