@@ -21,6 +21,7 @@ import {
   CardActions,
   Container,
   Collapse,
+  List,
 } from "@material-ui/core/";
 // Icon
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -202,7 +203,7 @@ const Post = ({ post }) => {
                 aria-haspopup="true"
                 onClick={handleClickOpen}
               >
-                <MoreVertIcon fontSize="small" />
+                <MoreVertIcon />
               </IconButton>
               <Menu
                 id="post-menu"
@@ -278,13 +279,14 @@ const Post = ({ post }) => {
           </Button>
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
-          {/* <CardContent>
-            
-          </CardContent> */}
-          {post.comments.map((comment) => (
-            <Comment key={comment._id} comment={comment} />
-          ))}
-          <CommentForm post_id={post._id} />
+          <List>
+            {post.comments.map((comment) => (
+              <Comment key={comment._id} comment={comment} />
+            ))}
+          </List>
+          <CardContent>
+            <CommentForm post_id={post._id} />
+          </CardContent>
         </Collapse>
       </Card>
 
