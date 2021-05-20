@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+//component
+import Comment from "./Comment";
+import CreatePost from "../views/Home/CreateComment";
 // Mui
 import {
   Avatar,
@@ -70,6 +73,7 @@ const Post = ({ post }) => {
   const classes = useStyles();
   const current_user = useSelector((state) => state.user.user);
   const isAuthor = current_user._id === post.author._id;
+  console.log("----", isAuthor);
   //Kebab
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -183,25 +187,38 @@ const Post = ({ post }) => {
                   },
                 }}
               >
-                <MenuItem disabled={isAuthor} onClick={() => handleOpenModal()}>
+                <MenuItem
+                  disabled={!isAuthor}
+                  onClick={() => handleOpenModal()}
+                >
                   <EditIcon fontSize="small" />
                   <Typography variant="inherit">แก้ไขโพสต์</Typography>
                 </MenuItem>
-                <MenuItem disabled={isAuthor} onClick={() => handleDeletePost(post._id)}>
+                <MenuItem
+                  disabled={!isAuthor}
+                  onClick={() => handleDeletePost(post._id)}
+                >
                   <DeleteIcon fontSize="small" />
                   <Typography variant="inherit">ลบโพสต์</Typography>
                 </MenuItem>
               </Menu>
             </Grid>
           </Grid>
-          <Grid item container xs direction='row'>
-            <Grid item xs={6}>
+          <Grid item container xs direction="row">
+            <Grid item xs={2}>
               <Button>LIKE</Button>
             </Grid>
-            <Grid item xs={6}>
-              <Button>Comment</Button>
+            <Grid item xs={10}>
+              {/* <CreatePost post_id={post._id}/> */}
             </Grid>
           </Grid>
+          {post.comments.map((comment) => (
+            <Grid item container xs direction="row">
+              <Grid item xs={12}>
+                {/* <Comment comment={comment} /> */}
+              </Grid>
+            </Grid>
+          ))}
         </Grid>
       </Paper>
       <Modal
