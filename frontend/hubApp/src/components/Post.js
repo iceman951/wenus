@@ -62,9 +62,9 @@ const validationPostSchema = yup.object({
 
 const Post = ({ post }) => {
   const dispatch = useDispatch();
-  const current_user = useSelector((state) => state.user.user);
   const classes = useStyles();
-
+  const current_user = useSelector((state) => state.user.user);
+  const isAuthor = current_user._id === post.author._id;
   //Kebab
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -142,23 +142,7 @@ const Post = ({ post }) => {
       </form>
     </div>
   );
-
-  let setting_button;
-  if (current_user._id === post.author._id) {
-    setting_button = (
-      <IconButton
-        aria-label="more"
-        aria-controls="post-menu"
-        aria-haspopup="true"
-        onClick={handleClickOpen}
-      >
-        <MoreVertIcon fontSize="small" />
-      </IconButton>
-    );
-  } else {
-    setting_button = <></>;
-  }
-
+  
   return (
     <>
       <Card key={post._id} style={{ marginBottom: "1%" }}>
@@ -175,7 +159,14 @@ const Post = ({ post }) => {
               </Box>
             </Grid>
             <Grid item xs={2}>
-              {setting_button}
+              <IconButton
+                aria-label="more"
+                aria-controls="post-menu"
+                aria-haspopup="true"
+                onClick={handleClickOpen}
+              >
+                <MoreVertIcon fontSize="small" />
+              </IconButton>
               <Menu
                 id="post-menu"
                 anchorEl={anchorEl}
@@ -184,15 +175,15 @@ const Post = ({ post }) => {
                 onClose={handleClose}
                 PaperProps={{
                   style: {
-                    width: "20ch",
+                    width: "25ch",
                   },
                 }}
               >
-                <MenuItem onClick={() => handleOpenModal()}>
+                <MenuItem disabled={isAuthor} onClick={() => handleOpenModal()}>
                   <EditIcon fontSize="small" />
                   <Typography variant="inherit">แก้ไขโพสต์</Typography>
                 </MenuItem>
-                <MenuItem onClick={() => handleDeletePost(post._id)}>
+                <MenuItem disabled={isAuthor} onClick={() => handleDeletePost(post._id)}>
                   <DeleteIcon fontSize="small" />
                   <Typography variant="inherit">ลบโพสต์</Typography>
                 </MenuItem>
