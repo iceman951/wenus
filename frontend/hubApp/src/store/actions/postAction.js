@@ -8,7 +8,7 @@ import {
 export const getAllPost = (dispatch) => {
   Axios.get("/posts/").then((res) => {
     dispatch({ type: "FETCH_ALL_POST", res });
-    // console.log(res.data.data)
+    console.log(res.data)
     // console.log(posts)
   });
 };
@@ -60,3 +60,15 @@ export const likePost = (id) => {
 
   }) 
 }
+export const createComment = (dispatch, values) => {
+  Axios.post(`/comments`, values)
+    .then((res) => {
+      // console.log("res", res.data);
+      getAllPost(dispatch);
+      alertSuccessToast(res.message);
+    })
+    .catch((err) => {
+      console.log(err.response);
+    });
+  // console.log(values);
+};

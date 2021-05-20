@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+//component
+import Comment from "./Comment";
+import CreatePost from "../views/Home/CreateComment";
 // Mui
 import {
   Avatar,
@@ -102,6 +105,7 @@ const Post = ({ post }) => {
     setLiked(!liked);
   };
 
+  console.log("----", isAuthor);
   //Kebab
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -258,6 +262,21 @@ const Post = ({ post }) => {
           </Button>
         </CardActions>
       </Card>
+          <Grid container xs direction="row">
+            <Grid item xs={2}>
+              <Button>LIKE</Button>
+            </Grid>
+            <Grid item xs={10}>
+              {/* <CreatePost post_id={post._id}/> */}
+            </Grid>
+          </Grid>
+          {post.comments.map((comment) => (
+            <Grid item container xs direction="row">
+              <Grid item xs={12}>
+                {/* <Comment comment={comment} /> */}
+              </Grid>
+            </Grid>
+          ))}
       <Modal
         className={classes.modal}
         open={openModal}
