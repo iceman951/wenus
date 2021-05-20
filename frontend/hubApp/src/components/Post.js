@@ -1,28 +1,31 @@
 import React, { useState } from "react";
+<<<<<<< HEAD
+=======
+// Mui
+>>>>>>> 29bd517d7be361c5f6b1bf1147fe52dee1dedb43
 import {
-  Card,
-  CardContent,
   Avatar,
   Typography,
   IconButton,
   Box,
   Menu,
   MenuItem,
-} from "@material-ui/core/";
-import { Grid } from "@material-ui/core";
-import { deletePost, editPost } from "../store/actions/postAction";
-import { useDispatch, useSelector } from "react-redux";
-import DeleteIcon from "@material-ui/icons/Delete";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import EditIcon from "@material-ui/icons/Edit";
-
-import {
   Modal,
   TextField,
   Divider,
   Button,
   makeStyles,
+  Grid,
+  Paper,
 } from "@material-ui/core/";
+// Icon
+import DeleteIcon from "@material-ui/icons/Delete";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import EditIcon from "@material-ui/icons/Edit";
+// Redux
+import { deletePost, editPost } from "../store/actions/postAction";
+import { useDispatch, useSelector } from "react-redux";
+// Formik
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -36,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     width: "50vw",
     backgroundColor: theme.palette.primary.dark,
-    borderRadius: "10px 10px 10px 10px",
+    borderRadius: "10px",
     padding: theme.spacing(2, 3, 2),
   },
   typography: {
@@ -50,6 +53,11 @@ const useStyles = makeStyles((theme) => ({
       borderBottom: "none",
     },
     color: "white",
+  },
+  root: {
+    borderRadius: "20px",
+    padding: theme.spacing(2, 2, 1),
+    marginBottom: theme.spacing(2),
   },
 }));
 
@@ -142,23 +150,22 @@ const Post = ({ post }) => {
       </form>
     </div>
   );
-  
   return (
     <>
-      <Card key={post._id} style={{ marginBottom: "1%" }}>
-        <CardContent>
-          <Grid container justify="center" alignItems="flex-start">
-            <Grid item xs={2}>
+      <Paper className={classes.root}>
+        <Grid container spacing={2} direction="column">
+          <Grid item container justify="center" alignItems="flex-start">
+            <Grid item xs={1}>
               <Avatar></Avatar>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={10}>
               <Box minWidth={1}>
                 <Typography style={{ wordWrap: "break-word" }}>
                   {post.text}
                 </Typography>
               </Box>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={1}>
               <IconButton
                 aria-label="more"
                 aria-controls="post-menu"
@@ -190,8 +197,16 @@ const Post = ({ post }) => {
               </Menu>
             </Grid>
           </Grid>
-        </CardContent>
-      </Card>
+          <Grid item container xs direction='row'>
+            <Grid item xs={6}>
+              <Button>LIKE</Button>
+            </Grid>
+            <Grid item xs={6}>
+              <Button>Comment</Button>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Paper>
       <Modal
         className={classes.modal}
         open={openModal}
