@@ -15,7 +15,7 @@ import {
   Divider,
   Button,
   makeStyles,
-  // Grid,
+  Grid,
   // Paper,
   Card,
   CardContent,
@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   numbar: {
     display: "flex",
     flexDirection: "row",
-  }
+  },
 }));
 
 const validationPostSchema = yup.object({
@@ -231,7 +231,10 @@ const Post = ({ post }) => {
         />
         <CardContent>
           {/* <Box minWidth={1}> */}
-          <Typography paragraph style={{ wordWrap: "break-word", textAlign: "left" }}>
+          <Typography
+            paragraph
+            style={{ wordWrap: "break-word", textAlign: "left" }}
+          >
             {post.text}
           </Typography>
           {/* </Box> */}
@@ -254,29 +257,19 @@ const Post = ({ post }) => {
             {/* {nLike} */}
             <Typography>ถูกใจ</Typography>
           </Button>
-          <Button
-            fullWidth
-          >
+          <Button fullWidth>
             <MessageOutlinedIcon fontSize="small" />
             <Typography>แสดงความคิดเห็น</Typography>
           </Button>
         </CardActions>
       </Card>
-          <Grid container xs direction="row">
-            <Grid item xs={2}>
-              <Button>LIKE</Button>
-            </Grid>
-            <Grid item xs={10}>
-              {/* <CreatePost post_id={post._id}/> */}
-            </Grid>
+      {post.comments.map((comment) => (
+        <Grid item container xs direction="row">
+          <Grid item xs={12}>
+            <Comment comment={comment} />
           </Grid>
-          {post.comments.map((comment) => (
-            <Grid item container xs direction="row">
-              <Grid item xs={12}>
-                {/* <Comment comment={comment} /> */}
-              </Grid>
-            </Grid>
-          ))}
+        </Grid>
+      ))}
       <Modal
         className={classes.modal}
         open={openModal}
