@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 //component
 import Comment from "./Comment";
-import CreatePost from "../views/Home/CreateComment";
 // Mui
 import {
   Avatar,
@@ -15,13 +14,13 @@ import {
   Divider,
   Button,
   makeStyles,
-  Grid,
   // Paper,
   Card,
   CardContent,
   CardHeader,
   CardActions,
   Container,
+  Collapse,
 } from "@material-ui/core/";
 // Icon
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -71,6 +70,7 @@ const useStyles = makeStyles((theme) => ({
   numbar: {
     display: "flex",
     flexDirection: "row",
+    // justifyContent: "space-between",
   },
 }));
 
@@ -87,14 +87,21 @@ const Post = ({ post }) => {
   const current_user = useSelector((state) => state.user.user);
   const isAuthor = current_user._id === post.author._id;
 
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleCommentClick = () => {
+    setExpanded(!expanded);
+  };
   //liked
   const [nLike, setNLike] = useState(0);
+  const [nComment, setNComment] = useState(0);
   const [liked, setLiked] = useState(null);
 
   useEffect(() => {
     setLiked(post.liked_users.some((luser) => luser._id === current_user._id));
     setNLike(post.liked_users.length);
-  }, [current_user._id, post.liked_users]);
+    setNComment(post.comments.length);
+  }, [current_user._id, post]);
 
   const handleClickLike = () => {
     if (liked) {
@@ -239,8 +246,12 @@ const Post = ({ post }) => {
           </Typography>
           {/* </Box> */}
           <Container className={classes.numbar}>
-            <Typography>ถูกใจ: {nLike}</Typography>
-            <Typography>คอมเม้น: {nLike}</Typography>
+            {nLike !== 0 ? <Typography>ถูกใจ: {nLike}</Typography> : <></>}
+            {nComment !== 0 ? (
+              <Typography>ความคิดเห็น: {nComment} รายการ</Typography>
+            ) : (
+              <></>
+            )}
           </Container>
         </CardContent>
         <CardActions>
@@ -257,15 +268,24 @@ const Post = ({ post }) => {
             {/* {nLike} */}
             <Typography>ถูกใจ</Typography>
           </Button>
-          <Button fullWidth>
+          <Button
+            fullWidth
+            onClick={handleCommentClick}
+            aria-expanded={expanded}
+          >
             <MessageOutlinedIcon fontSize="small" />
             <Typography>แสดงความคิดเห็น</Typography>
           </Button>
         </CardActions>
-        {post.comments.map((comment) => (
-          <Comment key={comment._id} comment={comment} />
-        ))}
-        < CommentForm post_id={post._id} />
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          {/* <CardContent>
+            
+          </CardContent> */}
+          {post.comments.map((comment) => (
+            <Comment key={comment._id} comment={comment} />
+          ))}
+          <CommentForm post_id={post._id} />
+        </Collapse>
       </Card>
 
       <Modal
