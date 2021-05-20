@@ -8,7 +8,7 @@ import {
 export const getAllPost = (dispatch) => {
   Axios.get("/posts/").then((res) => {
     dispatch({ type: "FETCH_ALL_POST", res });
-    console.log(res.data)
+    // console.log(res.data)
     // console.log(posts)
   });
 };

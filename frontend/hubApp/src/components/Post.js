@@ -28,6 +28,7 @@ import { useDispatch, useSelector } from "react-redux";
 // Formik
 import { useFormik } from "formik";
 import * as yup from "yup";
+import CommentForm from "../forms/CommentForm";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -73,7 +74,6 @@ const Post = ({ post }) => {
   const classes = useStyles();
   const current_user = useSelector((state) => state.user.user);
   const isAuthor = current_user._id === post.author._id;
-  console.log("----", isAuthor);
   //Kebab
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -209,16 +209,20 @@ const Post = ({ post }) => {
               <Button>LIKE</Button>
             </Grid>
             <Grid item xs={10}>
-              {/* <CreatePost post_id={post._id}/> */}
             </Grid>
           </Grid>
           {post.comments.map((comment) => (
             <Grid item container xs direction="row">
               <Grid item xs={12}>
-                {/* <Comment comment={comment} /> */}
+                <Comment comment={comment} />
               </Grid>
             </Grid>
           ))}
+          <Grid item container xs direction="row">
+            <Grid item xs={12}>
+              <CommentForm />
+            </Grid>
+          </Grid>
         </Grid>
       </Paper>
       <Modal
