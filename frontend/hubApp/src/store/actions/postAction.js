@@ -53,3 +53,10 @@ export const editPost = (dispatch, values) => {
     });
   // console.log(values);
 };
+
+export const likePost = (id) => {
+  const values = {post_id: id};
+  Axios.patch(`/posts/like`, values).then((res)=> {
+
+  }) 
+}
