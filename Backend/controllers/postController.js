@@ -30,7 +30,11 @@ exports.create = async (req, res, next) => {
 
 exports.show = async (req, res, next) => {
   try {
-    const posts = await Post.find()
+
+    const skip = req.body.skip ? Number(req.body.skip) : 0;
+    const tag = req.params.tag;
+
+    const posts = await Post.find({tag: tag}, undefined, { skip, limit: 5 })
       .sort("-createDate")
       .populate("author", "_id firstName lastName")
       .populate({
