@@ -189,9 +189,9 @@ const CreatePost = () => {
       <Modal className={classes.modal} open={openModal} onClose={handleCloseModal}>
         {modalBody}
       </Modal>
-      <Backdrop className={classes.backdrop} open={loading}>
+      {/* <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
-      </Backdrop>
+      </Backdrop> */}
     </>
   );
 };

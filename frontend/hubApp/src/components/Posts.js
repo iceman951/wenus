@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import LazyLoad from "react-lazyload";
 import Post from "./Post";
 import { Container } from "@material-ui/core/";
 import { getAllPost, filterPost } from "../store/actions/postAction";
@@ -23,7 +24,9 @@ export default function Posts() {
   return (
     <Container>
       {posts.map((post) => (
-        <Post key={post._id} post={post} />
+        <LazyLoad key={post._id} placeholder={<div>loading....</div>}>
+          <Post key={post._id} post={post} />
+        </LazyLoad>
       ))}
     </Container>
   );
