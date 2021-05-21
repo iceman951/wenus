@@ -31,7 +31,7 @@ exports.create = async (req, res, next) => {
 exports.show = async (req, res, next) => {
   try {
 
-    const skip = req.body.skip ? Number(req.body.skip) : 0;
+    const skip = req.params.skip ? Number(req.params.skip) : 0 ;
     const tag = req.params.tag;
 
     const posts = await Post.find({tag: tag}, undefined, { skip, limit: 5 })
@@ -60,6 +60,7 @@ exports.show = async (req, res, next) => {
       success: true,
       message: "สำเร็จ",
       data: posts,
+      skip: skip
     });
   } catch (error) {
     next(error);

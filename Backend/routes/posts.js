@@ -6,7 +6,7 @@ const postController = require('../controllers/postController');
 router.post("/", postController.create);
 
 /* http://localhost:3000/posts */
-router.get("/:tag", postController.show);
+router.get("/:tag/:skip", postController.show);
 
 /* http://localhost:3000/posts */
 router.delete("/", postController.delete);
