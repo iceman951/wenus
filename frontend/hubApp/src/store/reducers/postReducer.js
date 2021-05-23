@@ -15,7 +15,11 @@ const postReducer = (state = initState, action) => {
         posts: [...state.posts, ...data],
         loading: false,
       };
-
+    case 'RESET_POST':
+      return {
+        ...state,
+        posts: [],
+      }
     // case "FILTER_POST_BY_TAG":
     //   // console.log(action.selectedTag)
     //   let filteredPosts = state.allPosts.filter(

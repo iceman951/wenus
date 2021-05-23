@@ -1,74 +1,47 @@
-import React, { useState } from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
+import React from "react";
 import {
   Button,
   Divider,
   makeStyles,
   MenuItem,
-  Modal,
   Select,
   TextField,
   Typography,
   FormControl,
   InputLabel,
-  Avatar,
-  Card,
-  CardContent,
-  Container,
-  Backdrop,
-  CircularProgress,
 } from "@material-ui/core/";
-import { red } from "@material-ui/core/colors";
-import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
-    modal: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
+  paper: {
+    position: "absolute",
+    width: "50vw",
+    backgroundColor: theme.palette.primary.dark,
+    borderRadius: "10px 10px 10px 10px",
+    padding: theme.spacing(2, 3, 2),
+  },
+  typography: {
+    color: "#fff",
+  },
+  input: {
+    "&&&:before": {
+      borderBottom: "none",
     },
-    paper: {
-      position: "absolute",
-      width: "70vh",
-      backgroundColor: "#4d4d4d",
-      borderRadius: "10px 10px 10px 10px",
-      padding: theme.spacing(2, 3, 2),
+    "&&:after": {
+      borderBottom: "none",
     },
-    typography: {
-      color: "#fff",
-    },
-    input: {
-      "&&&:before": {
-        borderBottom: "none",
-      },
-      "&&:after": {
-        borderBottom: "none",
-      },
-      color: "white",
-    },
-    card: {
-      marginTop: "3%",
-      backgroundColor: "rgba(255,255,255,0.1)",
-    },
-    details: {
-      display: "flex",
-      flexDirection: "row",
-    },
-    avatar: {
-      backgroundColor: red[500],
-    },
-    backdrop: {
-      zIndex: theme.zIndex.drawer + 1,
-      color: "#fff",
-    },
-  }));
-export default function PostForm() {
-    const classes = useStyles()
+    color: "white",
+  },
+}));
+
+const PostForm = ({ actions, formik }) => {
+  const classes = useStyles();
+  const tags = useSelector((state) => state.tag.tags);
+
   return (
     <div className={classes.paper}>
       <Typography align="center" variant="h6" className={classes.typography}>
-        สร้างโพสต์
+        {actions === "create" ? "สร้างโพสต์" : "แก้ไขโพสต์"}
       </Typography>
       <Divider
         style={{
@@ -77,23 +50,37 @@ export default function PostForm() {
         }}
       />
       <form onSubmit={formik.handleSubmit}>
-        <FormControl>
-          <InputLabel htmlFor="tag">Tags</InputLabel>
-          <Select
-            id="tag"
-            value={formik.values.tag}
-            onChange={formik.handleChange("tag")}
-            autoWidth
-            className={classes.input}
-          >
-            <MenuItem value="ทั่วไป">ทั่วไป</MenuItem>
-            <MenuItem value="ความรัก">ความรัก</MenuItem>
-            <MenuItem value="การศึกษา">การศึกษา</MenuItem>
-          </Select>
-        </FormControl>
+        {actions === "create" && (
+          <FormControl>
+            <InputLabel htmlFor="tag">Tags</InputLabel>
+            <Select
+              id="tag"
+              value={formik.values.tag}
+              onChange={formik.handleChange("tag")}
+              autoWidth
+              className={classes.input}
+            >
+              {tags.map((tag, index) => (
+                <MenuItem
+                  key={index}
+                  value={tag}
+                  style={{
+                    fontSize: "16px",
+                  }}
+                >
+                  {tag}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        )}
         <TextField
-          id="text"
-          placeholder="คุณอยากโพสต์อะไร?"
+          id={actions}
+          placeholder={
+            actions === "create"
+              ? "คุณอยากโพสต์อะไร?"
+              : "กรุณาพิมพ์ข้อความเพื่อแก้ไขโพสต์"
+          }
           multiline
           rows={6}
           fullWidth
@@ -105,15 +92,16 @@ export default function PostForm() {
         />
         <Button
           fullWidth
-          // style={{ backgroundColor: "blue", color: "white" }}
           type="submit"
           variant="contained"
           color="primary"
           disabled={!formik.values.text}
         >
-          โพสต์
+          {actions === "create" ? "โพสต์" : "แก้ไข"}
         </Button>
       </form>
     </div>
   );
-}
+};
+
+export default PostForm;

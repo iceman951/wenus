@@ -1,11 +1,11 @@
-import { Chip, Container, makeStyles, Paper } from "@material-ui/core";
+import { Chip, Container, Divider, makeStyles, Paper } from "@material-ui/core";
 import React, { useEffect } from "react";
 // redux
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedTag } from "../../store/actions/tagAction";
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
+  tagsbar: {
     display: "flex",
     overflowX: "scroll",
     listStyle: "none",
@@ -22,8 +22,10 @@ const useStyles = makeStyles((theme) => ({
   tags: {
     margin: theme.spacing(0.5),
   },
-  tagsbar: {
+  root: {
     marginTop: theme.spacing(2),
+    display: "flex",
+    flexDirection: "row",
   },
 }));
 
@@ -31,38 +33,53 @@ const TagsBar = () => {
   const classes = useStyles();
 
   //redux
-  const tags = useSelector((state) => state.tag.tags)
+  const tags = useSelector((state) => state.tag.tags);
   const selectedTag = useSelector((state) => state.tag.selectedTag);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // console.log(selectedTag);
   }, [selectedTag]);
 
   return (
-    <Container className={classes.tagsbar}>
-      <Paper className={classes.paper}>
-        {tags.map((tag, index) => {
-          return (
-            <Chip
-              key={index}
-              className={classes.tags}
-              label={tag}
-              color="primary"
-              variant={tag === selectedTag ? "default" : "outlined"}
-              onClick={(e) => {
-                //update state (Redux)
-                dispatch(setSelectedTag(e.target.innerText));
-              }}
-            />
-          );
-        })}
-        {/* End Space (lastItem)*/}
-        <span
-          style={{
-            minWidth: "10px",
-          }}
-        ></span>
+    <Container>
+      <Paper className={classes.root}>
+        <div style={{ padding: "4px" }}>
+          <Chip
+            className={classes.tags}
+            label="โพสต์ของฉัน"
+            color="secondary"
+            variant={"โพสต์ของฉัน" === selectedTag ? "default" : "outlined"}
+            onClick={(e) => {
+              //update state (Redux)
+              dispatch(setSelectedTag(e.target.innerText));
+            }}
+          />
+        </div>
+        <Divider orientation="vertical" flexItem/>
+        <Container className={classes.tagsbar}>
+          {tags.map((tag, index) => {
+            return (
+              <Chip
+                key={index}
+                className={classes.tags}
+                label={tag}
+                color="primary"
+                variant={tag === selectedTag ? "default" : "outlined"}
+                onClick={(e) => {
+                  //update state (Redux)
+                  dispatch(setSelectedTag(e.target.innerText));
+                }}
+              />
+            );
+          })}
+          {/* End Space (lastItem)*/}
+          <span
+            style={{
+              minWidth: "10px",
+            }}
+          ></span>
+        </Container>
       </Paper>
     </Container>
   );

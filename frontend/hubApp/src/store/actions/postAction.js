@@ -1,15 +1,12 @@
-// import { Axios } from "../../components/HttpClient";
 import Axios from "axios";
-import { useSelector } from "react-redux";
 import {
   alertSuccessToast,
   alertErrorToast,
 } from "../../utils/sweetAlertToast";
 
 export const getPosts = (dispatch, tag, skip) => {
-  console.log(skip, "skip")
-  const Url = `posts/${tag}`;
-  Axios.get(Url, {skip: skip}).then((res) => {
+  console.log("skip: ", skip, ", tag: ", tag);
+  Axios.get(`posts/${tag}/${skip}`).then((res) => {
     dispatch({ type: "FETCH_POST_BY_TAG", res });
     console.log(res)
     // console.log(posts)

@@ -6,15 +6,11 @@ import {
   Avatar,
   Typography,
   IconButton,
-  // Box,
   Menu,
   MenuItem,
   Modal,
-  TextField,
-  Divider,
   Button,
   makeStyles,
-  // Paper,
   Card,
   CardContent,
   CardHeader,
@@ -22,6 +18,7 @@ import {
   Container,
   Collapse,
   List,
+  Divider,
 } from "@material-ui/core/";
 // Icon
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -30,13 +27,16 @@ import EditIcon from "@material-ui/icons/Edit";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import ThumbUpOutlinedIcon from "@material-ui/icons/ThumbUpOutlined";
 import MessageOutlinedIcon from "@material-ui/icons/MessageOutlined";
+import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 // Redux
-import { deletePost, editPost, likePost } from "../store/actions/postAction";
+import { deletePost, editPost, likePost } from "../../store/actions/postAction";
 import { useDispatch, useSelector } from "react-redux";
 // Formik
 import { useFormik } from "formik";
 import * as yup from "yup";
-import CommentForm from "../forms/CommentForm";
+import CommentForm from "../../forms/CommentForm";
+import PostForm from "../../forms/PostForm";
+import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -44,29 +44,13 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
   },
-  paper: {
-    position: "absolute",
-    width: "50vw",
-    backgroundColor: theme.palette.primary.dark,
-    borderRadius: "10px",
-    padding: theme.spacing(2, 3, 2),
-  },
-  typography: {
-    color: "#fff",
-  },
-  input: {
-    "&&&:before": {
-      borderBottom: "none",
-    },
-    "&&:after": {
-      borderBottom: "none",
-    },
-    color: "white",
-  },
   post: {
     borderRadius: "20px",
     padding: theme.spacing(2, 2, 1),
     marginBottom: theme.spacing(2),
+  },
+  post_title: {
+    textAlign: "left",
   },
   numbar: {
     display: "flex",
@@ -155,97 +139,74 @@ const Post = ({ post }) => {
     },
   });
 
-  const modalBody = (
-    <div className={classes.paper}>
-      <Typography align="center" variant="h6" className={classes.typography}>
-        แก้ไขโพสต์
-      </Typography>
-      <Divider
-        style={{
-          marginBottom: "3%",
-          marginTop: "3%",
-        }}
-      />
-      <form onSubmit={formik.handleSubmit}>
-        <TextField
-          id="text"
-          placeholder="กรุณาพิมพ์ข้อความเพื่อแก้ไขโพสต์"
-          multiline
-          rows={6}
-          fullWidth
-          InputProps={{ className: classes.input }}
-          value={formik.values.text}
-          onChange={formik.handleChange("text")}
-          error={formik.touched.text && Boolean(formik.errors.text)}
-          helperText={formik.touched.text && formik.errors.text}
-        />
-        <Button
-          fullWidth
-          type="submit"
-          variant="contained"
-          color="primary"
-          disabled={!formik.values.text}
-        >
-          แก้ไข
-        </Button>
-      </form>
-    </div>
-  );
   return (
     <>
       <Card className={classes.post}>
         <CardHeader
-          avatar={<Avatar />}
+          className={classes.post_title}
+          avatar={<Avatar style={{ backgroundColor: isAuthor ? "red" : "" }} />}
           action={
+            isAuthor && (
+              <>
+                <IconButton
+                  aria-controls="post-menu"
+                  aria-haspopup="true"
+                  onClick={handleClickOpen}
+                >
+                  <MoreVertIcon />
+                </IconButton>
+                <Menu
+                  id="post-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={open}
+                  onClose={handleClose}
+                  PaperProps={{
+                    style: {
+                      width: "25ch",
+                    },
+                  }}
+                >
+                  <MenuItem
+                    disabled={!isAuthor}
+                    onClick={() => handleOpenModal()}
+                  >
+                    <EditIcon fontSize="small" />
+                    <Typography variant="inherit">แก้ไขโพสต์</Typography>
+                  </MenuItem>
+                  <MenuItem
+                    disabled={!isAuthor}
+                    onClick={() => handleDeletePost(post._id)}
+                    style={{ color: "red" }}
+                  >
+                    <DeleteIcon fontSize="small" />
+                    <Typography variant="inherit">ลบโพสต์</Typography>
+                  </MenuItem>
+                </Menu>
+              </>
+            )
+          }
+          title={
             <>
-              <IconButton
-                aria-controls="post-menu"
-                aria-haspopup="true"
-                onClick={handleClickOpen}
-              >
-                <MoreVertIcon />
-              </IconButton>
-              <Menu
-                id="post-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={open}
-                onClose={handleClose}
-                PaperProps={{
-                  style: {
-                    width: "25ch",
-                  },
-                }}
-              >
-                <MenuItem
-                  disabled={!isAuthor}
-                  onClick={() => handleOpenModal()}
-                >
-                  <EditIcon fontSize="small" />
-                  <Typography variant="inherit">แก้ไขโพสต์</Typography>
-                </MenuItem>
-                <MenuItem
-                  disabled={!isAuthor}
-                  onClick={() => handleDeletePost(post._id)}
-                >
-                  <DeleteIcon fontSize="small" />
-                  <Typography variant="inherit">ลบโพสต์</Typography>
-                </MenuItem>
-              </Menu>
+              {`${post.author.firstName} ${post.author.lastName}`}
+              <LocalOfferIcon
+                style={{ fontSize: "20px", paddingLeft: "1%", color: "gray" }}
+              />
+              {post.tag}
             </>
           }
-          title="Shrimp and Chorizo Paella"
-          subheader="September 14, 2016"
+          // subheader={moment(post.createDate).format("dddd, MMM DD HH:mm a")}
+          // subheader={moment(post.createDate).format("MMM DD")}
+          subheader={moment(post.createDate).fromNow()}
+          // subheader={moment.locale()}
         />
         <CardContent>
-          {/* <Box minWidth={1}> */}
           <Typography
             paragraph
             style={{ wordWrap: "break-word", textAlign: "left" }}
           >
             {post.text}
           </Typography>
-          {/* </Box> */}
           <Container className={classes.numbar}>
             {nLike !== 0 ? <Typography>ถูกใจ: {nLike}</Typography> : <></>}
             {nComment !== 0 ? (
@@ -254,8 +215,13 @@ const Post = ({ post }) => {
               <></>
             )}
           </Container>
+          <Divider
+            style={{
+              marginTop: "1%",
+            }}
+          />
         </CardContent>
-        <CardActions>
+        <CardActions style={{ padding: 0 }}>
           <Button
             color={liked ? "secondary" : "default"}
             fullWidth
@@ -278,6 +244,13 @@ const Post = ({ post }) => {
             <Typography>แสดงความคิดเห็น</Typography>
           </Button>
         </CardActions>
+        {expanded && (
+          <Divider
+            style={{
+              margin: "1%",
+            }}
+          />
+        )}
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <List>
             {post.comments.map((comment) => (
@@ -295,7 +268,9 @@ const Post = ({ post }) => {
         open={openModal}
         onClose={handleCloseModal}
       >
-        {modalBody}
+        <>
+          <PostForm actions="Edit" formik={formik} />
+        </>
       </Modal>
     </>
   );

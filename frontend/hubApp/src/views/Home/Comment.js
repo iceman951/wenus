@@ -9,17 +9,21 @@ import {
   ListItem,
 } from "@material-ui/core/";
 // Redux
+import { useSelector } from "react-redux";
 
 const Comment = ({ comment }) => {
+  const current_user = useSelector((state) => state.user.user);
+  const isAuthor = current_user._id === comment.author;
 
   return (
     <>
-      <ListItem alignItems="flex-start" style={{ marginBottom: 5}}>
+      <ListItem alignItems="flex-start" style={{ marginBottom: 5 }}>
         <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+          <Avatar style={{ backgroundColor: isAuthor && "red" }} />
         </ListItemAvatar>
         <ListItemText
-          primary={
+          primary={comment.author}
+          secondary={
             <Typography
               component="span"
               variant="body2"
