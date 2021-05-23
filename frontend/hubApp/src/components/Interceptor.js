@@ -13,6 +13,7 @@ const Interceptor = (store) => {
       config.headers = { Authorization: `Bearer ${jwtToken}` };
     }
     config.url = join("https://guarded-falls-57008.herokuapp.com/", config.url);
+    // console.log(config)
     return config;
   });
 

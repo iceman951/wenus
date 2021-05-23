@@ -1,34 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 // Mui
 import {
   Avatar,
   Typography,
-  IconButton,
-  Box,
-  Menu,
-  MenuItem,
-  Modal,
-  TextField,
   Divider,
-  Button,
-  makeStyles,
-  Grid,
-  Paper,
-  Container,
-  CardContent,
   ListItemAvatar,
   ListItemText,
   ListItem,
 } from "@material-ui/core/";
-// Icon
-import DeleteIcon from "@material-ui/icons/Delete";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import EditIcon from "@material-ui/icons/Edit";
 // Redux
-import { useDispatch, useSelector } from "react-redux";
 
 const Comment = ({ comment }) => {
-  const dispatch = useDispatch();
 
   return (
     <>

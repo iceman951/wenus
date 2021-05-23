@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { createComment } from "../store/actions/postAction";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { Box, Button, TextField } from "@material-ui/core/";
+import { TextField } from "@material-ui/core/";
 const validationPostSchema = yup.object({
   text: yup.string("").required(""),
 });
