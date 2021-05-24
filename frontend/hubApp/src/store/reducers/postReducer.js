@@ -8,7 +8,7 @@ const postReducer = (state = initState, action) => {
   switch (action.type) {
     case "FETCH_POST_BY_TAG":
       var data = action.res.data;
-      console.log(data);
+      // console.log(data);
       // console.log(action.res.data.data)
       return {
         ...state,

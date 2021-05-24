@@ -5,10 +5,10 @@ import {
 } from "../../utils/sweetAlertToast";
 
 export const getPosts = (dispatch, tag, skip) => {
-  console.log("skip: ", skip, ", tag: ", tag);
+  dispatch({ type: "isLoading"});
   Axios.get(`posts/tag/${tag}/skip/${skip}`).then((res) => {
     dispatch({ type: "FETCH_POST_BY_TAG", res });
-    // console.log(res);
+    // console.log(res)
     // console.log(posts)
   });
 };
@@ -31,8 +31,6 @@ export const getPostById = (dispatch, id) => {
 export const createPost = (dispatch, values) => {
   Axios.post(`/posts`, values)
     .then((res) => {
-      // console.log(res)
-      // fetch new post
       getPosts(dispatch);
       alertSuccessToast(res.message);
     })

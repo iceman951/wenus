@@ -4,6 +4,7 @@ import Post from "./Post";
 import { Container } from "@material-ui/core/";
 import { getMyPost, getPosts } from "../../store/actions/postAction";
 import { useDispatch, useSelector } from "react-redux";
+import Loading from './Loading'
 
 const WINDOW_HEIGHT_50 = window.innerHeight / 2;
 
@@ -12,6 +13,7 @@ export default function Posts() {
   // const allPosts = useSelector((state) => state.post.allPosts);
   const posts = useSelector((state) => state.post.posts);
   const selectedTag = useSelector((state) => state.tag.selectedTag);
+  const isLoading = useSelector((state) => state.post.loading);
   const [skip, setSkip] = useState(0);
 
   //Load post when selectedTag changed
@@ -36,6 +38,7 @@ export default function Posts() {
 
       if (clientHeight + scrollTop + WINDOW_HEIGHT_50 >= scrollHeight) {
         setSkip(posts.length);
+        // console.log("---------", clientHeight, scrollTop, scrollHeight)
       }
     };
 
@@ -48,11 +51,14 @@ export default function Posts() {
 
   return (
     <Container>
-      {posts.map((post) => (
-        <LazyLoad key={post._id} placeholder={<p>loading....</p>}>
+      {posts.map((post, i) => (
+        <LazyLoad key={post._id}>
           <Post key={post._id} post={post} />
         </LazyLoad>
       ))}
+      {
+      isLoading ? <Loading />: <></>
+      }
     </Container>
   );
 }

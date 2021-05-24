@@ -52,7 +52,7 @@ export default function CommentForm({ post_id }) {
     },
     validationSchema: validationPostSchema,
     onSubmit: (values, actions) => {
-      console.log("onsubmit");
+      // console.log("onsubmit");
       createComment(dispatch, values);
       actions.resetForm();
     },
