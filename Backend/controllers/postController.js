@@ -28,7 +28,83 @@ exports.create = async (req, res, next) => {
   }
 };
 
-exports.show = async (req, res, next) => {
+exports.showById = async (req, res, next) => {
+  try {
+
+    const id = req.params._id ;
+
+    const posts = await Post.findById({_id: id})
+      .sort("-createDate")
+      .populate("author", "_id firstName lastName")
+      .populate({
+        path: "comments",
+        populate: {
+          path: "liked_users",
+          select: "_id firstName lastName",
+        },
+      })
+      .populate({
+        path: "comments.author",
+        select: "_id firstName lastName"
+      })
+      .populate({ path: "liked_users", select: "_id firstName lastName" });
+
+    if (!posts) {
+      const error = new Error("ไม่พบข้อมูลโพสต์");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "สำเร็จ",
+      data: posts,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.showMine = async (req, res, next) => {
+  try {
+
+    const skip = req.params.skip ? Number(req.params.skip) : 0 ;
+    const user_id = req.user._id ;
+
+    const posts = await Post.find({author: user_id}, undefined, { skip, limit: 5 })
+      .sort("-createDate")
+      .populate("author", "_id firstName lastName")
+      .populate({
+        path: "comments",
+        populate: {
+          path: "liked_users",
+          select: "_id firstName lastName",
+        },
+      })
+      .populate({
+        path: "comments.author",
+        select: "_id firstName lastName"
+      })
+      .populate({ path: "liked_users", select: "_id firstName lastName" });
+
+    if (!posts) {
+      const error = new Error("ไม่พบข้อมูลโพสต์");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "สำเร็จ",
+      data: posts,
+      skip: skip
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.showByTag = async (req, res, next) => {
   try {
 
     const skip = req.params.skip ? Number(req.params.skip) : 0 ;
@@ -40,13 +116,13 @@ exports.show = async (req, res, next) => {
       .populate({
         path: "comments",
         populate: {
-          path: "author",
-          select: "_id firstName lastName",
-        },
-        populate: {
           path: "liked_users",
           select: "_id firstName lastName",
         },
+      })
+      .populate({
+        path: "comments.author",
+        select: "_id firstName lastName"
       })
       .populate({ path: "liked_users", select: "_id firstName lastName" });
 
