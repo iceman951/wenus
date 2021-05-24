@@ -15,23 +15,24 @@ const postReducer = (state = initState, action) => {
         posts: [...state.posts, ...data],
         loading: false,
       };
-    case 'RESET_POST':
+    case "RESET_POST":
       return {
         ...state,
         posts: [],
-      }
-    // case "FILTER_POST_BY_TAG":
-    //   // console.log(action.selectedTag)
-    //   let filteredPosts = state.allPosts.filter(
-    //     post => post.tag === action.selectedTag
-    //   );
-    //   // console.log(data);
-
-    //   return {
-    //     ...state,
-    //     posts: filteredPosts,
-    //     // loading: false,
-    //   };
+      };
+    case "UPDATE_POST":
+      // console.log(action.res.data.product_name)
+      return {
+        ...state,
+        posts: state.posts.map((post) =>
+          post._id === action.id
+            ? {
+                ...post,
+                text: action.text,
+              }
+            : post
+        ),
+      };
     case "isLoading":
       return {
         ...state,

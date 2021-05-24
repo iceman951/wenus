@@ -25,7 +25,6 @@ export const createPost = (dispatch, values) => {
   Axios.post(`/posts`, values)
     .then((res) => {
       // console.log(res)
-      // console.log(res.data.message)
       // fetch new post
       getPosts(dispatch);
       alertSuccessToast(res.message);
@@ -48,8 +47,8 @@ export const deletePost = (dispatch, id) => {
 export const editPost = (dispatch, values) => {
   Axios.patch(`/posts`, values)
     .then((res) => {
-      // console.log("res", res.data);
-      getPosts(dispatch);
+      // console.log("res", res);
+      dispatch({ type: "UPDATE_POST", id: values.post_id, text: values.text })
       alertSuccessToast(res.message);
     })
     .catch((err) => {

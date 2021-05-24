@@ -5,7 +5,7 @@ import { Container } from "@material-ui/core/";
 import { getMyPost, getPosts } from "../../store/actions/postAction";
 import { useDispatch, useSelector } from "react-redux";
 
-const WINDOW_HEIGHT_20 = window.innerHeight / 5;
+const WINDOW_HEIGHT_50 = window.innerHeight / 2;
 
 export default function Posts() {
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ export default function Posts() {
         e.target.scrollingElement;
       // console.log(clientHeight, scrollTop, scrollHeight, e);
 
-      if (clientHeight + scrollTop + WINDOW_HEIGHT_20 >= scrollHeight) {
+      if (clientHeight + scrollTop + WINDOW_HEIGHT_50 >= scrollHeight) {
         setSkip(posts.length);
       }
     };
