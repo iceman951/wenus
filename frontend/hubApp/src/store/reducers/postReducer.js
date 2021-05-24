@@ -25,14 +25,10 @@ const postReducer = (state = initState, action) => {
       return {
         ...state,
         posts: state.posts.map((post) =>
-          post._id === action.id
-            ? {
-                ...post,
-                text: action.text,
-              }
-            : post
+          post._id === action.post._id ? action.post : post
         ),
       };
+
     case "isLoading":
       return {
         ...state,

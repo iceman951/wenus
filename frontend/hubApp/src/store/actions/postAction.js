@@ -8,7 +8,7 @@ export const getPosts = (dispatch, tag, skip) => {
   console.log("skip: ", skip, ", tag: ", tag);
   Axios.get(`posts/tag/${tag}/skip/${skip}`).then((res) => {
     dispatch({ type: "FETCH_POST_BY_TAG", res });
-    console.log(res);
+    // console.log(res);
     // console.log(posts)
   });
 };
@@ -16,10 +16,17 @@ export const getPosts = (dispatch, tag, skip) => {
 export const getMyPost = (dispatch, skip) => {
   Axios.get(`posts/me/skip/${skip}`).then((res) => {
     dispatch({ type: "FETCH_POST_BY_TAG", res });
-    console.log(res);
+    // console.log(res);
     // console.log(posts)
   });
 };
+
+export const getPostById = (dispatch, id) => {
+  Axios.get(`posts/id/${id}`).then((res)=>{
+    // console.log(res);
+    dispatch({ type: "UPDATE_POST", post: res.data})
+  })
+}
 
 export const createPost = (dispatch, values) => {
   Axios.post(`/posts`, values)
@@ -48,7 +55,7 @@ export const editPost = (dispatch, values) => {
   Axios.patch(`/posts`, values)
     .then((res) => {
       // console.log("res", res);
-      dispatch({ type: "UPDATE_POST", id: values.post_id, text: values.text })
+      getPostById(dispatch, values.post_id)
       alertSuccessToast(res.message);
     })
     .catch((err) => {
@@ -64,8 +71,7 @@ export const likePost = (id) => {
 export const createComment = (dispatch, values) => {
   Axios.post(`/comments`, values)
     .then((res) => {
-      // console.log("res", res.data);
-      getPosts(dispatch);
+      getPostById(dispatch, values.post_id)
       alertSuccessToast(res.message);
     })
     .catch((err) => {
