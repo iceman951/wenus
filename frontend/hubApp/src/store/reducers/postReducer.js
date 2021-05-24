@@ -2,6 +2,7 @@ const initState = {
   // allPosts: [],
   posts: [],
   loading: true,
+  dbPostsLength: 0,
 };
 
 const postReducer = (state = initState, action) => {
@@ -10,16 +11,24 @@ const postReducer = (state = initState, action) => {
       var data = action.res.data;
       // console.log(data);
       // console.log(action.res.data.data)
+      if (action.skip === 0) {
+        return {
+          ...state,
+          posts: [...state.posts, ...data],
+          loading: false,
+          dbPostsLength: action.res.postsLength,
+        };
+      }
       return {
         ...state,
         posts: [...state.posts, ...data],
         loading: false,
       };
-    case 'RESET_POST':
+    case "RESET_POST":
       return {
         ...state,
         posts: [],
-      }
+      };
     case "isLoading":
       return {
         ...state,

@@ -12,6 +12,7 @@ export default function Posts() {
   const posts = useSelector((state) => state.post.posts);
   const selectedTag = useSelector((state) => state.tag.selectedTag);
   const isLoading = useSelector((state) => state.post.loading);
+  const dbPostsLength = useSelector((state) => state.post.dbPostsLength)
   const [skip, setSkip] = useState(0);
 
   //Load post when selectedTag changed
@@ -23,7 +24,7 @@ export default function Posts() {
   //Load next posts
   useEffect(() => {
     // console.log(skip);
-    getPosts(dispatch, selectedTag, skip);
+    getPosts(dispatch, selectedTag, skip, dbPostsLength);
   }, [dispatch, selectedTag, skip]);
 
   //scroll
@@ -33,7 +34,7 @@ export default function Posts() {
         e.target.scrollingElement;
       // console.log(clientHeight, scrollTop, scrollHeight, e);
 
-      if (clientHeight + scrollTop + 300 >= scrollHeight) {
+      if (clientHeight + scrollTop >= scrollHeight) {
         setSkip(posts.length);
         // console.log("---------", clientHeight, scrollTop, scrollHeight)
       }
