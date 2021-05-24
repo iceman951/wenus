@@ -109,10 +109,13 @@ exports.showByTag = async (req, res, next) => {
   try {
     let skip = req.params.skip ? Number(req.params.skip) : 0;
     const tag = req.params.tag;
-    const length = req.params.newLength;
+    const length = req.params.length;
     
     const newLength = await Post.find({ tag: tag }).count()
-    skip = skip + newLength - length;
+    if(length != 0) {
+      skip += newLength - length;
+    }
+    
     const posts = await Post.find({ tag: tag }, undefined, { skip, limit: 5 })
       .sort("-createDate")
       .populate("author", "_id firstName lastName")
