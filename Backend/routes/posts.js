@@ -9,7 +9,7 @@ router.post("/", postController.create);
 router.get("/id/:_id", postController.showById);
 
 /* http://localhost:3000/posts/:tag/:skip */
-router.get("/tag/:tag/skip/:skip", postController.showByTag);
+router.get("/tag/:tag/skip/:skip/posts_length/:length", postController.showByTag);
 
 /* http://localhost:3000/posts/:tag/:skip */
 router.get("/me/skip/:skip", postController.showMine);
