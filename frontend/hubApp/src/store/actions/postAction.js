@@ -1,11 +1,12 @@
 import Axios from "axios";
+import { useSelector } from "react-redux";
 import {
   alertSuccessToast,
   alertErrorToast,
 } from "../../utils/sweetAlertToast";
 
 export const getPosts = (dispatch, tag, skip) => {
-  dispatch({ type: "isLoading"});
+  dispatch({ type: "isLoading" });
   Axios.get(`posts/tag/${tag}/skip/${skip}`).then((res) => {
     dispatch({ type: "FETCH_POST_BY_TAG", res });
     // console.log(res)
@@ -13,14 +14,18 @@ export const getPosts = (dispatch, tag, skip) => {
   });
 };
 
-
-export const createPost = (dispatch, values) => {
+export const createPost = (dispatch, values, selectedTag) => {
   Axios.post(`/posts`, values)
     .then((res) => {
+      alertSuccessToast(res.message);
+      if (selectedTag === values.tag) {
+        dispatch({ type: "RESET_POST" });
+        getPosts(dispatch, selectedTag, 0);
+      } else {
+        dispatch({ type: "SET_SELECTED_TAG", payload: { selectedTag: values.tag} });
+      }
       // console.log(res)
       // console.log(res.data.message)
-      getPosts(dispatch);
-      alertSuccessToast(res.message);
     })
     .catch((err) => {
       alertErrorToast(err);

@@ -11,7 +11,7 @@ import {
   Container,
 } from "@material-ui/core/";
 import { red } from "@material-ui/core/colors";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createPost } from "../../store/actions/postAction";
 import PostForm from "../../forms/PostForm";
 
@@ -50,6 +50,7 @@ const CreatePost = () => {
 
   //redux
   const dispatch = useDispatch();
+  const selectedTag = useSelector((state) => state.tag.selectedTag)
 
   const formik = useFormik({
     initialValues: {
@@ -58,8 +59,7 @@ const CreatePost = () => {
     },
     validationSchema: validationPostSchema,
     onSubmit: (values, actions) => {
-      dispatch({ type: "isLoading" });
-      createPost(dispatch, values);
+      createPost(dispatch, values, selectedTag);
       handleCloseModal();
       actions.resetForm();
     },

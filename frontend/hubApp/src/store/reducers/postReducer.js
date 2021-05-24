@@ -20,18 +20,6 @@ const postReducer = (state = initState, action) => {
         ...state,
         posts: [],
       }
-    // case "FILTER_POST_BY_TAG":
-    //   // console.log(action.selectedTag)
-    //   let filteredPosts = state.allPosts.filter(
-    //     post => post.tag === action.selectedTag
-    //   );
-    //   // console.log(data);
-
-    //   return {
-    //     ...state,
-    //     posts: filteredPosts,
-    //     // loading: false,
-    //   };
     case "isLoading":
       return {
         ...state,
