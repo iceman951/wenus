@@ -1,7 +1,7 @@
-const fs = require('fs');
-const path = require('path');
-const uuidv4 = require('uuid');
-const { promisify } = require('util');
+const fs = require("fs");
+const path = require("path");
+const uuidv4 = require("uuid");
+const { promisify } = require("util");
 const writeFileAsync = promisify(fs.writeFile);
 
 const Post = require("../models/post");
@@ -28,25 +28,23 @@ exports.create = async (req, res, next) => {
   }
 };
 
-exports.show = async (req, res, next) => {
+exports.showById = async (req, res, next) => {
   try {
+    const id = req.params._id;
 
-    const skip = req.params.skip ? Number(req.params.skip) : 0 ;
-    const tag = req.params.tag;
-
-    const posts = await Post.find({tag: tag}, undefined, { skip, limit: 5 })
+    const posts = await Post.findById({ _id: id })
       .sort("-createDate")
       .populate("author", "_id firstName lastName")
       .populate({
         path: "comments",
         populate: {
-          path: "author",
-          select: "_id firstName lastName",
-        },
-        populate: {
           path: "liked_users",
           select: "_id firstName lastName",
         },
+      })
+      .populate({
+        path: "comments.author",
+        select: "_id firstName lastName",
       })
       .populate({ path: "liked_users", select: "_id firstName lastName" });
 
@@ -60,7 +58,88 @@ exports.show = async (req, res, next) => {
       success: true,
       message: "สำเร็จ",
       data: posts,
-      skip: skip
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.showMine = async (req, res, next) => {
+  try {
+    const skip = req.params.skip ? Number(req.params.skip) : 0;
+    const user_id = req.user._id;
+
+    const posts = await Post.find({ author: user_id }, undefined, {
+      skip,
+      limit: 5,
+    })
+      .sort("-createDate")
+      .populate("author", "_id firstName lastName")
+      .populate({
+        path: "comments",
+        populate: {
+          path: "liked_users",
+          select: "_id firstName lastName",
+        },
+      })
+      .populate({
+        path: "comments.author",
+        select: "_id firstName lastName",
+      })
+      .populate({ path: "liked_users", select: "_id firstName lastName" });
+
+    if (!posts) {
+      const error = new Error("ไม่พบข้อมูลโพสต์");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "สำเร็จ",
+      data: posts,
+      skip: skip,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.showByTag = async (req, res, next) => {
+  try {
+    let skip = req.params.skip ? Number(req.params.skip) : 0;
+    const tag = req.params.tag;
+    const length = req.params.newLength;
+    
+    const newLength = await Post.find({ tag: tag }).count()
+    skip = skip + newLength - length;
+    const posts = await Post.find({ tag: tag }, undefined, { skip, limit: 5 })
+      .sort("-createDate")
+      .populate("author", "_id firstName lastName")
+      .populate({
+        path: "comments",
+        populate: {
+          path: "liked_users",
+          select: "_id firstName lastName",
+        },
+      })
+      .populate({
+        path: "comments.author",
+        select: "_id firstName lastName",
+      })
+      .populate({ path: "liked_users", select: "_id firstName lastName" });
+    if (!posts) {
+      const error = new Error("ไม่พบข้อมูลโพสต์");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "สำเร็จ",
+      data: posts,
+      skip: skip,
+      postsLength: newLength,
     });
   } catch (error) {
     next(error);
@@ -109,7 +188,7 @@ exports.edit = async (req, res, next) => {
     } else {
       res.status(200).json({
         success: true,
-        message: "แก้ไขข้อมูลเรียบร้อย",
+        message: "แก้ไขข้อมูลเรียบร้อย"
       });
     }
   } catch (error) {
@@ -152,22 +231,25 @@ exports.like = async (req, res, next) => {
 };
 
 async function saveImage(baseImage) {
-  const projectPath = path.resolve('./') ;
+  const projectPath = path.resolve("./");
   //โฟลเดอร์และ path ของการอัปโหลด
   const uploadPath = `${projectPath}/public/images/`;
-  const ext = baseImage.substring(baseImage.indexOf("/")+1, baseImage.indexOf(";base64"));
+  const ext = baseImage.substring(
+    baseImage.indexOf("/") + 1,
+    baseImage.indexOf(";base64")
+  );
 
   //สุ่มชื่อไฟล์ใหม่
-  let filename = '';
-  if (ext === 'png+xml') {
-      filename = `${uuidv4.v4()}.png`;
+  let filename = "";
+  if (ext === "png+xml") {
+    filename = `${uuidv4.v4()}.png`;
   } else {
-      filename = `${uuidv4.v4()}.${ext}`;
+    filename = `${uuidv4.v4()}.${ext}`;
   }
 
   let image = decodeBase64Image(baseImage);
 
-  await writeFileAsync(uploadPath+filename, image.data, 'base64');
+  await writeFileAsync(uploadPath + filename, image.data, "base64");
   return filename;
 }
 
@@ -175,7 +257,7 @@ function decodeBase64Image(base64Str) {
   var matches = base64Str.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
   var image = {};
   if (!matches || matches.length !== 3) {
-      throw new Error('Invalid base64 string');
+    throw new Error("Invalid base64 string");
   }
 
   image.type = matches[1];

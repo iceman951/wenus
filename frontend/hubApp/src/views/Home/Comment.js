@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 
 const Comment = ({ comment }) => {
   const current_user = useSelector((state) => state.user.user);
-  const isAuthor = current_user._id === comment.author;
+  const isAuthor = current_user._id === comment.author._id;
 
   return (
     <>
@@ -22,7 +22,7 @@ const Comment = ({ comment }) => {
           <Avatar style={{ backgroundColor: isAuthor && "red" }} />
         </ListItemAvatar>
         <ListItemText
-          primary={comment.author}
+          primary={`${comment.author.firstName} ${comment.author.lastName}`}
           secondary={
             <Typography
               component="span"

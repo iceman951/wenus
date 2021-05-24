@@ -29,6 +29,15 @@ const postReducer = (state = initState, action) => {
         ...state,
         posts: [],
       };
+    case "UPDATE_POST":
+      // console.log(action.res.data.product_name)
+      return {
+        ...state,
+        posts: state.posts.map((post) =>
+          post._id === action.post._id ? action.post : post
+        ),
+      };
+
     case "isLoading":
       return {
         ...state,

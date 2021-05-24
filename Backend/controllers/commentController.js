@@ -81,7 +81,7 @@ exports.edit = async (req, res, next) => {
     } else {
       res.status(200).json({
         success: true,
-        message: "แก้ไขข้อมูลเรียบร้อย",
+        message: "แก้ไขข้อมูลเรียบร้อย"
       });
     }
   } catch (error) {

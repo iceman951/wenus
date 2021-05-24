@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 const PostForm = ({ actions, formik }) => {
   const classes = useStyles();
   const tags = useSelector((state) => state.tag.tags);
+  const selectedTag = useSelector((state) => state.tag.selectedTag)
 
   return (
     <div className={classes.paper}>
@@ -55,7 +56,7 @@ const PostForm = ({ actions, formik }) => {
             <InputLabel htmlFor="tag">Tags</InputLabel>
             <Select
               id="tag"
-              value={formik.values.tag}
+              value={selectedTag}
               onChange={formik.handleChange("tag")}
               autoWidth
               className={classes.input}
