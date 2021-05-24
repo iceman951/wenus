@@ -37,6 +37,7 @@ import * as yup from "yup";
 import CommentForm from "../../forms/CommentForm";
 import PostForm from "../../forms/PostForm";
 import moment from "moment";
+import "moment/locale/th";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -55,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   numbar: {
     display: "flex",
     flexDirection: "row",
-    // justifyContent: "space-between",
+    justifyContent: "space-between",
   },
 }));
 
@@ -195,10 +196,11 @@ const Post = ({ post }) => {
               {post.tag}
             </>
           }
-          // subheader={moment(post.createDate).format("dddd, MMM DD HH:mm a")}
-          // subheader={moment(post.createDate).format("MMM DD")}
-          subheader={moment(post.createDate).fromNow()}
-          // subheader={moment.locale()}
+          subheader={
+            moment(post.createDate) > moment().subtract(1, "days")
+              ? `${moment(post.createDate).fromNow()}`
+              : `${moment(post.createDate).format("วันddddที่ DD MMM YYYY เวลา HH:mm น.")}`
+          }
         />
         <CardContent>
           <Typography
@@ -208,11 +210,11 @@ const Post = ({ post }) => {
             {post.text}
           </Typography>
           <Container className={classes.numbar}>
-            {nLike !== 0 ? <Typography>ถูกใจ: {nLike}</Typography> : <></>}
+            {nLike !== 0 ? <Typography>ถูกใจ: {nLike}</Typography> : <Typography />}
             {nComment !== 0 ? (
               <Typography>ความคิดเห็น: {nComment} รายการ</Typography>
             ) : (
-              <></>
+              <Typography />
             )}
           </Container>
           <Divider

@@ -6,16 +6,20 @@ import {
 
 export const getPosts = (dispatch, tag, skip) => {
   console.log("skip: ", skip, ", tag: ", tag);
-  Axios.get(`posts/${tag}/${skip}`).then((res) => {
+  Axios.get(`posts/tag/${tag}/skip/${skip}`).then((res) => {
     dispatch({ type: "FETCH_POST_BY_TAG", res });
-    console.log(res)
+    console.log(res);
     // console.log(posts)
   });
 };
 
-// export const filterPost = (dispatch, selectedTag) => {
-//   dispatch({ type: "FILTER_POST_BY_TAG", selectedTag });
-// };
+export const getMyPost = (dispatch, skip) => {
+  Axios.get(`posts/me/skip/${skip}`).then((res) => {
+    dispatch({ type: "FETCH_POST_BY_TAG", res });
+    console.log(res);
+    // console.log(posts)
+  });
+};
 
 export const createPost = (dispatch, values) => {
   Axios.post(`/posts`, values)
