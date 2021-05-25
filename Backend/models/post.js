@@ -18,7 +18,9 @@ const schema = new mongoose.Schema(
         ref: "User",
       },
     ],
+    active: {type: Boolean, default: true}
   },
+
   {
     collection: "posts",
   }
