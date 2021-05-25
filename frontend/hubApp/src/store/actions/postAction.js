@@ -31,6 +31,7 @@ export const createPost = (dispatch, values, selectedTag) => {
   });
 };
 export const getMyPost = (dispatch, skip) => {
+  dispatch({ type: "isLoading" });
   Axios.get(`posts/me/skip/${skip}`).then((res) => {
     dispatch({ type: "FETCH_POST_BY_TAG", res });
     // console.log(res);
