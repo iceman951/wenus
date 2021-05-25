@@ -110,12 +110,12 @@ exports.showByTag = async (req, res, next) => {
     let skip = req.params.skip ? Number(req.params.skip) : 0;
     const tag = req.params.tag;
     const length = req.params.length;
-    
-    const newLength = await Post.find({ tag: tag }).count()
-    if(length != 0) {
+
+    const newLength = await Post.find({ tag: tag }).count();
+    if (length != 0) {
       skip += newLength - length;
     }
-    
+
     const posts = await Post.find({ tag: tag }, undefined, { skip, limit: 5 })
       .sort("-createDate")
       .populate("author", "_id firstName lastName")
@@ -160,7 +160,10 @@ exports.delete = async (req, res, next) => {
       throw error;
     }
 
-    await post.delete();
+    // await post.delete();
+    post.active = false;
+    await post.save();
+
 
     res.status(200).json({
       success: true,
@@ -191,7 +194,7 @@ exports.edit = async (req, res, next) => {
     } else {
       res.status(200).json({
         success: true,
-        message: "แก้ไขข้อมูลเรียบร้อย"
+        message: "แก้ไขข้อมูลเรียบร้อย",
       });
     }
   } catch (error) {
