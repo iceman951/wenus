@@ -25,11 +25,14 @@ export const Logout = (dispatch, values) => {
 
 export const Register = (dispatch, formActions, values) => {
   Axios.post(`/users/register`, values).then((res) => {
+    // console.log(res)
     if (res.data.success) {
       formActions.resetForm();
     }
+  })
+  .catch((error) => {
+    if (error.response.status === 400) {
+      formActions.setFieldError("email", "อีเมลนี้ได้ลงทะเบียนแล้ว");
+    }
   });
-  // .catch((err) => {
-  //   formActions.setFieldError("email", "อีเมลนี้ได้ลงทะเบียนแล้ว");
-  // });
 };
