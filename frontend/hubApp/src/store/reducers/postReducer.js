@@ -37,7 +37,12 @@ const postReducer = (state = initState, action) => {
           post._id === action.post._id ? action.post : post
         ),
       };
-
+    case "DELETE_POST":
+      return {
+        ...state,
+        posts: state.posts.filter((post) => action.post._id !== post._id),
+        dbPostsLength: state.dbPostsLength - 1,
+      };
     case "isLoading":
       return {
         ...state,

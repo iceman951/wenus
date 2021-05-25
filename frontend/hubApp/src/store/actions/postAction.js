@@ -1,7 +1,6 @@
 import Axios from "axios";
 import {
   alertSuccessToast,
-  alertErrorToast,
 } from "../../utils/sweetAlertToast";
 
 export const getPosts = (dispatch, tag, skip, posts_length) => {
@@ -46,11 +45,11 @@ export const getPostById = (dispatch, id) => {
   });
 };
 
-export const deletePost = (dispatch, id) => {
-  const value = { data: { post_id: id } };
+export const deletePost = (dispatch, post) => {
+  const value = { data: { post_id: post._id } };
   Axios.delete(`/posts`, value).then((res) => {
     // console.log("res", res.data);
-    getPosts(dispatch);
+    dispatch({type: "DELETE_POST", post})
     alertSuccessToast(res.message);
   });
 };

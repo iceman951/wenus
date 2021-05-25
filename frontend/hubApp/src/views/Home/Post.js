@@ -110,9 +110,8 @@ const Post = ({ post }) => {
   };
 
   //Action
-  const handleDeletePost = (post_id) => {
-    deletePost(dispatch, post_id);
-    dispatch({ type: "isLoading" });
+  const handleDeletePost = () => {
+    deletePost(dispatch, post);
   };
 
   //Modal
@@ -177,7 +176,7 @@ const Post = ({ post }) => {
                   </MenuItem>
                   <MenuItem
                     disabled={!isAuthor}
-                    onClick={() => handleDeletePost(post._id)}
+                    onClick={() => handleDeletePost()}
                     style={{ color: "red" }}
                   >
                     <DeleteIcon fontSize="small" />
