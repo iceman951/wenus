@@ -6,7 +6,6 @@ import TagsBar from "./TagsBar";
 import { useSelector } from "react-redux";
 import Login from "../LoginPage/index";
 
-const WINDOW_HEIGHT = window.innerHeight;
 const Home = () => {
   const loggedIn = useSelector((state) => state.user.loggedIn);
   if (!loggedIn) {
@@ -15,7 +14,12 @@ const Home = () => {
   return (
     <div
       style={{
-        backgroundImage: `url(/assets/images/bg1.jpg)`
+        backgroundImage: `url(/assets/images/bg1.jpg)`,
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        backgroundAttachment: "fixed",
+        minHeight: window.innerHeight,
       }}
     >
       <NavBar />
