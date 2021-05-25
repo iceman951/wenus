@@ -21,7 +21,7 @@ export default function Posts() {
   useEffect(() => {
     dispatch({ type: "RESET_POST" });
     setSkip(0);
-    if (selectedTag === "โพสต์ของฉัน") getMyPost(dispatch, 0);
+    if (selectedTag === "ฉัน") getMyPost(dispatch, 0);
     else getPosts(dispatch, selectedTag, 0, 0);
   }, [dispatch, selectedTag]);
 

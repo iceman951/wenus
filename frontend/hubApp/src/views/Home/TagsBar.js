@@ -1,6 +1,16 @@
-import { Chip, Container, makeStyles, Paper } from "@material-ui/core";
 import React, { useEffect } from "react";
-// redux
+import {
+  Chip,
+  Container,
+  Divider,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedTag } from "../../store/actions/tagAction";
 
@@ -8,20 +18,22 @@ const useStyles = makeStyles((theme) => ({
   tagsbar: {
     display: "flex",
     justifyContent: "flex-start",
+    flexDirection: "column",
     flexWrap: "wrap",
     listStyle: "none",
     padding: theme.spacing(0.5),
-    margin: 0,
   },
   tags: {
-    margin: theme.spacing(0.5),
+    padding: 0,
   },
   root: {
     marginTop: theme.spacing(2),
     display: "flex",
-    // flexDirection: "column",
-    borderRadius: 0,
-    backgroundColor: 'rgba(0,0,0,0)'
+    flexDirection: "column",
+  },
+  title: {
+    color: "white",
+    textAlign: "left",
   },
 }));
 
@@ -39,40 +51,47 @@ const TagsBar = () => {
   }, [selectedTag]);
 
   return (
-    <Container>
-      <Paper className={classes.root} elevation={0}>
-        <Container className={classes.tagsbar}>
-          <Chip
-            className={classes.tags}
-            label="โพสต์ของฉัน"
-            color="primary"
-            // variant={"โพสต์ของฉัน" === selectedTag ? "default" : "outlined"}
-            
-            disabled={isLoading ? true : false}
-            onClick={(e) => {
-              //update state (Redux)
-              dispatch(setSelectedTag(e.target.innerText));
-            }}
-          />
+    <Container className={classes.root}>
+      <Typography className={classes.title}>Tags</Typography>
+      <Divider />
+      <Container className={classes.tagsbar}>
+        <List>
           {tags.map((tag, index) => {
             return (
-              <Chip
+              <ListItem
+                button
                 key={index}
                 className={classes.tags}
-                label={tag}
-                color="primary"
-                // variant={tag === selectedTag ? "default" : "outlined"}
-                disabled={isLoading ? true : false}
-                onClick={(e) => {
-                  //update state (Redux)
-                  dispatch(setSelectedTag(e.target.innerText));
+                onClick={() => {
+                  dispatch(setSelectedTag(tag));
                 }}
-              />
+                disabled={isLoading? true:false}
+              >
+                <ListItemIcon style={{minWidth: '25px'}}>
+                  <LocalOfferIcon
+                    style={{
+                      fontSize: "20px",
+                      color: "gray",
+                    }}
+                  />
+                </ListItemIcon>
+                <ListItemText
+                  primary={
+                    <Typography
+                      style={{
+                        fontSize: "20px",
+                        color: tag === selectedTag ? "white" : "gray",
+                      }}
+                    >
+                      {tag}
+                    </Typography>
+                  }
+                />
+              </ListItem>
             );
           })}
-          {/* End Space (lastItem)*/}
-        </Container>
-      </Paper>
+        </List>
+      </Container>
     </Container>
   );
 };

@@ -2,6 +2,7 @@ import { SET_TAGS, SET_SELECTED_TAG } from "../actions/tagAction";
 
 const initState = {
   tags: [
+    "ฉัน",
     "ทั่วไป",
     "ความรัก",
     "การศึกษา",
