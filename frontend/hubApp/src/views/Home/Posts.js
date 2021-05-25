@@ -40,7 +40,7 @@ export default function Posts() {
         e.target.scrollingElement;
       // console.log(clientHeight, scrollTop, scrollHeight, e);
 
-      if (clientHeight + scrollTop + WINDOW_HEIGHT_20 >= scrollHeight) {
+      if (clientHeight + scrollTop + WINDOW_HEIGHT_20 >= scrollHeight && !isLoading) {
         setSkip(skip + 5);
         // console.log("---------", clientHeight, scrollTop, scrollHeight)
       }
