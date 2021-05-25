@@ -6,7 +6,7 @@ import { getMyPost, getPosts } from "../../store/actions/postAction";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "./Loading";
 
-const WINDOW_HEIGHT_50 = window.innerHeight / 2;
+const WINDOW_HEIGHT_20 = window.innerHeight / 5;
 
 export default function Posts() {
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ export default function Posts() {
         e.target.scrollingElement;
       // console.log(clientHeight, scrollTop, scrollHeight, e);
 
-      if (clientHeight + scrollTop + WINDOW_HEIGHT_50 >= scrollHeight) {
+      if (clientHeight + scrollTop + WINDOW_HEIGHT_20 >= scrollHeight) {
         setSkip(skip + 5);
         // console.log("---------", clientHeight, scrollTop, scrollHeight)
       }
@@ -56,11 +56,11 @@ export default function Posts() {
   return (
     <Container>
       {posts.map((post, i) => (
-        <LazyLoad key={post._id}>
+        <LazyLoad key={post._id} placeholder={<Loading />}>
           <Post key={post._id} post={post} />
         </LazyLoad>
       ))}
-      {isLoading ? <Loading /> : <></>}
+      {isLoading && <Loading />}
     </Container>
   );
 }
