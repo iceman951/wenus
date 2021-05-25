@@ -8,7 +8,8 @@ import Skeleton from "@material-ui/lab/Skeleton";
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    margin: theme.spacing(2),
+    borderRadius: 30,
+    width: "100%",
   },
   media: {
     height: 190,
