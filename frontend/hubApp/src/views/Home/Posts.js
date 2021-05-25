@@ -38,7 +38,7 @@ export default function Posts() {
       // console.log(clientHeight, scrollTop, scrollHeight, e);
 
       if (clientHeight + scrollTop + WINDOW_HEIGHT_50 >= scrollHeight) {
-        setSkip(posts.length);
+        setSkip(skip+5);
         // console.log("---------", clientHeight, scrollTop, scrollHeight)
       }
     };
