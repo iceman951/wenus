@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    marginBottom: 66,
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -30,7 +31,7 @@ export default function NavBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar>
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
