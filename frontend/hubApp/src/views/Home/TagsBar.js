@@ -7,7 +7,7 @@ import { setSelectedTag } from "../../store/actions/tagAction";
 const useStyles = makeStyles((theme) => ({
   tagsbar: {
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     flexWrap: "wrap",
     listStyle: "none",
     padding: theme.spacing(0.5),
@@ -19,7 +19,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: theme.spacing(2),
     display: "flex",
-    flexDirection: "row",
+    // flexDirection: "column",
+    borderRadius: 0,
+    backgroundColor: 'rgba(0,0,0,0)'
   },
 }));
 
@@ -38,13 +40,14 @@ const TagsBar = () => {
 
   return (
     <Container>
-      <Paper className={classes.root}>
+      <Paper className={classes.root} elevation={0}>
         <Container className={classes.tagsbar}>
           <Chip
             className={classes.tags}
             label="โพสต์ของฉัน"
             color="primary"
-            variant={"โพสต์ของฉัน" === selectedTag ? "default" : "outlined"}
+            // variant={"โพสต์ของฉัน" === selectedTag ? "default" : "outlined"}
+            
             disabled={isLoading ? true : false}
             onClick={(e) => {
               //update state (Redux)
@@ -58,7 +61,7 @@ const TagsBar = () => {
                 className={classes.tags}
                 label={tag}
                 color="primary"
-                variant={tag === selectedTag ? "default" : "outlined"}
+                // variant={tag === selectedTag ? "default" : "outlined"}
                 disabled={isLoading ? true : false}
                 onClick={(e) => {
                   //update state (Redux)
