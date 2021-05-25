@@ -54,9 +54,6 @@ export default function Facebook() {
   return (
     <div>
       <Media />
-      <Media />
-      <Media />
-      <Media />
     </div>
   );
 }

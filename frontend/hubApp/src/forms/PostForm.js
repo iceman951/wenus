@@ -37,8 +37,7 @@ const useStyles = makeStyles((theme) => ({
 const PostForm = ({ actions, formik }) => {
   const classes = useStyles();
   const tags = useSelector((state) => state.tag.tags);
-  const selectedTag = useSelector((state) => state.tag.selectedTag)
-
+  
   return (
     <div className={classes.paper}>
       <Typography align="center" variant="h6" className={classes.typography}>
