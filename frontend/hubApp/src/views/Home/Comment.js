@@ -3,7 +3,6 @@ import React from "react";
 import {
   Avatar,
   Typography,
-  Divider,
   ListItemAvatar,
   ListItemText,
   ListItem,
@@ -14,6 +13,11 @@ import { useSelector } from "react-redux";
 const Comment = ({ comment }) => {
   const current_user = useSelector((state) => state.user.user);
   const isAuthor = current_user._id === comment.author._id;
+  const text = {
+    component: "span",
+    variant: "body2",
+    style: { wordWrap: "break-word", textAlign: "left", marginLeft: 20},
+  };
 
   return (
     <>
@@ -23,19 +27,12 @@ const Comment = ({ comment }) => {
         </ListItemAvatar>
         <ListItemText
           primary={`${comment.author.firstName} ${comment.author.lastName}`}
-          secondary={
-            <Typography
-              component="span"
-              variant="body2"
-              color="textPrimary"
-              style={{ wordWrap: "break-word", textAlign: "left" }}
-            >
-              {comment.text}
-            </Typography>
-          }
+          primaryTypographyProps={{ variant: "h6", style:{marginLeft: 20}}}
+          secondary={comment.text}
+          secondaryTypographyProps={ text }
+          style={{backgroundColor: 'rgba(0,0,0,0.1)', borderRadius: 30          }}
         />
       </ListItem>
-      <Divider variant="inset" component="li" />
     </>
   );
 };
