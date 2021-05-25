@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   post: {
-    borderRadius: "20px",
+    borderRadius: 30,
     padding: theme.spacing(2, 2, 1),
     marginBottom: theme.spacing(2),
   },

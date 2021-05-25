@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
+    marginBottom: 66,
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -33,7 +34,7 @@ export default function NavBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" className={classes.appBar}>
+      <AppBar className={classes.appBar}>
         <Toolbar>
           <IconButton
             edge="start"
