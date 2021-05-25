@@ -19,8 +19,8 @@ export default function Posts() {
 
   //Load post when selectedTag changed
   useEffect(() => {
-    setSkip(0);
     dispatch({ type: "RESET_POST" });
+    setSkip(0);
   }, [dispatch, selectedTag]);
 
   //Load next posts

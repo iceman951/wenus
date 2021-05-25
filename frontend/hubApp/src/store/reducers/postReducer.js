@@ -8,7 +8,7 @@ const initState = {
 const postReducer = (state = initState, action) => {
   switch (action.type) {
     case "FETCH_POST_BY_TAG":
-      var data = action.res.data;
+      var data = action.res.data.filter((post) => post.active === true);
       // console.log(data);
       // console.log(action.res.data.data)
       if (action.skip === 0) {
