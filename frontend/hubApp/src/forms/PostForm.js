@@ -56,7 +56,7 @@ const PostForm = ({ actions, formik }) => {
             <InputLabel htmlFor="tag">Tags</InputLabel>
             <Select
               id="tag"
-              value={selectedTag}
+              value={formik.values.tag}
               onChange={formik.handleChange("tag")}
               autoWidth
               className={classes.input}

@@ -198,7 +198,9 @@ const Post = ({ post }) => {
           subheader={
             moment(post.createDate) > moment().subtract(1, "days")
               ? `${moment(post.createDate).fromNow()}`
-              : `${moment(post.createDate).format("วันddddที่ DD MMM YYYY เวลา HH:mm น.")}`
+              : `${moment(post.createDate).format(
+                  "วันddddที่ DD MMM YYYY เวลา HH:mm น."
+                )}`
           }
         />
         <CardContent>
@@ -209,19 +211,23 @@ const Post = ({ post }) => {
             {post.text}
           </Typography>
           <Container className={classes.numbar}>
-            {nLike !== 0 ? <Typography>ถูกใจ: {nLike}</Typography> : <Typography />}
+            {nLike !== 0 ? (
+              <Typography>ถูกใจ: {nLike}</Typography>
+            ) : (
+              <Typography />
+            )}
             {nComment !== 0 ? (
               <Typography>ความคิดเห็น: {nComment} รายการ</Typography>
             ) : (
               <Typography />
             )}
           </Container>
-          <Divider
-            style={{
-              marginTop: "1%",
-            }}
-          />
         </CardContent>
+        <Divider
+          style={{
+            margin: "1%",
+          }}
+        />
         <CardActions style={{ padding: 0 }}>
           <Button
             color={liked ? "secondary" : "default"}
