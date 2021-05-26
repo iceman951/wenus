@@ -54,13 +54,13 @@ export default function Posts() {
   }, [posts.length]);
 
   return (
-    <Container>
+    <>
       {posts.map((post, i) => (
         <LazyLoad key={post._id} placeholder={<Loading />}>
           <Post key={post._id} post={post} />
         </LazyLoad>
       ))}
       {isLoading && <Loading />}
-    </Container>
+    </>
   );
 }

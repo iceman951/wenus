@@ -26,11 +26,9 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     backgroundColor: theme.palette.primary.dark,
   },
-  drawerContainer: {
-    overflow: "auto",
-  },
   content: {
     flexGrow: 1,
+    width: window.innerWidth - drawerWidth - 100,
   },
 }));
 

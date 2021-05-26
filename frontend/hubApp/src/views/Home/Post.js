@@ -188,11 +188,24 @@ const Post = ({ post }) => {
           }
           title={
             <>
-              {`${post.author.firstName} ${post.author.lastName}`}
+              <Typography
+                variant="body1"
+                style={{
+                  display: "inline-block",
+                }}
+              >{`${post.author.firstName} ${post.author.lastName}`}</Typography>
               <LocalOfferIcon
-                style={{ fontSize: "20px", paddingLeft: "1%", color: "gray" }}
+                style={{ fontSize: "16px", paddingLeft: "1%", color: "gray" }}
               />
-              {post.tag}
+              <Typography
+                variant="subtitle2"
+                style={{
+                  paddingLeft: "2px",
+                  display: "inline-block",
+                }}
+              >
+                {post.tag}
+              </Typography>
             </>
           }
           subheader={
@@ -206,18 +219,21 @@ const Post = ({ post }) => {
         <CardContent>
           <Typography
             paragraph
+            variant="body1"
             style={{ wordWrap: "break-word", textAlign: "left" }}
           >
             {post.text}
           </Typography>
           <Container className={classes.numbar}>
             {nLike !== 0 ? (
-              <Typography>ถูกใจ: {nLike}</Typography>
+              <Typography variant="caption">ถูกใจ: {nLike}</Typography>
             ) : (
               <Typography />
             )}
             {nComment !== 0 ? (
-              <Typography>ความคิดเห็น: {nComment} รายการ</Typography>
+              <Typography variant="caption">
+                ความคิดเห็น: {nComment} รายการ
+              </Typography>
             ) : (
               <Typography />
             )}
@@ -264,9 +280,7 @@ const Post = ({ post }) => {
               <Comment key={comment._id} comment={comment} />
             ))}
           </List>
-          <CardContent>
-            <CommentForm post_id={post._id} />
-          </CardContent>
+          <CommentForm post_id={post._id} />
         </Collapse>
       </Card>
 

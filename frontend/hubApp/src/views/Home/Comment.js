@@ -16,24 +16,22 @@ const Comment = ({ comment }) => {
   const text = {
     component: "span",
     variant: "body2",
-    style: { wordWrap: "break-word", textAlign: "left", marginLeft: 20, marginRight: 20, marginBottom: 20},
+    style: { wordWrap: "break-word", textAlign: "left", marginLeft: 20 },
   };
 
   return (
-    <>
-      <ListItem alignItems="flex-start" style={{ marginBottom: 5 }}>
-        <ListItemAvatar>
-          <Avatar style={{ backgroundColor: isAuthor && "red" }} />
-        </ListItemAvatar>
-        <ListItemText
-          primary={`${comment.author.firstName} ${comment.author.lastName}`}
-          primaryTypographyProps={{ variant: "body1", style:{marginLeft: 20}}}
-          secondary={comment.text}
-          secondaryTypographyProps={ text }
-          style={{backgroundColor: 'rgba(0,0,0,0.1)', borderRadius: 30          }}
-        />
-      </ListItem>
-    </>
+    <ListItem alignItems="center" style={{ marginBottom: 5}}>
+      <ListItemAvatar>
+        <Avatar style={{ backgroundColor: isAuthor && "red" }} />
+      </ListItemAvatar>
+      <ListItemText
+        primary={`${comment.author.firstName} ${comment.author.lastName}`}
+        primaryTypographyProps={{ variant: "body1", style: { marginLeft: 20 } }}
+        secondary={comment.text}
+        secondaryTypographyProps={text}
+        style={{ backgroundColor: "rgba(0,0,0,0.1)", borderRadius: 20, padding: 5}}
+      />
+    </ListItem>
   );
 };
 
