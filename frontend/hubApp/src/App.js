@@ -7,8 +7,8 @@ import { ThemeProvider } from "@material-ui/core";
 
 var theme = createMuiTheme({
   typography: {
-    fontFamily: ["-apple-system"].join(","),
-    fontSize: 25,
+    fontFamily: ["KanitRegular"].join(","),
+    fontSize: 18,
   },
   palette: {
     primary: {

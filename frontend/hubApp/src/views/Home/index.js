@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
+    width: window.innerWidth - drawerWidth - 100,
   },
 }));
 
@@ -51,7 +52,7 @@ const Home = () => {
       className={classes.root}
     >
       <NavBar />
-      <Container className={classes.content} maxWidth={false}>
+      <Container className={classes.content}>
         <Toolbar />
         <CreatePost />
         <Posts />
