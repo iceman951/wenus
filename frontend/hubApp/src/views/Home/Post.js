@@ -264,9 +264,7 @@ const Post = ({ post }) => {
               <Comment key={comment._id} comment={comment} />
             ))}
           </List>
-          <CardContent>
-            <CommentForm post_id={post._id} />
-          </CardContent>
+          <CommentForm post_id={post._id} />
         </Collapse>
       </Card>
 

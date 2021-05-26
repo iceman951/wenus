@@ -26,9 +26,6 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     backgroundColor: theme.palette.primary.dark,
   },
-  drawerContainer: {
-    overflow: "auto",
-  },
   content: {
     flexGrow: 1,
   },
@@ -54,7 +51,7 @@ const Home = () => {
       className={classes.root}
     >
       <NavBar />
-      <Container className={classes.content}>
+      <Container className={classes.content} maxWidth={false}>
         <Toolbar />
         <CreatePost />
         <Posts />
