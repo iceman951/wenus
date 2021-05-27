@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
 }));
-export default function NavBar() {
+export default function NavBar({ onClickMenu }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -55,6 +55,7 @@ export default function NavBar() {
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
+            onClick={() => onClickMenu(true)}
           >
             <MenuIcon />
           </IconButton>
