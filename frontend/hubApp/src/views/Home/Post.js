@@ -38,6 +38,7 @@ import CommentForm from "../../forms/CommentForm";
 import PostForm from "../../forms/PostForm";
 import moment from "moment";
 import "moment/locale/th";
+import { alertWarning } from "../../utils/sweetAlertConfirm";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -111,7 +112,11 @@ const Post = ({ post }) => {
 
   //Action
   const handleDeletePost = () => {
-    deletePost(dispatch, post);
+    handleClose()
+    alertWarning({
+      message: "คุณต้องการลบโพสต์ใช่ไหม?",
+      onClickConfirm: () => {deletePost(dispatch, post)},
+    });
   };
 
   //Modal

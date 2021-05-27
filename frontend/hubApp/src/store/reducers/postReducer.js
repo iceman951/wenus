@@ -30,8 +30,7 @@ const postReducer = (state = initState, action) => {
           loading: false,
           dbPostsLength: action.postsLength,
         };
-      }
-      else if (state.skip < state.dbPostsLength) {
+      } else if (state.skip < state.dbPostsLength) {
         return {
           ...state,
           skip: state.skip + 10,
@@ -61,7 +60,6 @@ const postReducer = (state = initState, action) => {
       return {
         ...state,
         posts: state.posts.filter((post) => action.post._id !== post._id),
-        dbPostsLength: state.dbPostsLength - 1,
       };
     case "isLoading":
       return {
