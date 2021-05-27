@@ -33,7 +33,7 @@ export default function NavBar({ onClickMenu }) {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const newPostNumber = useSelector((state) => state.post.newPostNumber)
+  const newPostNumber = useSelector((state) => state.post.newPostNumber);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -64,6 +64,11 @@ export default function NavBar({ onClickMenu }) {
             PSU HUB
           </Typography>
 
+          <IconButton aria-label="show new notifications" color="inherit">
+            <Badge badgeContent={newPostNumber} color="secondary">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
           <IconButton
             aria-label="account of current user"
             aria-controls="menu-appbar"
@@ -88,21 +93,8 @@ export default function NavBar({ onClickMenu }) {
             open={open}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>
-              <IconButton
-                aria-label="show new notifications"
-                color="inherit"
-              >
-                <Badge badgeContent={newPostNumber} color="secondary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-              <p>Notifications</p>
-            </MenuItem>
             <MenuItem onClick={(handleClose, handleLogOut)}>
-              <IconButton
-                color="inherit"
-              >
+              <IconButton color="inherit">
                 <MeetingRoomIcon />
               </IconButton>
               <p>Log Out</p>
