@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     marginTop: theme.spacing(2),
+    borderRadius: 20,
   },
   details: {
     display: "flex",
@@ -30,10 +31,6 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     backgroundColor: red[500],
-  },
-  backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
-    color: "#fff",
   },
 }));
 
@@ -75,7 +72,7 @@ const CreatePost = () => {
 
   return (
     <>
-      <Container style={{ marginBottom: "1%" }}>
+      <Container style={{ marginBottom: "1%", padding: 0, }}>
         <Card className={classes.card}>
           <CardContent>
             <div className={classes.details}>

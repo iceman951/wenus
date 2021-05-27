@@ -1,22 +1,20 @@
 const initState = {
-  // allPosts: [],
   posts: [],
-  loading: true,
+  skip: 0,
   dbPostsLength: 0,
+  loading: true,
 };
 
 const postReducer = (state = initState, action) => {
   switch (action.type) {
     case "FETCH_POST_BY_TAG":
-      var data = action.res.data.filter((post) => post.active === true);
-      // console.log(data);
-      // console.log(action.res.data.data)
-      if (action.skip === 0) {
+      const data = action.data;
+      if (state.posts.length === 0) {
         return {
           ...state,
           posts: [...state.posts, ...data],
           loading: false,
-          dbPostsLength: action.res.postsLength,
+          dbPostsLength: action.postsLength,
         };
       }
       return {
@@ -24,10 +22,31 @@ const postReducer = (state = initState, action) => {
         posts: [...state.posts, ...data],
         loading: false,
       };
+    case "NEXT_PAGE_POST":
+      if (state.posts.length === 0) {
+        return {
+          ...state,
+          skip: state.skip + 10,
+          loading: false,
+          dbPostsLength: action.postsLength,
+        };
+      }
+      else if (state.skip < state.dbPostsLength) {
+        return {
+          ...state,
+          skip: state.skip + 10,
+          loading: false,
+        };
+      }
+      return {
+        ...state,
+        loading: false,
+      };
     case "RESET_POST":
       return {
         ...state,
         posts: [],
+        skip: 0,
         dbPostsLength: 0,
       };
     case "UPDATE_POST":
