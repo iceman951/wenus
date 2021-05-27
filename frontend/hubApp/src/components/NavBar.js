@@ -11,7 +11,7 @@ import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 
 import { Logout } from "../store/actions/userAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Badge, Menu, MenuItem } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -33,6 +33,7 @@ export default function NavBar() {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const newPostNumber = useSelector((state) => state.post.newPostNumber)
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -88,10 +89,10 @@ export default function NavBar() {
           >
             <MenuItem onClick={handleClose}>
               <IconButton
-                aria-label="show 11 new notifications"
+                aria-label="show new notifications"
                 color="inherit"
               >
-                <Badge badgeContent={11} color="secondary">
+                <Badge badgeContent={newPostNumber} color="secondary">
                   <NotificationsIcon />
                 </Badge>
               </IconButton>

@@ -1,5 +1,6 @@
 const initState = {
   posts: [],
+  newPostNumber: 0,
   skip: 0,
   dbPostsLength: 0,
   loading: true,
@@ -63,6 +64,11 @@ const postReducer = (state = initState, action) => {
         posts: state.posts.filter((post) => action.post._id !== post._id),
         dbPostsLength: state.dbPostsLength - 1,
       };
+    case "COUNT_NEW_POST":
+      return {
+        ...state,
+        newPostNumber: state.newPostNumber + 1,
+      }
     case "isLoading":
       return {
         ...state,
