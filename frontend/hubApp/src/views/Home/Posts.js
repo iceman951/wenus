@@ -1,57 +1,59 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import LazyLoad from "react-lazyload";
 import Post from "./Post";
-import { Container } from "@material-ui/core/";
 import { getMyPost, getPosts } from "../../store/actions/postAction";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "./Loading";
 
-const WINDOW_HEIGHT_20 = window.innerHeight / 5;
-
 export default function Posts() {
   const dispatch = useDispatch();
-  // const allPosts = useSelector((state) => state.post.allPosts);
   const posts = useSelector((state) => state.post.posts);
   const selectedTag = useSelector((state) => state.tag.selectedTag);
   const isLoading = useSelector((state) => state.post.loading);
   const dbPostsLength = useSelector((state) => state.post.dbPostsLength);
-  const [skip, setSkip] = useState(0);
+  const skip = useSelector((state) => state.post.skip);
 
-  //Load post when selectedTag changed
+  //Load Post First Time && Change Tag
   useEffect(() => {
+    console.log("First Time or Change Tag");
     dispatch({ type: "RESET_POST" });
-    setSkip(0);
-    if (selectedTag === "ฉัน") getMyPost(dispatch, 0);
-    else getPosts(dispatch, selectedTag, 0, 0);
+    selectedTag === "ฉัน"
+      ? getMyPost(dispatch, 0)
+      : getPosts(dispatch, selectedTag, 0, 0);
   }, [dispatch, selectedTag]);
-
-  //Load next posts
+  //Load New Post When Change skip
   useEffect(() => {
-    // console.log(skip);
     if (skip !== 0) {
-      getPosts(dispatch, selectedTag, skip, dbPostsLength);
+      console.log("Next: New Skip", skip);
+      selectedTag === "ฉัน"
+        ? getMyPost(dispatch, skip)
+        : getPosts(dispatch, selectedTag, skip, dbPostsLength);
     }
-  }, [dispatch, skip]);
-
-  //scroll
+  }, [dispatch, skip, dbPostsLength]);
+  //Load new post at bottom When scrolling
   useEffect(() => {
     const handleScroll = (e) => {
-      const { clientHeight, scrollTop, scrollHeight } =
-        e.target.scrollingElement;
-      // console.log(clientHeight, scrollTop, scrollHeight, e);
+      if (!isLoading) {
+        const { clientHeight, scrollTop, scrollHeight } =
+          e.target.scrollingElement;
 
-      if (clientHeight + scrollTop + WINDOW_HEIGHT_20 >= scrollHeight && !isLoading) {
-        setSkip(skip + 5);
-        // console.log("---------", clientHeight, scrollTop, scrollHeight)
+        if (clientHeight + scrollTop === scrollHeight && !isLoading) {
+          console.log("Hit Bottom Zone");
+          dispatch({ type: "NEXT_PAGE_POST" });
+        }
       }
     };
+    
+    if(posts.length < 5 && posts.length !== 0 && !isLoading){
+      dispatch({ type: "NEXT_PAGE_POST" });
+    }
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-
+    
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [posts.length]);
+  }, [dispatch, isLoading, posts]);
 
   return (
     <>
