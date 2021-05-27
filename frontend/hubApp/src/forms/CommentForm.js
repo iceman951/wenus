@@ -70,7 +70,7 @@ export default function CommentForm({ post_id }) {
             InputProps={{ className: classes.input }}
             placeholder="แสดงความคิดเห็น......"
             size="small"
-            rows={6}
+            multiline
             fullWidth
             value={formik.values.text}
             onChange={formik.handleChange("text")}

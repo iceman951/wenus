@@ -163,7 +163,8 @@ const Post = ({ post }) => {
                   onClose={handleClose}
                   PaperProps={{
                     style: {
-                      width: "25ch",
+                      marginTop: 50,
+                      width: "20ch",
                     },
                   }}
                 >
@@ -172,7 +173,14 @@ const Post = ({ post }) => {
                     onClick={() => handleOpenModal()}
                   >
                     <EditIcon fontSize="small" />
-                    <Typography variant="inherit">แก้ไขโพสต์</Typography>
+                    <Typography
+                      style={{
+                        marginLeft: 10,
+                      }}
+                      variant="inherit"
+                    >
+                      แก้ไขโพสต์
+                    </Typography>
                   </MenuItem>
                   <MenuItem
                     disabled={!isAuthor}
@@ -180,7 +188,14 @@ const Post = ({ post }) => {
                     style={{ color: "red" }}
                   >
                     <DeleteIcon fontSize="small" />
-                    <Typography variant="inherit">ลบโพสต์</Typography>
+                    <Typography
+                      style={{
+                        marginLeft: 10,
+                      }}
+                      variant="inherit"
+                    >
+                      ลบโพสต์
+                    </Typography>
                   </MenuItem>
                 </Menu>
               </>
