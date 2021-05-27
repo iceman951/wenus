@@ -32,7 +32,7 @@ export const getMyPost = (dispatch, skip) => {
   });
 };
 
-export const createPost = (dispatch, values, selectedTag) => {
+export const createPost = (dispatch, SentMessage, values, selectedTag) => {
   Axios.post(`/posts`, values).then((res) => {
     alertSuccessToast(res.message);
     if (selectedTag === values.tag) {
@@ -44,6 +44,7 @@ export const createPost = (dispatch, values, selectedTag) => {
         payload: { selectedTag: values.tag },
       });
     }
+    SentMessage()
     // console.log(res)
     // console.log(res.data.message)
   });

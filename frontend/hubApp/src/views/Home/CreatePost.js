@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import {
@@ -14,6 +14,7 @@ import { red } from "@material-ui/core/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost } from "../../store/actions/postAction";
 import PostForm from "../../forms/PostForm";
+import { SocketContext } from "../../context/socket";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -42,12 +43,23 @@ const validationPostSchema = yup.object({
 });
 
 const CreatePost = () => {
+  const socket = useContext(SocketContext);
   const classes = useStyles();
   const [openModal, setOpenModal] = useState(false);
 
   //redux
   const dispatch = useDispatch();
-  const selectedTag = useSelector((state) => state.tag.selectedTag)
+  const selectedTag = useSelector((state) => state.tag.selectedTag);
+
+  useEffect(() => {
+    socket.on("new-message", (msg) => {
+      dispatch({ type: "COUNT_NEW_POST" });
+    });
+  }, []);
+
+  const SentMessage = () => {
+    socket.emit("sent-message", "text...");
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -56,7 +68,7 @@ const CreatePost = () => {
     },
     validationSchema: validationPostSchema,
     onSubmit: (values, actions) => {
-      createPost(dispatch, values, selectedTag);
+      createPost(dispatch, SentMessage, values, selectedTag);
       handleCloseModal();
       actions.resetForm();
     },
@@ -72,7 +84,7 @@ const CreatePost = () => {
 
   return (
     <>
-      <Container style={{ marginBottom: "1%", padding: 0, }}>
+      <Container style={{ marginBottom: "1%", padding: 0 }}>
         <Card className={classes.card}>
           <CardContent>
             <div className={classes.details}>
