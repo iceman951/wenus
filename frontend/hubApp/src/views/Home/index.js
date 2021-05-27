@@ -14,7 +14,7 @@ import {
 } from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 
-const drawerWidth = window.innerWidth / 6;
+const drawerWidth = 200;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
   },
   drawer: {
     width: drawerWidth,
-    // flexShrink: 0,
   },
   drawerPaper: {
     width: drawerWidth,

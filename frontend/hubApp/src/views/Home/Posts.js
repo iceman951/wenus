@@ -43,17 +43,19 @@ export default function Posts() {
         }
       }
     };
-    
-    if(posts.length < 5 && posts.length !== 0 && !isLoading){
-      dispatch({ type: "NEXT_PAGE_POST" });
-    }
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [dispatch, isLoading, posts]);
+  }, [dispatch, isLoading]);
+  //Check post
+  useEffect(() => {
+    if (posts.length < 10 && posts.length !== 0) {
+      dispatch({ type: "NEXT_PAGE_POST" });
+    }
+  }, [dispatch, posts]);
 
   return (
     <>

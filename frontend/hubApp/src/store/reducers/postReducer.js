@@ -28,14 +28,12 @@ const postReducer = (state = initState, action) => {
         return {
           ...state,
           skip: state.skip + 10,
-          loading: false,
           dbPostsLength: action.postsLength,
         };
       } else if (state.skip < state.dbPostsLength) {
         return {
           ...state,
           skip: state.skip + 10,
-          loading: false,
         };
       }
       return {
