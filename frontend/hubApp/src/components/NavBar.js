@@ -99,12 +99,9 @@ export default function NavBar() {
             </MenuItem>
             <MenuItem onClick={(handleClose, handleLogOut)}>
               <IconButton
-                aria-label="show 11 new notifications"
                 color="inherit"
               >
-                <Badge badgeContent={11} color="secondary">
-                  <MeetingRoomIcon />
-                </Badge>
+                <MeetingRoomIcon />
               </IconButton>
               <p>Log Out</p>
             </MenuItem>

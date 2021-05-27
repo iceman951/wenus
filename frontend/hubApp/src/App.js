@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import Routing from "./routes";
 import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/core";
+import { io } from "socket.io-client";
 
 var theme = createMuiTheme({
   typography: {
@@ -26,6 +27,8 @@ var theme = createMuiTheme({
   },
 });
 theme = responsiveFontSizes(theme);
+
+const socket = io("https://guarded-falls-57008.herokuapp.com/");
 
 function App() {
   return (
