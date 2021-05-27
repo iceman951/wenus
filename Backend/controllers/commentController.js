@@ -43,10 +43,6 @@ exports.delete = async (req, res, next) => {
       throw error;
     }
 
-    console.log(req.user._id);
-    console.log(post.author);
-
-
     // await post.comments.pull({ _id: comment_id });
     // await post.save();
 

@@ -112,7 +112,7 @@ exports.showByTag = async (req, res, next) => {
     const length = req.params.length;
 
     const newLength = await Post.find({ tag: tag }).count();
-    if (length != 0) {
+    if (length != 0 && newLength - length >= 0) {
       skip += newLength - length;
     }
 
