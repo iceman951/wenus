@@ -68,6 +68,7 @@ exports.showMine = async (req, res, next) => {
   try {
     const skip = req.params.skip ? Number(req.params.skip) : 0;
     const user_id = req.user._id;
+    const newLength = await Post.find({ author: user_id }).count()
 
     const posts = await Post.find({ author: user_id }, undefined, {
       skip,
@@ -99,6 +100,7 @@ exports.showMine = async (req, res, next) => {
       message: "สำเร็จ",
       data: posts,
       skip: skip,
+      postsLength: newLength,
     });
   } catch (error) {
     next(error);
@@ -112,7 +114,7 @@ exports.showByTag = async (req, res, next) => {
     const length = req.params.length;
 
     const newLength = await Post.find({ tag: tag }).count();
-    if (length != 0) {
+    if (length != 0 && newLength - length >= 0) {
       skip += newLength - length;
     }
 
