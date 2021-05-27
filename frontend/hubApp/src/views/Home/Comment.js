@@ -19,13 +19,13 @@ const Comment = ({ comment }) => {
   };
 
   return (
-    <ListItem alignItems="center" style={{ marginBottom: 5 }}>
+    <ListItem alignItems="flex-start" style={{ marginBottom: 5 }}>
       <ListItemAvatar>
         <Avatar style={{ backgroundColor: isAuthor && "red" }} />
       </ListItemAvatar>
       <ListItemText
         primary={`${comment.author.firstName} ${comment.author.lastName}`}
-        primaryTypographyProps={{ variant: "body1", style: { marginLeft: 20 } }}
+        primaryTypographyProps={{ variant: "body2", style: { marginLeft: 20 } }}
         secondary={comment.text}
         secondaryTypographyProps={text}
         style={{
