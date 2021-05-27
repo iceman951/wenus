@@ -13,7 +13,7 @@ const config = require("../config/index");
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(config.PORT || "3000");
+const port = normalizePort(config.PORT || "4000");
 app.set("port", port);
 
 /**
@@ -21,6 +21,18 @@ app.set("port", port);
  */
 
 const server = http.createServer(app);
+
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "*",
+  },
+});
+
+io.on("connection", (socket) => {
+  socket.on("sent-message", () => {
+    io.emit("new-message", 'ข้อความใหม่');
+  });
+});
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -85,16 +97,3 @@ function onListening() {
   let bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
   debug("Listening on " + bind);
 }
-
-const io = require("socket.io")(http, {
-  cors: {
-    origin: "*",
-  },
-});
-
-io.on("connection", (socket) => {
-  socket.on("sent-message", (msg) => {
-    console.log("message: " + msg);
-    io.emit("new-message", msg);
-  });
-});
