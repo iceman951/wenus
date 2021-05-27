@@ -9,5 +9,6 @@ npm run dev (run in dev mode)
 
 ## Run frontend 
 ```
-
+npm install
+npm start
 ```
