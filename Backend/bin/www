@@ -8,6 +8,7 @@ const app = require("../app");
 const debug = require("debug")("backend:server");
 const http = require("http");
 const config = require("../config/index");
+const { nextTick } = require("process");
 
 /**
  * Get port from environment and store in Express.
@@ -28,11 +29,27 @@ const io = require("socket.io")(server, {
   },
 });
 
+var users = {}
+
 io.on("connection", (socket) => {
-  socket.on("sent-message", () => {
-    io.emit("new-message", 'ข้อความใหม่');
+
+  socket.on("sent-post", (user_id) => {
+    try {
+      users.user_id.push(socket.id)
+    }catch (error) {
+      users.user_id = [socket.id]
+    }
+    socket.broadcast.emit("new-post", users)
+    // io.emit("new-message", "ข้อความ");
+
   });
 });
+
+io.on("disconnect", (socket) => {
+
+});
+
+
 
 /**
  * Listen on provided port, on all network interfaces.
