@@ -34,6 +34,7 @@ export default function NavBar({ onClickMenu }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const newPostNumber = useSelector((state) => state.post.newPostNumber);
+  const isLoading = useSelector((state) => state.post.loading)
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -57,6 +58,7 @@ export default function NavBar({ onClickMenu }) {
             color="inherit"
             aria-label="menu"
             onClick={() => onClickMenu(true)}
+            disabled={isLoading}
           >
             <MenuIcon />
           </IconButton>
@@ -92,6 +94,9 @@ export default function NavBar({ onClickMenu }) {
             }}
             open={open}
             onClose={handleClose}
+            style={{
+              marginTop: 40,
+            }}
           >
             <MenuItem onClick={(handleClose, handleLogOut)}>
               <IconButton color="inherit">

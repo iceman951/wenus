@@ -19,6 +19,7 @@ import {
   Collapse,
   List,
   Divider,
+  Chip,
 } from "@material-ui/core/";
 // Icon
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -38,6 +39,7 @@ import CommentForm from "../../forms/CommentForm";
 import PostForm from "../../forms/PostForm";
 import moment from "moment";
 import "moment/locale/th";
+import { alertWarning } from "../../utils/sweetAlertConfirm";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -111,7 +113,13 @@ const Post = ({ post }) => {
 
   //Action
   const handleDeletePost = () => {
-    deletePost(dispatch, post);
+    handleClose();
+    alertWarning({
+      message: "คุณต้องการลบโพสต์ใช่ไหม?",
+      onClickConfirm: () => {
+        deletePost(dispatch, post);
+      },
+    });
   };
 
   //Modal
@@ -209,7 +217,7 @@ const Post = ({ post }) => {
                   display: "inline-block",
                 }}
               >{`${post.author.firstName} ${post.author.lastName}`}</Typography>
-              <LocalOfferIcon
+              {/* <LocalOfferIcon
                 style={{ fontSize: "16px", paddingLeft: "1%", color: "gray" }}
               />
               <Typography
@@ -220,7 +228,23 @@ const Post = ({ post }) => {
                 }}
               >
                 {post.tag}
-              </Typography>
+              </Typography> */}
+              <Chip
+                size="small"
+                icon={
+                  <LocalOfferIcon
+                    style={{
+                      color: "gray",
+                    }}
+                  />
+                }
+                label={post.tag}
+                style={{
+                  padding: 10,
+                  marginBottom: 5,
+                  marginLeft: 5,
+                }}
+              />
             </>
           }
           subheader={
@@ -271,7 +295,13 @@ const Post = ({ post }) => {
               <ThumbUpOutlinedIcon fontSize="small" />
             )}
             {/* {nLike} */}
-            <Typography>ถูกใจ</Typography>
+            <Typography
+              style={{
+                marginLeft: 10,
+              }}
+            >
+              ถูกใจ
+            </Typography>
           </Button>
           <Button
             fullWidth
@@ -279,7 +309,13 @@ const Post = ({ post }) => {
             aria-expanded={expanded}
           >
             <MessageOutlinedIcon fontSize="small" />
-            <Typography>แสดงความคิดเห็น</Typography>
+            <Typography
+              style={{
+                marginLeft: 10,
+              }}
+            >
+              แสดงความคิดเห็น
+            </Typography>
           </Button>
         </CardActions>
         {expanded && (
