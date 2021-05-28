@@ -28,6 +28,49 @@ exports.create = async (req, res, next) => {
   }
 };
 
+exports.show = async (req, res, next) => {
+  try {
+    let skip = req.params.skip ? Number(req.params.skip) : 0;
+    const length = req.params.length;
+
+    const newLength = await Post.find().countDocuments();
+    if (length != 0 && newLength - length >= 0) {
+      skip += newLength - length;
+    }
+
+    const posts = await Post.find({}, undefined, { skip, limit: 10 })
+      .sort("-createDate")
+      .populate("author", "_id firstName lastName")
+      .populate({
+        path: "comments",
+        populate: {
+          path: "liked_users",
+          select: "_id firstName lastName",
+        },
+      })
+      .populate({
+        path: "comments.author",
+        select: "_id firstName lastName",
+      })
+      .populate({ path: "liked_users", select: "_id firstName lastName" });
+    if (!posts) {
+      const error = new Error("ไม่พบข้อมูลโพสต์");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "สำเร็จ",
+      data: posts,
+      skip: skip,
+      postsLength: newLength,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.showById = async (req, res, next) => {
   try {
     const id = req.params._id;
@@ -68,11 +111,11 @@ exports.showMine = async (req, res, next) => {
   try {
     const skip = req.params.skip ? Number(req.params.skip) : 0;
     const user_id = req.user._id;
-    const newLength = await Post.find({ author: user_id }).count()
+    const newLength = await Post.find({ author: user_id }).countDocuments();
 
     const posts = await Post.find({ author: user_id }, undefined, {
       skip,
-      limit: 5,
+      limit: 10,
     })
       .sort("-createDate")
       .populate("author", "_id firstName lastName")
@@ -113,7 +156,7 @@ exports.showByTag = async (req, res, next) => {
     const tag = req.params.tag;
     const length = req.params.length;
 
-    const newLength = await Post.find({ tag: tag }).count();
+    const newLength = await Post.find({ tag: tag }).countDocuments();
     if (length != 0 && newLength - length >= 0) {
       skip += newLength - length;
     }
@@ -165,7 +208,6 @@ exports.delete = async (req, res, next) => {
     // await post.delete();
     post.active = false;
     await post.save();
-
 
     res.status(200).json({
       success: true,

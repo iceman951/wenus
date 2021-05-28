@@ -5,6 +5,9 @@ const postController = require('../controllers/postController');
 /* http://localhost:3000/posts */
 router.post("/", postController.create);
 
+/* http://localhost:3000/posts */
+router.get("/skip/:skip/posts_length/:length", postController.show);
+
 /* http://localhost:3000/posts/id/:_id */
 router.get("/id/:_id", postController.showById);
 
