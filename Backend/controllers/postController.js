@@ -118,7 +118,7 @@ exports.showByTag = async (req, res, next) => {
       skip += newLength - length;
     }
 
-    const posts = await Post.find({ tag: tag }, undefined, { skip, limit: 5 })
+    const posts = await Post.find({ tag: tag }, undefined, { skip, limit: 10 })
       .sort("-createDate")
       .populate("author", "_id firstName lastName")
       .populate({
