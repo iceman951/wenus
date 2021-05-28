@@ -53,9 +53,9 @@ const CreatePost = () => {
   const selectedTag = useSelector((state) => state.tag.selectedTag);
 
   useEffect(() => {
-    socket.on("new-post", (id) => {
+    socket.on("new-post", (userObjects) => {
       dispatch({ type: "COUNT_NEW_POST" });
-      // console.log(id);
+      console.log(userObjects);
     });
   }, []);
 
