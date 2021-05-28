@@ -50,7 +50,7 @@ export default function RegisterPage() {
                           type="submit"
                           color="primary"
                           component={Link}
-                          to="/"
+                          to="/Login"
                         >
                           Sign in
                         </Button>

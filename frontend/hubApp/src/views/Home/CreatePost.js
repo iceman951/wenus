@@ -59,6 +59,7 @@ const CreatePost = () => {
 
   const SentMessage = () => {
     socket.emit("sent-message", "text...");
+    console.log(socket.id);
   };
 
   const formik = useFormik({

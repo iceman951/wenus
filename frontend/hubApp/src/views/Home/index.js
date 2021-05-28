@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import NavBar from "../../components/NavBar";
 import CreatePost from "./CreatePost";
 import Posts from "./Posts";
 import TagsBar from "./TagsBar";
-import { useSelector } from "react-redux";
-import Login from "../LoginPage/index";
 import {
   Container,
   Drawer,
@@ -13,6 +11,7 @@ import {
   IconButton,
 } from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import { SocketContext } from "../../context/socket";
 
 const drawerWidth = 200;
 
@@ -32,20 +31,27 @@ const useStyles = makeStyles((theme) => ({
     width: window.innerWidth,
   },
   toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end', 
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
   },
 }));
 
 const Home = () => {
   const classes = useStyles();
+  const socket = useContext(SocketContext);
+
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const loggedIn = useSelector((state) => state.user.loggedIn);
-  if (!loggedIn) {
-    return <Login />;
-  }
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("Connected: ",socket.id);
+    });
+
+    return () => {
+      socket.emit('disconnect')
+    };
+  }, []);
 
   const toggleDrawer = (open) => {
     setDrawerOpen(open);
@@ -60,6 +66,7 @@ const Home = () => {
         backgroundSize: "cover",
         backgroundAttachment: "fixed",
         minHeight: window.innerHeight,
+        overflowX: 'hidden',
       }}
       className={classes.root}
     >
@@ -75,9 +82,11 @@ const Home = () => {
       >
         <Toolbar className={classes.toolbar}>
           <IconButton onClick={() => toggleDrawer(false)}>
-            <ChevronLeftIcon style={{
-              color: 'white'
-            }}/>
+            <ChevronLeftIcon
+              style={{
+                color: "white",
+              }}
+            />
           </IconButton>
         </Toolbar>
         <TagsBar onClick={toggleDrawer} />
