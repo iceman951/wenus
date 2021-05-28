@@ -2,7 +2,6 @@ import React from "react";
 // Mui
 import {
   Avatar,
-  Typography,
   ListItemAvatar,
   ListItemText,
   ListItem,
@@ -20,16 +19,20 @@ const Comment = ({ comment }) => {
   };
 
   return (
-    <ListItem alignItems="center" style={{ marginBottom: 5}}>
+    <ListItem alignItems="flex-start" style={{ marginBottom: 5 }}>
       <ListItemAvatar>
         <Avatar style={{ backgroundColor: isAuthor && "red" }} />
       </ListItemAvatar>
       <ListItemText
         primary={`${comment.author.firstName} ${comment.author.lastName}`}
-        primaryTypographyProps={{ variant: "body1", style: { marginLeft: 20 } }}
+        primaryTypographyProps={{ variant: "body2", style: { marginLeft: 20 } }}
         secondary={comment.text}
         secondaryTypographyProps={text}
-        style={{ backgroundColor: "rgba(0,0,0,0.1)", borderRadius: 20, padding: 5}}
+        style={{
+          backgroundColor: "rgba(0,0,0,0.1)",
+          borderRadius: 20,
+          padding: 5,
+        }}
       />
     </ListItem>
   );

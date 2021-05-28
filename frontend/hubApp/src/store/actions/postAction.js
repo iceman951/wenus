@@ -1,20 +1,38 @@
 import Axios from "axios";
-import {
-  alertSuccessToast,
-} from "../../utils/sweetAlertToast";
+import { alertSuccessToast } from "../../utils/sweetAlertToast";
 
 export const getPosts = (dispatch, tag, skip, posts_length) => {
   dispatch({ type: "isLoading" });
   Axios.get(`posts/tag/${tag}/skip/${skip}/posts_length/${posts_length}`).then(
     (res) => {
-      dispatch({ type: "FETCH_POST_BY_TAG", res, skip });
-      // console.log(res)
+      let data = res.data.filter((post) => post.active === true);
+      let postsLength = res.postsLength;
+      if (!(data.length === 0)) {
+        dispatch({ type: "FETCH_POST_BY_TAG", data, postsLength });
+      } else {
+        dispatch({ type: "NEXT_PAGE_POST", postsLength });
+      }
       // console.log(posts)
     }
   );
 };
 
-export const createPost = (dispatch, values, selectedTag) => {
+export const getMyPost = (dispatch, skip) => {
+  dispatch({ type: "isLoading" });
+  Axios.get(`posts/me/skip/${skip}`).then((res) => {
+    let data = res.data.filter((post) => post.active === true);
+    let postsLength = res.postsLength;
+    if (!(data.length === 0)) {
+      dispatch({ type: "FETCH_POST_BY_TAG", data, postsLength });
+    } else {
+      dispatch({ type: "NEXT_PAGE_POST", postsLength });
+    }
+    // console.log(res);
+    // console.log(posts)
+  });
+};
+
+export const createPost = (dispatch, SentMessage, values, selectedTag) => {
   Axios.post(`/posts`, values).then((res) => {
     alertSuccessToast(res.message);
     if (selectedTag === values.tag) {
@@ -26,16 +44,9 @@ export const createPost = (dispatch, values, selectedTag) => {
         payload: { selectedTag: values.tag },
       });
     }
+    SentMessage()
     // console.log(res)
     // console.log(res.data.message)
-  });
-};
-export const getMyPost = (dispatch, skip) => {
-  dispatch({ type: "isLoading" });
-  Axios.get(`posts/me/skip/${skip}`).then((res) => {
-    dispatch({ type: "FETCH_POST_BY_TAG", res });
-    // console.log(res);
-    // console.log(posts)
   });
 };
 
@@ -50,7 +61,7 @@ export const deletePost = (dispatch, post) => {
   const value = { data: { post_id: post._id } };
   Axios.delete(`/posts`, value).then((res) => {
     // console.log("res", res.data);
-    dispatch({type: "DELETE_POST", post})
+    dispatch({ type: "DELETE_POST", post });
     alertSuccessToast(res.message);
   });
 };

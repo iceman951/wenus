@@ -16,6 +16,73 @@ const initState = {
     "หนัง-ซีรีย์",
     "อาหาร",
   ],
+  // tags: [
+  //   {
+  //     icon: "",
+  //     text: "ฉัน",
+  //     value: "me",
+  //   },
+  //   {
+  //     icon: "",
+  //     text: "ทั่วไป",
+  //     value: "general",
+  //   },
+  //   {
+  //     icon: "",
+  //     text: "ความรัก",
+  //     value: "love",
+  //   },
+  //   {
+  //     icon: "",
+  //     text: "การศึกษา",
+  //     value: "education",
+  //   },
+  //   {
+  //     icon: "",
+  //     text: "ไอดอล",
+  //     value: "idol",
+  //   },
+  //   {
+  //     icon: "",
+  //     text: "ปรึกษา",
+  //     value: "consult",
+  //   },
+  //   {
+  //     icon: "",
+  //     text: "เกม/กีฬา",
+  //     value: "game",
+  //   },
+  //   {
+  //     icon: "",
+  //     text: "สุขภาพ",
+  //     value: "healthy",
+  //   },
+  //   {
+  //     icon: "",
+  //     text: "สังคม",
+  //     value: "social",
+  //   },
+  //   {
+  //     icon: "",
+  //     text: "นิยาย",
+  //     value: "Fiction",
+  //   },
+  //   {
+  //     icon: "",
+  //     text: "บิวตี้",
+  //     value: "Beauty",
+  //   },
+  //   {
+  //     icon: "",
+  //     text: "หนัง/ซีรีส์",
+  //     value: "movies",
+  //   },
+  //   {
+  //     icon: "",
+  //     text: "อาหาร",
+  //     value: "food",
+  //   },
+  // ],
   selectedTag: "ทั่วไป",
 };
 

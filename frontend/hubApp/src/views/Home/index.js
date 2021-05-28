@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import NavBar from "../../components/NavBar";
 import CreatePost from "./CreatePost";
 import Posts from "./Posts";
@@ -10,9 +10,11 @@ import {
   Drawer,
   makeStyles,
   Toolbar,
+  IconButton,
 } from "@material-ui/core";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 
-const drawerWidth = window.innerWidth/6;
+const drawerWidth = 200;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
   },
   drawer: {
     width: drawerWidth,
-    flexShrink: 0,
   },
   drawerPaper: {
     width: drawerWidth,
@@ -28,17 +29,28 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    width: window.innerWidth - drawerWidth - 100,
+    width: window.innerWidth,
+  },
+  toolbar: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end', 
   },
 }));
 
 const Home = () => {
   const classes = useStyles();
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const loggedIn = useSelector((state) => state.user.loggedIn);
   if (!loggedIn) {
     return <Login />;
   }
+
+  const toggleDrawer = (open) => {
+    setDrawerOpen(open);
+  };
+
   return (
     <div
       style={{
@@ -51,23 +63,30 @@ const Home = () => {
       }}
       className={classes.root}
     >
-      <NavBar />
+      <NavBar onClickMenu={toggleDrawer} />
+      <Drawer
+        className={classes.drawer}
+        anchor="left"
+        open={drawerOpen}
+        onClose={() => toggleDrawer(false)}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        <Toolbar className={classes.toolbar}>
+          <IconButton onClick={() => toggleDrawer(false)}>
+            <ChevronLeftIcon style={{
+              color: 'white'
+            }}/>
+          </IconButton>
+        </Toolbar>
+        <TagsBar onClick={toggleDrawer} />
+      </Drawer>
       <Container className={classes.content}>
         <Toolbar />
         <CreatePost />
         <Posts />
       </Container>
-      <Drawer
-        className={classes.drawer}
-        variant="permanent"
-        anchor="right"
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <Toolbar />
-        <TagsBar />
-      </Drawer>
     </div>
   );
 };

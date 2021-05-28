@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
   },
   root: {
-    marginTop: theme.spacing(2),
     display: "flex",
     flexDirection: "column",
   },
@@ -36,13 +35,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TagsBar = () => {
+const TagsBar = ({onClick}) => {
   const classes = useStyles();
 
   //redux
   const tags = useSelector((state) => state.tag.tags);
   const selectedTag = useSelector((state) => state.tag.selectedTag);
-  const isLoading = useSelector((state) => state.post.loading);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -62,9 +60,9 @@ const TagsBar = () => {
                 key={index}
                 className={classes.tags}
                 onClick={() => {
+                  onClick(false);
                   dispatch(setSelectedTag(tag));
                 }}
-                disabled={isLoading? true:false}
               >
                 <ListItemIcon style={{minWidth: '25px'}}>
                   <LocalOfferIcon

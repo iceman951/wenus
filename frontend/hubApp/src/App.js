@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import Routing from "./routes";
 import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/core";
+import { SocketContext, socket } from "./context/socket";
 
 var theme = createMuiTheme({
   typography: {
@@ -31,11 +32,11 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-          <div style={{ background: "#f8f4f4", minHeight: "100vh" }}>
-            <BrowserRouter>
-              <Routing />
-            </BrowserRouter>
-          </div>
+        <SocketContext.Provider value={socket}>
+          <BrowserRouter>
+            <Routing />
+          </BrowserRouter>
+        </SocketContext.Provider>
       </ThemeProvider>
     </div>
   );

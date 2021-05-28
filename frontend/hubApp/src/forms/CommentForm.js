@@ -70,12 +70,22 @@ export default function CommentForm({ post_id }) {
             InputProps={{ className: classes.input }}
             placeholder="แสดงความคิดเห็น......"
             size="small"
-            rows={6}
+            multiline
             fullWidth
             value={formik.values.text}
             onChange={formik.handleChange("text")}
             error={formik.touched.text && Boolean(formik.errors.text)}
             helperText={formik.touched.text && formik.errors.text}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                formik.handleSubmit();
+                e.preventDefault();
+              }
+              if(e.shiftKey){
+                formik.setFieldValue('text', `${formik.values.text}\n`)
+                e.preventDefault();
+              }
+            }}
           />
         </Paper>
       </form>
