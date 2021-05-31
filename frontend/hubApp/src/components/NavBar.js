@@ -3,16 +3,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import SettingsIcon from "@material-ui/icons/Settings";
+// import SettingsIcon from "@material-ui/icons/Settings";
 import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 
 import { Logout } from "../store/actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
-import { Badge, Menu, MenuItem } from "@material-ui/core";
+import { Avatar, Badge, Chip, Menu, MenuItem } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +33,8 @@ export default function NavBar({ onClickMenu }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const newPostNumber = useSelector((state) => state.post.newPostNumber);
-  const isLoading = useSelector((state) => state.post.loading)
+  const isLoading = useSelector((state) => state.post.loading);
+  const user = useSelector((state) => state.user.user);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -71,7 +71,16 @@ export default function NavBar({ onClickMenu }) {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton
+          <Chip
+            avatar={<Avatar />}
+            label={user.firstName}
+            onClick={handleMenu}
+            color="primary"
+            style={{
+              fontSize: 20,
+            }}
+          />
+          {/* <IconButton
             aria-label="account of current user"
             aria-controls="menu-appbar"
             aria-haspopup="true"
@@ -79,7 +88,7 @@ export default function NavBar({ onClickMenu }) {
             color="inherit"
           >
             <SettingsIcon />
-          </IconButton>
+          </IconButton> */}
           <Menu
             id="menu-appbar"
             anchorEl={anchorEl}
@@ -102,7 +111,7 @@ export default function NavBar({ onClickMenu }) {
               <IconButton color="inherit">
                 <MeetingRoomIcon />
               </IconButton>
-              <p>Log Out</p>
+              <p>ออกจากระบบ</p>
             </MenuItem>
           </Menu>
         </Toolbar>

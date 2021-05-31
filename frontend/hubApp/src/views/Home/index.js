@@ -1,8 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import NavBar from "../../components/NavBar";
-import CreatePost from "./CreatePost";
-import Posts from "./Posts";
-import TagsBar from "./TagsBar";
 import {
   Container,
   Drawer,
@@ -11,13 +7,21 @@ import {
   IconButton,
 } from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import { useSelector } from "react-redux";
 import { SocketContext } from "../../context/socket";
+import NewPostBar from "./NewPostBar";
+import NavBar from "../../components/NavBar";
+import CreatePost from "./CreatePost";
+import Posts from "./Posts";
+import TagsBar from "./TagsBar";
 
 const drawerWidth = 200;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   drawer: {
     width: drawerWidth,
@@ -40,18 +44,21 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const classes = useStyles();
   const socket = useContext(SocketContext);
+  const newPostNumber = useSelector((state) => state.post.newPostNumber);
 
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     socket.on("connect", () => {
-      console.log("Connected: ",socket.id);
+      console.log("Connected: ", socket.id);
     });
 
     return () => {
-      socket.emit('disconnect')
+      // socket.emit('disconnect')
+      // socket.disconnect();
+      // console.log(socket.id);
     };
-  }, []);
+  }, [socket]);
 
   const toggleDrawer = (open) => {
     setDrawerOpen(open);
@@ -66,7 +73,7 @@ const Home = () => {
         backgroundSize: "cover",
         backgroundAttachment: "fixed",
         minHeight: window.innerHeight,
-        overflowX: 'hidden',
+        overflowX: "hidden",
       }}
       className={classes.root}
     >
@@ -91,11 +98,15 @@ const Home = () => {
         </Toolbar>
         <TagsBar onClick={toggleDrawer} />
       </Drawer>
+
       <Container className={classes.content}>
         <Toolbar />
         <CreatePost />
         <Posts />
       </Container>
+      {newPostNumber !== 0 && (
+        <NewPostBar />
+      )}
     </div>
   );
 };

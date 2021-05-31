@@ -43,25 +43,24 @@ const validationPostSchema = yup.object({
 });
 
 const CreatePost = () => {
+  const classes = useStyles();
+  const dispatch = useDispatch();
   const socket = useContext(SocketContext);
   const user_id = useSelector((state) => state.user.user._id);
-  const classes = useStyles();
-  const [openModal, setOpenModal] = useState(false);
-
-  //redux
-  const dispatch = useDispatch();
   const selectedTag = useSelector((state) => state.tag.selectedTag);
+  
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     socket.on("new-post", (userObjects) => {
       dispatch({ type: "COUNT_NEW_POST" });
       console.log(userObjects);
     });
-  }, []);
+  }, [dispatch, socket]);
 
   const SentMessage = () => {
     socket.emit("sent-post", user_id);
-    console.log(socket);
+    // console.log(socket);
   };
 
   const formik = useFormik({
