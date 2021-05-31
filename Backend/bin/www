@@ -28,28 +28,36 @@ const io = require("socket.io")(server, {
     origin: "*",
   },
 });
-
-var users = {}
+const User = require("../models/user");
+const Notification = require("../models/notification");
+const { notify } = require("../app");
+const post = require("../models/post");
 
 io.on("connection", (socket) => {
-
   socket.on("sent-post", (user_id) => {
-    try {
-      users.user_id.push(socket.id)
-    }catch (error) {
-      users.user_id = [socket.id]
-    }
-    socket.broadcast.emit("new-post", users)
+    socket.broadcast.emit("new-post", user_id);
     // io.emit("new-message", "ข้อความ");
-
   });
+
+  socket.on("join-rooms", (rooms) => {
+    socket.join(rooms);
+  });
+
+  socket.on("notification", (post_id) => {
+    const query = { subscribedPosts: { $elemMatch: { _id: post_id } } };
+    let users = User.find(query);
+    users.forEach((user) => {
+      let notification = new Notification({
+        type: "comment",
+        user: user._id,
+        post: post_id,
+      });
+      notification.save();
+    });
+    socket.to(post_id).emit("new-comment`")
+  });
+
 });
-
-io.on("disconnect", (socket) => {
-
-});
-
-
 
 /**
  * Listen on provided port, on all network interfaces.

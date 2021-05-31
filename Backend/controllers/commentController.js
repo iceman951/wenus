@@ -1,10 +1,12 @@
 const Comment = require("../models/comment");
 const Post = require("../models/post");
+const User = require("../models/user");
 
 exports.create = async (req, res, next) => {
   try {
     const { post_id, text } = req.body;
     let post = await Post.findById({ _id: post_id });
+    let user = await User.findById({ _id: req.user._id})
 
     if (!post) {
       const error = new Error("ไม่พบข้อมูลโพสต์ที่ต้องการเพิ่มคอมเมนต์");
@@ -13,12 +15,15 @@ exports.create = async (req, res, next) => {
     }
 
     let comment = new Comment({
-      text: text,
+      text: text, 
       author: req.user._id,
     });
 
-    await post.comments.push(comment);
+    post.comments.push(comment);
     await post.save();
+    
+    user.subscribedPosts.push(post_id);
+    await user.save();
 
     res.status(201).json({
       success: true,

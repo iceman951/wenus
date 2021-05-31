@@ -10,6 +10,12 @@ const schema = new mongoose.Schema(
     birthdate: { type: Date, required: true },
     faculty: { type: String, required: true },
     createDate: { type: Date, default: Date.now },
+    subscribedPosts: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post",
+      },
+    ],
   },
   {
     collection: "users",
