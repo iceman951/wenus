@@ -46,6 +46,7 @@ const postReducer = (state = initState, action) => {
         posts: [],
         skip: 0,
         dbPostsLength: 0,
+        newPostNumber: 0,
       };
     case "UPDATE_POST":
       // console.log(action.res.data.product_name)

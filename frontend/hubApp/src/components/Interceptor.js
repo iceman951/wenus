@@ -19,14 +19,14 @@ const Interceptor = (store) => {
 
   Axios.interceptors.response.use(
     (response) => {
-      if (response.data.success) {
+      if (response?.data?.success) {
         return response.data;
       }
       return response;
     },
     (error) => {
-      console.log(error.response);
-      if (error.response.status === 401) {
+      console.log(error?.response);
+      if (error?.response?.status === 401) {
         ErrorHandler();
       }
       throw error;
