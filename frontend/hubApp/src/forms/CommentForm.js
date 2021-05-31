@@ -81,7 +81,7 @@ export default function CommentForm({ post_id }) {
                 formik.handleSubmit();
                 e.preventDefault();
               }
-              if(e.shiftKey){
+              if(e.shiftKey && e.key === 'Enter'){
                 formik.setFieldValue('text', `${formik.values.text}\n`)
                 e.preventDefault();
               }
