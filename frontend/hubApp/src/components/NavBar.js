@@ -5,7 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-// import SettingsIcon from "@material-ui/icons/Settings";
+import SettingsIcon from "@material-ui/icons/Settings";
 import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 
@@ -74,21 +74,13 @@ export default function NavBar({ onClickMenu }) {
           <Chip
             avatar={<Avatar />}
             label={user.firstName}
-            onClick={handleMenu}
+            onDelete={handleMenu}
+            deleteIcon={<SettingsIcon style={{color: 'white'}}/>}
             color="primary"
             style={{
               fontSize: 20,
             }}
           />
-          {/* <IconButton
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            onClick={handleMenu}
-            color="inherit"
-          >
-            <SettingsIcon />
-          </IconButton> */}
           <Menu
             id="menu-appbar"
             anchorEl={anchorEl}
@@ -108,10 +100,8 @@ export default function NavBar({ onClickMenu }) {
             }}
           >
             <MenuItem onClick={(handleClose, handleLogOut)}>
-              <IconButton color="inherit">
-                <MeetingRoomIcon />
-              </IconButton>
-              <p>ออกจากระบบ</p>
+              <MeetingRoomIcon fontSize="small" />
+              <Typography variant="inherit">ออกจากระบบ</Typography>
             </MenuItem>
           </Menu>
         </Toolbar>
