@@ -86,6 +86,7 @@ export const likePost = (id) => {
 export const createComment = (dispatch, join_rooms, notification, values) => {
   Axios.post(`/comments`, values)
     .then((res) => {
+      console.log(values.post_id)
       join_rooms(values.post_id);
       notification(values.post_id);
       getPostById(dispatch, values.post_id);
