@@ -1,12 +1,13 @@
 import Axios from "axios";
 
-export const Login = (dispatch, formActions, values) => {
+export const Login = (dispatch, formActions, values, joinRooms) => {
   Axios.post(`/users/login`, values)
     .then((res) => {
       localStorage.setItem("token", res.access_token);
       localStorage.setItem("user", JSON.stringify(res.user));
       dispatch({ type: "LOGIN", res });
-      // console.log("loginUser", res.user)
+      console.log("loginUser", res.user.subscribedPosts)
+      joinRooms(res.user.subscribedPosts);
     })
     .catch((error) => {
       if (error.response.status === 404) {
@@ -26,13 +27,17 @@ export const Logout = (dispatch, values) => {
 export const Register = (dispatch, formActions, values) => {
   Axios.post(`/users/register`, values).then((res) => {
     // console.log(res)
-    if (res.data.success) {
+    if (res.success) {
       formActions.resetForm();
     }
   })
   .catch((error) => {
-    if (error.response.status === 400) {
+    if (error?.response?.status === 400) {
       formActions.setFieldError("email", "อีเมลนี้ได้ลงทะเบียนแล้ว");
     }
   });
 };
+
+// export const FetchNotification = (dispatch) => {
+//   axios
+// };

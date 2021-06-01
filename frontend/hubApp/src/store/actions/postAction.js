@@ -83,9 +83,11 @@ export const likePost = (id) => {
   const values = { post_id: id };
   Axios.patch(`/posts/like`, values);
 };
-export const createComment = (dispatch, values) => {
+export const createComment = (dispatch, join_rooms, notification, values) => {
   Axios.post(`/comments`, values)
     .then((res) => {
+      join_rooms(values.post_id);
+      notification(values.post_id);
       getPostById(dispatch, values.post_id);
       alertSuccessToast(res.message);
     })
