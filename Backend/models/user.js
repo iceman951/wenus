@@ -13,7 +13,7 @@ const schema = new mongoose.Schema(
     subscribedPosts: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Post",
+        ref: "User",
       },
     ],
   },

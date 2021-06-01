@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const corsOptions={
   origin: ["http://127.0.0.1:3000", "http://localhost:3000"],
-  methods:"GET,HEAD,PUT,PATCH,POST,DELETE"
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
 };
 app.use(cors(corsOptions));
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useDispatch } from "react-redux";
 import { createComment } from "../store/actions/postAction";
 import { useFormik } from "formik";
@@ -10,6 +10,7 @@ import {
   makeStyles,
   Avatar,
 } from "@material-ui/core/";
+import { SocketContext } from "../context/socket";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,10 +42,18 @@ const validationPostSchema = yup.object({
   text: yup.string("").required(""),
 });
 
+
 export default function CommentForm({ post_id }) {
   const dispatch = useDispatch();
   const classes = useStyles();
-
+  const socket = useContext(SocketContext);
+  const join_room = (post_id) => {
+    socket.emit("join-rooms", [post_id]);
+  };
+  const notification = (post_id) => {
+    socket.emit("notification", post_id);
+    // console.log(socket);
+  };
   const formik = useFormik({
     initialValues: {
       text: "",
@@ -53,7 +62,7 @@ export default function CommentForm({ post_id }) {
     validationSchema: validationPostSchema,
     onSubmit: (values, actions) => {
       // console.log("onsubmit");
-      createComment(dispatch, values);
+      createComment(dispatch, join_room, notification, values);
       actions.resetForm();
     },
   });
