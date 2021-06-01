@@ -21,3 +21,10 @@ exports.create = async (req, res, next) => {
   }
 };
 
+exports.show = async(req, res, next) => {
+    try {
+        
+    } catch (error) {
+        next(error);
+    }
+}

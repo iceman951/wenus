@@ -61,7 +61,8 @@ exports.login = async (req, res, next) => {
         email: user.email,
         createDate: user.createDate,
         birthdate: user.birthdate,
-        faculty: user.faculty
+        faculty: user.faculty,
+        subscribedPosts: user.subscribedPosts
       }
     });
   } catch (error) {
@@ -119,6 +120,7 @@ exports.register = async (req, res, next) => {
     user.password = await user.encryptPassword(password);
     user.birthdate = birthdate;
     user.faculty = faculty;
+    user.subscribedPosts = [];
 
     await user.save();
 
