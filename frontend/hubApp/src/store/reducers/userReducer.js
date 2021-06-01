@@ -2,8 +2,8 @@ let user = JSON.parse(localStorage.getItem("user"));
 let token = localStorage.getItem("token");
 
 const initialState = user
-  ? { user: user, token: token, loggedIn: true }
-  : { user: null, token: null, loggedIn: false };
+  ? { user: user, token: token, loggedIn: true, notification: [] }
+  : { user: null, token: null, loggedIn: false, notification: [] };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {

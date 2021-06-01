@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import {
@@ -10,8 +10,12 @@ import {
 } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { Login } from "../store/actions/userAction";
+import { SocketContext } from "../context/socket";
 
 function LoginForm({ setJwt }) {
+  const dispatch = useDispatch();
+  const socket = useContext(SocketContext);
+  
   const validationSchema = yup.object({
     email: yup
       .string("Enter your email")
@@ -23,8 +27,10 @@ function LoginForm({ setJwt }) {
       .required("Password is required"),
   });
 
-  const dispatch = useDispatch();
-  
+
+  const joinRooms = (rooms) => {
+    socket.emit("join-rooms", rooms);
+  };
 
   const LoginForm = useFormik({
     initialValues: {
@@ -33,7 +39,7 @@ function LoginForm({ setJwt }) {
     },
     validationSchema: validationSchema,
     onSubmit: (values, actions) => {
-      Login(dispatch, actions, values);
+      Login(dispatch, actions, values, joinRooms);
     },
   });
 

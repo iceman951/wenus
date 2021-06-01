@@ -53,6 +53,14 @@ const Home = () => {
       console.log("Connected: ", socket.id);
     });
 
+    socket.on("new-comment", () => {
+      console.log("new_comment")
+    })
+
+    socket.on("debug", (msg) =>{
+      console.log("debugSocket", msg)
+    })
+
     return () => {
       // socket.emit('disconnect')
       // socket.disconnect();
