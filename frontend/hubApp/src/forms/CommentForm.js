@@ -42,16 +42,16 @@ const validationPostSchema = yup.object({
   text: yup.string("").required(""),
 });
 
-
 export default function CommentForm({ post_id }) {
   const dispatch = useDispatch();
   const classes = useStyles();
   const socket = useContext(SocketContext);
+
   const join_room = (post_id) => {
     socket.emit("join-rooms", [post_id]);
   };
   const notification = (post_id) => {
-    socket.emit("notification", post_id);
+    socket.emit("sent-comment", post_id);
     // (socket);
   };
   const formik = useFormik({
@@ -85,12 +85,12 @@ export default function CommentForm({ post_id }) {
             error={formik.touched.text && Boolean(formik.errors.text)}
             helperText={formik.touched.text && formik.errors.text}
             onKeyPress={(e) => {
-              if (e.key === 'Enter' && !e.shiftKey) {
+              if (e.key === "Enter" && !e.shiftKey) {
                 formik.handleSubmit();
                 e.preventDefault();
               }
-              if(e.shiftKey && e.key === 'Enter'){
-                formik.setFieldValue('text', `${formik.values.text}\n`)
+              if (e.shiftKey && e.key === "Enter") {
+                formik.setFieldValue("text", `${formik.values.text}\n`);
                 e.preventDefault();
               }
             }}

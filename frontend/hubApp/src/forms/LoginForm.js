@@ -27,11 +27,6 @@ function LoginForm({ setJwt }) {
       .required("Password is required"),
   });
 
-
-  const joinRooms = (rooms) => {
-    socket.emit("join-rooms", rooms);
-  };
-
   const LoginForm = useFormik({
     initialValues: {
       email: "",
@@ -39,7 +34,7 @@ function LoginForm({ setJwt }) {
     },
     validationSchema: validationSchema,
     onSubmit: (values, actions) => {
-      Login(dispatch, actions, values, joinRooms);
+      Login(dispatch, actions, values);
     },
   });
 

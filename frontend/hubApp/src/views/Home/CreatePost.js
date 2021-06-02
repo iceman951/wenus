@@ -46,19 +46,19 @@ const CreatePost = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const socket = useContext(SocketContext);
-  const user_id = useSelector((state) => state.user.user._id);
   const selectedTag = useSelector((state) => state.tag.selectedTag);
   
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
-    socket.on("new-post", (userObjects) => {
-      dispatch({ type: "COUNT_NEW_POST" });
+    socket.on("new-post", () => {
+      // dispatch({ type: "COUNT_NEW_POST" });
+      console.log("Have New Post");
     });
   }, [dispatch, socket]);
 
   const SentMessage = () => {
-    socket.emit("sent-post", user_id);
+    socket.emit("sent-post");
   };
 
   const formik = useFormik({

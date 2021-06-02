@@ -1,12 +1,11 @@
 import Axios from "axios";
 
-export const Login = (dispatch, formActions, values, joinRooms) => {
+export const Login = (dispatch, formActions, values ) => {
   Axios.post(`/users/login`, values)
     .then((res) => {
       localStorage.setItem("token", res.access_token);
       localStorage.setItem("user", JSON.stringify(res.user));
       dispatch({ type: "LOGIN", res });
-      joinRooms(res.user.subscribedPosts);
     })
     .catch((error) => {
       if (error.response.status === 404) {

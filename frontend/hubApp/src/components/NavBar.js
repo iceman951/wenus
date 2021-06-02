@@ -11,7 +11,8 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 
 import { Logout } from "../store/actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
-import { Avatar, Badge, Chip, Menu, MenuItem } from "@material-ui/core";
+import { Avatar, Badge, Chip, Menu, MenuItem, Paper } from "@material-ui/core";
+import Notification from "./Notification";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,6 +33,8 @@ export default function NavBar({ onClickMenu }) {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const [NotiAnchorEl, setNotiAnchorEl] = useState(null);
+  const openNoti = Boolean(NotiAnchorEl);
   const newPostNumber = useSelector((state) => state.post.newPostNumber);
   const isLoading = useSelector((state) => state.post.loading);
   const user = useSelector((state) => state.user.user);
@@ -40,8 +43,13 @@ export default function NavBar({ onClickMenu }) {
     setAnchorEl(event.currentTarget);
   };
 
+  const handleNoti = (event) => {
+    setNotiAnchorEl(event.currentTarget);
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
+    setNotiAnchorEl(null);
   };
 
   const handleLogOut = () => {
@@ -68,14 +76,40 @@ export default function NavBar({ onClickMenu }) {
 
           <IconButton aria-label="show new notifications" color="inherit">
             <Badge badgeContent={newPostNumber} color="secondary">
-              <NotificationsIcon />
+              <NotificationsIcon onClick={handleNoti} />
             </Badge>
           </IconButton>
+          <Menu
+            id="noti-appbar"
+            anchorEl={NotiAnchorEl}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            open={openNoti}
+            onClose={handleClose}
+            style={{
+              marginTop: 40,
+              alignItems: "center",
+            }}
+          >
+            <MenuItem onClick={handleClose}>
+              <Notification />
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <Notification />
+            </MenuItem>
+          </Menu>
           <Chip
             avatar={<Avatar />}
             label={user.firstName}
             onDelete={handleMenu}
-            deleteIcon={<SettingsIcon style={{color: 'white'}}/>}
+            deleteIcon={<SettingsIcon style={{ color: "white" }} />}
             color="primary"
             style={{
               fontSize: 20,
