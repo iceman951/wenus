@@ -64,7 +64,6 @@ const Home = () => {
     return () => {
       // socket.emit('disconnect')
       // socket.disconnect();
-      // console.log(socket.id);
     };
   }, [socket]);
 

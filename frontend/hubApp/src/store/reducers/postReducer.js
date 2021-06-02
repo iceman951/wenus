@@ -49,7 +49,6 @@ const postReducer = (state = initState, action) => {
         newPostNumber: 0,
       };
     case "UPDATE_POST":
-      // console.log(action.res.data.product_name)
       return {
         ...state,
         posts: state.posts.map((post) =>

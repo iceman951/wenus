@@ -12,7 +12,6 @@ export const getPosts = (dispatch, tag, skip, posts_length) => {
       } else {
         dispatch({ type: "NEXT_PAGE_POST", postsLength });
       }
-      // console.log(posts)
     }
   );
 };
@@ -27,8 +26,6 @@ export const getMyPost = (dispatch, skip) => {
     } else {
       dispatch({ type: "NEXT_PAGE_POST", postsLength });
     }
-    // console.log(res);
-    // console.log(posts)
   });
 };
 
@@ -45,14 +42,11 @@ export const createPost = (dispatch, SentMessage, values, selectedTag) => {
       });
     }
     SentMessage()
-    // console.log(res)
-    // console.log(res.data.message)
   });
 };
 
 export const getPostById = (dispatch, id) => {
   Axios.get(`posts/id/${id}`).then((res) => {
-    // console.log(res);
     dispatch({ type: "UPDATE_POST", post: res.data });
   });
 };
@@ -60,7 +54,6 @@ export const getPostById = (dispatch, id) => {
 export const deletePost = (dispatch, post) => {
   const value = { data: { post_id: post._id } };
   Axios.delete(`/posts`, value).then((res) => {
-    // console.log("res", res.data);
     dispatch({ type: "DELETE_POST", post });
     alertSuccessToast(res.message);
   });
@@ -69,14 +62,12 @@ export const deletePost = (dispatch, post) => {
 export const editPost = (dispatch, values) => {
   Axios.patch(`/posts`, values)
     .then((res) => {
-      // console.log("res", res);
       getPostById(dispatch, values.post_id);
       alertSuccessToast(res.message);
     })
     .catch((err) => {
       console.log(err.response);
     });
-  // console.log(values);
 };
 
 export const likePost = (id) => {
@@ -86,7 +77,6 @@ export const likePost = (id) => {
 export const createComment = (dispatch, join_rooms, notification, values) => {
   Axios.post(`/comments`, values)
     .then((res) => {
-      console.log(values.post_id)
       join_rooms(values.post_id);
       notification(values.post_id);
       getPostById(dispatch, values.post_id);
@@ -95,5 +85,4 @@ export const createComment = (dispatch, join_rooms, notification, values) => {
     .catch((err) => {
       console.log(err.response);
     });
-  // console.log(values);
 };

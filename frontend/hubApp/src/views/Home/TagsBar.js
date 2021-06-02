@@ -44,7 +44,6 @@ const TagsBar = ({onClick}) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // console.log(selectedTag);
   }, [selectedTag]);
 
   return (
