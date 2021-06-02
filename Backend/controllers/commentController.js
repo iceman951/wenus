@@ -6,7 +6,7 @@ exports.create = async (req, res, next) => {
   try {
     const { post_id, text } = req.body;
     let post = await Post.findById({ _id: post_id });
-    let user = await User.findById({ _id: req.user._id})
+    let user = await User.findById({ _id: req.user._id });
 
     if (!post) {
       const error = new Error("ไม่พบข้อมูลโพสต์ที่ต้องการเพิ่มคอมเมนต์");
@@ -15,16 +15,18 @@ exports.create = async (req, res, next) => {
     }
 
     let comment = new Comment({
-      text: text, 
+      text: text,
       author: req.user._id,
     });
 
     post.comments.push(comment);
     await post.save();
-    
-    user.subscribedPosts.push(post_id);
-    await user.save();
 
+    if (!user.subscribedPosts.includes(post_id)) {
+      user.subscribedPosts.push(post_id);
+      await user.save();
+    }
+    
     res.status(201).json({
       success: true,
       message: "เพิ่มคอมเมนต์เรียบร้อย",
@@ -82,7 +84,7 @@ exports.edit = async (req, res, next) => {
     } else {
       res.status(200).json({
         success: true,
-        message: "แก้ไขข้อมูลเรียบร้อย"
+        message: "แก้ไขข้อมูลเรียบร้อย",
       });
     }
   } catch (error) {

@@ -2,6 +2,7 @@ const User = require("../models/user");
 const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const config = require("../config/index");
+const mongoose = require("mongoose");
 
 exports.me = async (req, res, next) => {
   const { _id, firstName, lastName, email, birthdate, faculty} = req.user;

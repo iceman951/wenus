@@ -1,5 +1,6 @@
 const io = require("socket.io")();
-const User = require("../../models/user");
+const event = require("./eventHandlers");
+// const User = require("../../models/user");
 
 io.on("connection", (socket) => {
   socket.on("sent-post", (user_id) => {
@@ -13,16 +14,23 @@ io.on("connection", (socket) => {
 
   socket.on("notification", (post_id) => {
     debugSocket(socket, "notification start");
+    try {
+      const users = event.getUsersByPostId(post_id);
+      // let users = User.find().select("password");
+
+      if (!users) {
+        socket.emit("debug", "no users");
+      }
+      console.log(users)
+      // for (const user in users) {
+      //   socket.emit("debug", user);
+      // }
+
+    } catch (error) {
+      debugSocket(socket, `error ${error}`);
+    }
+
     // try {
-    //   const users = User.find();
-
-    //   if (!users) {
-    //     socket.emit("debug", "no users");
-    //   }
-
-    //   for (const user in users) {
-    //     socket.emit("debug", user);
-    //   }
 
     //   // let notification = new Notification({
     //   //   type: "comment",
@@ -36,6 +44,7 @@ io.on("connection", (socket) => {
     //   debugSocket(socket, `error ${error}`);
     // }
     // socket.to(post_id).emit("new-comment");
+    
     debugSocket(socket, "notification success");
   });
 });
