@@ -22,6 +22,7 @@ exports.create = async (req, res, next) => {
     post.comments.push(comment);
     await post.save();
 
+    //user subscribe post
     if (!user.subscribedPosts.includes(post_id)) {
       user.subscribedPosts.push(post_id);
       await user.save();

@@ -5,19 +5,25 @@ const { promisify } = require("util");
 const writeFileAsync = promisify(fs.writeFile);
 
 const Post = require("../models/post");
+const User = require("../models/user");
 
 exports.create = async (req, res, next) => {
   try {
     const { text, tag, image } = req.body;
-
+    let user = await User.findById({ _id: req.user._id });
+    
     let post = new Post({
       text: text,
       tag: tag,
       author: req.user._id,
       // image: await saveImage(image)
     });
-
+    
     await post.save();
+
+    //user subscribe post
+    user.subscribedPosts.push(post._id);
+    await user.save();
 
     res.status(201).json({
       success: true,
