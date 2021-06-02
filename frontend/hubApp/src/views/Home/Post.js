@@ -76,6 +76,7 @@ const Post = ({ post }) => {
   const isAuthor = current_user._id === post.author._id;
 
   const [expanded, setExpanded] = React.useState(false);
+  const [showMore, setShowMore] = React.useState(false);
 
   const handleCommentClick = () => {
     setExpanded(!expanded);
@@ -217,18 +218,6 @@ const Post = ({ post }) => {
                   display: "inline-block",
                 }}
               >{`${post.author.firstName} ${post.author.lastName}`}</Typography>
-              {/* <LocalOfferIcon
-                style={{ fontSize: "16px", paddingLeft: "1%", color: "gray" }}
-              />
-              <Typography
-                variant="subtitle2"
-                style={{
-                  paddingLeft: "2px",
-                  display: "inline-block",
-                }}
-              >
-                {post.tag}
-              </Typography> */}
               <Chip
                 size="small"
                 icon={
@@ -326,8 +315,26 @@ const Post = ({ post }) => {
           />
         )}
         <Collapse in={expanded} timeout="auto" unmountOnExit>
+          {!showMore && post.comments.length > 3 && (
+            <Button
+              variant="outlined"
+              style={{
+                width: "30%",
+                padding: 0,
+              }}
+              onClick={() => {setShowMore(true)}}
+            >
+              <Typography variant="caption">ดูความคิดเห็นก่อนหน้า</Typography>
+            </Button>
+          )}
           <List>
-            {post.comments.map((comment) => (
+            {showMore &&
+              post.comments
+                .slice(0, -3)
+                .map((comment) => (
+                  <Comment key={comment._id} comment={comment} />
+                ))}
+            {post.comments.slice(-3).map((comment) => (
               <Comment key={comment._id} comment={comment} />
             ))}
           </List>

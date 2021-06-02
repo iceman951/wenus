@@ -79,6 +79,7 @@ export default function NavBar({ onClickMenu }) {
             color="primary"
             style={{
               fontSize: 20,
+              height: 50,
             }}
           />
           <Menu
