@@ -52,7 +52,7 @@ export default function CommentForm({ post_id }) {
   };
   const notification = (post_id) => {
     socket.emit("notification", post_id);
-    // console.log(socket);
+    // (socket);
   };
   const formik = useFormik({
     initialValues: {
@@ -61,7 +61,6 @@ export default function CommentForm({ post_id }) {
     },
     validationSchema: validationPostSchema,
     onSubmit: (values, actions) => {
-      // console.log("onsubmit");
       createComment(dispatch, join_room, notification, values);
       actions.resetForm();
     },

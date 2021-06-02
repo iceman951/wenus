@@ -1,5 +1,6 @@
 import Axios from "axios";
 import join from "url-join";
+import configData from '../config.json'
 
 const Interceptor = (store) => {
   function ErrorHandler() {
@@ -12,8 +13,7 @@ const Interceptor = (store) => {
     if (jwtToken != null) {
       config.headers = { Authorization: `Bearer ${jwtToken}` };
     }
-    config.url = join("https://guarded-falls-57008.herokuapp.com/", config.url);
-    // console.log(config)
+    config.url = join(configData.SERVER_URL, config.url);
     return config;
   });
 

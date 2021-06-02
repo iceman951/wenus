@@ -54,7 +54,7 @@ const Home = () => {
     });
 
     socket.on("new-comment", () => {
-      console.log("new_comment")
+      // console.log("new_comment")
     })
 
     socket.on("debug", (msg) =>{
@@ -64,7 +64,6 @@ const Home = () => {
     return () => {
       // socket.emit('disconnect')
       // socket.disconnect();
-      // console.log(socket.id);
     };
   }, [socket]);
 
