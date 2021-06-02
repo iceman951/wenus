@@ -8,6 +8,7 @@ const app = require("../app");
 const debug = require("debug")("backend:server");
 const http = require("http");
 const config = require("../config/index");
+const io = require("../routes/socket/index");
 
 /**
  * Get port from environment and store in Express.
@@ -26,60 +27,11 @@ const server = http.createServer(app);
  * Socket.io
  */
 
-const io = require("socket.io")(server, {
+io.attach(server, {
   cors: {
     origin: "*",
   },
 });
-
-const debugSocket = (socket, msg) => {
-  socket.emit("debug", msg);
-};
-
-io.on("connection", (socket) => {
-  socket.on("sent-post", (user_id) => {
-    socket.broadcast.emit("new-post", user_id);
-  });
-
-  socket.on("join-rooms", (rooms) => {
-    socket.join(rooms);
-    debugSocket(socket, socket.rooms);
-  });
-
-  socket.on("notification", (post_id) => {
-    debugSocket(socket, "notification start");
-    try {
-      socket.emit("debug", "name.getName()")
-      // const users = event.getUsersByPostId(post_id);
-
-      // if (!users) {
-      //   socket.emit("debug", "no users");
-      // }
-
-      // for (const user in users) {
-      //   socket.emit("debug", user._id);
-      // }
-
-      socket.emit("debug", { user: "ice", number: 10 });
-      // let notification = new Notification({
-      //   type: "comment",
-      //   user: user._id,
-      //   post: post_id,
-      // });
-      // notification.save();
-
-      socket.emit("debug", "err");
-    } catch (error) {
-      debugSocket(socket, `error ${error}`);
-    }
-    socket.to(post_id).emit("new-comment");
-    debugSocket(socket, "notification success");
-  });
-});
-
-/**
- * Listen on provided port, on all network interfaces.
- */
 
 server.listen(port);
 server.on("error", onError);

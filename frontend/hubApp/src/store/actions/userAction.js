@@ -6,7 +6,6 @@ export const Login = (dispatch, formActions, values, joinRooms) => {
       localStorage.setItem("token", res.access_token);
       localStorage.setItem("user", JSON.stringify(res.user));
       dispatch({ type: "LOGIN", res });
-      console.log("loginUser", res.user.subscribedPosts)
       joinRooms(res.user.subscribedPosts);
     })
     .catch((error) => {
@@ -26,7 +25,6 @@ export const Logout = (dispatch, values) => {
 
 export const Register = (dispatch, formActions, values) => {
   Axios.post(`/users/register`, values).then((res) => {
-    // console.log(res)
     if (res.success) {
       formActions.resetForm();
     }

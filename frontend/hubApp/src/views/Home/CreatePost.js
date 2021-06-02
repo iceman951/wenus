@@ -54,13 +54,11 @@ const CreatePost = () => {
   useEffect(() => {
     socket.on("new-post", (userObjects) => {
       dispatch({ type: "COUNT_NEW_POST" });
-      console.log(userObjects);
     });
   }, [dispatch, socket]);
 
   const SentMessage = () => {
     socket.emit("sent-post", user_id);
-    // console.log(socket);
   };
 
   const formik = useFormik({

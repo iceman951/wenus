@@ -15,7 +15,6 @@ export default function Posts() {
 
   //Load Post First Time && Change Tag
   useEffect(() => {
-    console.log("First Time or Change Tag");
     dispatch({ type: "RESET_POST" });
     selectedTag === "ฉัน"
       ? getMyPost(dispatch, 0)
@@ -24,7 +23,6 @@ export default function Posts() {
   //Load New Post When Change skip
   useEffect(() => {
     if (skip !== 0) {
-      console.log("Next: New Skip", skip);
       selectedTag === "ฉัน"
         ? getMyPost(dispatch, skip)
         : getPosts(dispatch, selectedTag, skip, dbPostsLength);
@@ -38,7 +36,6 @@ export default function Posts() {
           e.target.scrollingElement;
 
         if (clientHeight + scrollTop === scrollHeight && !isLoading) {
-          console.log("Hit Bottom Zone");
           dispatch({ type: "NEXT_PAGE_POST" });
         }
       }
