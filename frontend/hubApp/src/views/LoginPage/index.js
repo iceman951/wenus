@@ -8,19 +8,22 @@ import {
   CardContent,
   Typography,
   Button,
+  Hidden,
 } from "@material-ui/core";
 
 import LoginForm from "../../forms/LoginForm";
 export default function LoginPage() {
   return (
     <Grid container style={{ minHeight: "100vh" }}>
-      <Grid item xs={12} lg={6}>
-        <img
-          src="/assets/images/login.jpg"
-          style={{ width: "100%", height: "100%" }}
-          alt="brand"
-        />
-      </Grid>
+      <Hidden mdDown>
+        <Grid item lg={6}>
+          <img
+            src="/assets/images/login.jpg"
+            style={{ width: "100%", height: "100%" }}
+            alt="brand"
+          />
+        </Grid>
+      </Hidden>
       <Grid container item xs={12} lg={6} style={{ padding: "1%" }}>
         <Grid container justify="center">
           <div>
