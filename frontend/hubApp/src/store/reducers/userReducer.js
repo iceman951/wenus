@@ -19,6 +19,11 @@ const userReducer = (state = initialState, action) => {
         token: null,
         loggedIn: false,
       };
+    case "NOTIFICATION":
+      return {
+        ...state,
+        notification: state.notification.push(action.notification)
+      }
     case "TOKEN_TIMEOUT":
       return{
         loggedIn: false
