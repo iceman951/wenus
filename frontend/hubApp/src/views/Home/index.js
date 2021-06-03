@@ -16,7 +16,6 @@ import Posts from "./Posts";
 import TagsBar from "./TagsBar";
 
 const drawerWidth = 200;
-let WINDOW_WIDTH = window.innerWidth;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const classes = useStyles();
   const socket = useContext(SocketContext);
-  const newPostNumber = useSelector((state) => state.post.newPostNumber);
+  const newPost = useSelector((state) => state.post.newPost);
   const user = useSelector((state) => state.user.user);
 
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -113,7 +112,7 @@ const Home = () => {
         <CreatePost />
         <Posts />
       </Container>
-      {newPostNumber !== 0 && (
+      {newPost && (
         <NewPostBar />
       )}
     </div>
