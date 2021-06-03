@@ -8,11 +8,19 @@ const initialState = user
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case "LOGIN":
+      localStorage.setItem("token", action.res.access_token);
+      localStorage.setItem("user", JSON.stringify(action.res.user));
       return {
         user: action.res.user,
         token: action.res.access_token,
         loggedIn: true,
       };
+    case "UPDATE_USER":
+      localStorage.setItem("user", JSON.stringify(action.res.user));
+      return {
+        ...state,
+        user: action.res.user,
+      }
     case "LOGOUT":
       return {
         user: null,
