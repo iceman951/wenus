@@ -167,6 +167,15 @@ const Post = ({ post }) => {
                 <Menu
                   id="post-menu"
                   anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
                   keepMounted
                   open={open}
                   onClose={handleClose}

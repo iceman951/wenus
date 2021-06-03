@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    textAlign: 'left'
   },
 }));
 export default function NavBar({ onClickMenu }) {
@@ -73,7 +74,18 @@ export default function NavBar({ onClickMenu }) {
           <Typography variant="h6" className={classes.title}>
             PSU HUB
           </Typography>
-
+          <Chip
+            avatar={<Avatar style={{
+              width: 35,
+              height: 35,
+            }}/>}
+            label={user.firstName}
+            color="primary"
+            style={{
+              fontSize: 20,
+              height: 50,
+            }}
+          />
           <IconButton aria-label="show new notifications" color="inherit">
             <Badge badgeContent={newPostNumber} color="secondary">
               <NotificationsIcon onClick={handleNoti} />
@@ -82,19 +94,10 @@ export default function NavBar({ onClickMenu }) {
           <Menu
             id="noti-appbar"
             anchorEl={NotiAnchorEl}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
             open={openNoti}
             onClose={handleClose}
             style={{
-              marginTop: 40,
+              marginTop: 50,
               alignItems: "center",
             }}
           >
@@ -105,33 +108,16 @@ export default function NavBar({ onClickMenu }) {
               <Notification />
             </MenuItem>
           </Menu>
-          <Chip
-            avatar={<Avatar />}
-            label={user.firstName}
-            onDelete={handleMenu}
-            deleteIcon={<SettingsIcon style={{ color: "white" }} />}
-            color="primary"
-            style={{
-              fontSize: 20,
-              height: 50,
-            }}
-          />
+          <IconButton onClick={handleMenu}>
+            <SettingsIcon style={{ color: "white" }} />
+          </IconButton>
           <Menu
             id="menu-appbar"
             anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
             open={open}
             onClose={handleClose}
             style={{
-              marginTop: 40,
+              marginTop: 50,
             }}
           >
             <MenuItem onClick={(handleClose, handleLogOut)}>
