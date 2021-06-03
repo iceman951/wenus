@@ -1,9 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import SettingsIcon from "@material-ui/icons/Settings";
 import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
@@ -11,7 +7,17 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 
 import { Logout } from "../store/actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
-import { Avatar, Badge, Chip, Menu, MenuItem, Paper } from "@material-ui/core";
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Avatar,
+  Badge,
+  Chip,
+  Menu,
+  MenuItem,
+  Typography,
+} from "@material-ui/core";
 import Notification from "./Notification";
 
 const useStyles = makeStyles((theme) => ({
@@ -21,12 +27,24 @@ const useStyles = makeStyles((theme) => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
   },
+  title: {
+    flexGrow: 1,
+    textAlign: "left",
+  },
+  menu: {
+    marginTop: 50,
+    width: 300,
+    alignItems: "center",
+  },
+  menuTitle: {
+    paddingLeft: 15,
+  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
-  title: {
-    flexGrow: 1,
-    textAlign: 'left'
+  btnIcon: {
+    marginRight: 20,
+    backgroundColor: theme.palette.primary.main,
   },
 }));
 export default function NavBar({ onClickMenu }) {
@@ -39,6 +57,13 @@ export default function NavBar({ onClickMenu }) {
   const newPostNumber = useSelector((state) => state.post.newPostNumber);
   const isLoading = useSelector((state) => state.post.loading);
   const user = useSelector((state) => state.user.user);
+  const notifications = useSelector(
+    (state) => state.notification.notifications
+  );
+
+  useEffect(() => {
+    console.log(notifications);
+  }, [notifications]);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -75,10 +100,14 @@ export default function NavBar({ onClickMenu }) {
             PSU HUB
           </Typography>
           <Chip
-            avatar={<Avatar style={{
-              width: 35,
-              height: 35,
-            }}/>}
+            avatar={
+              <Avatar
+                style={{
+                  width: 30,
+                  height: 30,
+                }}
+              />
+            }
             label={user.firstName}
             color="primary"
             style={{
@@ -86,7 +115,11 @@ export default function NavBar({ onClickMenu }) {
               height: 50,
             }}
           />
-          <IconButton aria-label="show new notifications" color="inherit">
+          <IconButton
+            aria-label="show new notifications"
+            color="inherit"
+            style={{ padding: 5 }}
+          >
             <Badge badgeContent={newPostNumber} color="secondary">
               <NotificationsIcon onClick={handleNoti} />
             </Badge>
@@ -96,11 +129,26 @@ export default function NavBar({ onClickMenu }) {
             anchorEl={NotiAnchorEl}
             open={openNoti}
             onClose={handleClose}
-            style={{
-              marginTop: 50,
-              alignItems: "center",
+            PaperProps={{
+              className: classes.menu,
             }}
           >
+            <Typography variant="h6" className={classes.menuTitle}>
+              การแจ้งเตือน
+            </Typography>
+            <Typography variant="subtitle2" className={classes.menuTitle}>
+              ใหม่
+            </Typography>
+            {/* .filter Read is false and .map call MenuItem */}
+            {notifications.map((notification) => (
+              <MenuItem key={notification._id} onClick={handleClose}>
+                <Notification notification={notification}/>
+              </MenuItem>
+            ))}
+            <Typography variant="subtitle2" className={classes.menuTitle}>
+              ก่อนหน้านี้
+            </Typography>
+            {/* .filter Read is false and .map call MenuItem */}
             <MenuItem onClick={handleClose}>
               <Notification />
             </MenuItem>
@@ -108,7 +156,7 @@ export default function NavBar({ onClickMenu }) {
               <Notification />
             </MenuItem>
           </Menu>
-          <IconButton onClick={handleMenu}>
+          <IconButton onClick={handleMenu} style={{ padding: 5 }}>
             <SettingsIcon style={{ color: "white" }} />
           </IconButton>
           <Menu
@@ -116,12 +164,17 @@ export default function NavBar({ onClickMenu }) {
             anchorEl={anchorEl}
             open={open}
             onClose={handleClose}
-            style={{
-              marginTop: 50,
+            PaperProps={{
+              className: classes.menu,
             }}
           >
+            <Typography variant="h6" className={classes.menuTitle}>
+              บัญชีของคุณ
+            </Typography>
             <MenuItem onClick={(handleClose, handleLogOut)}>
-              <MeetingRoomIcon fontSize="small" />
+              <Avatar className={classes.btnIcon}>
+                <MeetingRoomIcon />
+              </Avatar>
               <Typography variant="inherit">ออกจากระบบ</Typography>
             </MenuItem>
           </Menu>

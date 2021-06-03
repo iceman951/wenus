@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createComment } from "../store/actions/postAction";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -46,12 +46,13 @@ export default function CommentForm({ post_id }) {
   const dispatch = useDispatch();
   const classes = useStyles();
   const socket = useContext(SocketContext);
+  const user = useSelector((state) => state.user.user)
 
-  const join_room = (post_id) => {
+  const joinRoom = (post_id) => {
     socket.emit("join-rooms", [post_id]);
   };
   const notification = (post_id) => {
-    socket.emit("sent-comment", post_id);
+    socket.emit("sent-comment", post_id, user._id);
     // (socket);
   };
   const formik = useFormik({
@@ -61,7 +62,7 @@ export default function CommentForm({ post_id }) {
     },
     validationSchema: validationPostSchema,
     onSubmit: (values, actions) => {
-      createComment(dispatch, join_room, notification, values);
+      createComment(dispatch, joinRoom, notification, values);
       actions.resetForm();
     },
   });

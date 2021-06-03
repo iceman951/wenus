@@ -7,13 +7,14 @@ import {
   IconButton,
 } from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SocketContext } from "../../context/socket";
 import NewPostBar from "./NewPostBar";
 import NavBar from "../../components/NavBar";
 import CreatePost from "./CreatePost";
 import Posts from "./Posts";
 import TagsBar from "./TagsBar";
+import { getNotifications } from "../../store/actions/notificationAction";
 
 const drawerWidth = 200;
 
@@ -42,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const socket = useContext(SocketContext);
   const newPost = useSelector((state) => state.post.newPost);
   const user = useSelector((state) => state.user.user);
@@ -49,18 +51,22 @@ const Home = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
+    getNotifications(dispatch);
+  }, []);
+  useEffect(() => {
     socket.on("connect", () => {
       console.log("Connected: ", socket.id);
       socket.emit("join-rooms", user.subscribedPosts);
     });
 
     socket.on("new-comment", () => {
-      console.log("new_comment")
-    })
+      getNotifications(dispatch);
+      console.log("new_comment");
+    });
 
-    socket.on("debug", (msg) =>{
-      console.log("debugSocket", msg)
-    })
+    socket.on("debug", (msg) => {
+      console.log("debugSocket", msg);
+    });
 
     return () => {
       // socket.emit('disconnect')
@@ -112,9 +118,7 @@ const Home = () => {
         <CreatePost />
         <Posts />
       </Container>
-      {newPost && (
-        <NewPostBar />
-      )}
+      {newPost && <NewPostBar />}
     </div>
   );
 };
