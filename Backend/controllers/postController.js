@@ -20,7 +20,7 @@ exports.create = async (req, res, next) => {
     });
     
     await post.save();
-
+    
     //user subscribe post
     user.subscribedPosts.push(post._id);
     await user.save();
@@ -28,6 +28,7 @@ exports.create = async (req, res, next) => {
     res.status(201).json({
       success: true,
       message: "เพิ่มโพสต์เรียบร้อย",
+      user: user
     });
   } catch (error) {
     next(error);
