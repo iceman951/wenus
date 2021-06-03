@@ -16,6 +16,7 @@ import Posts from "./Posts";
 import TagsBar from "./TagsBar";
 
 const drawerWidth = 200;
+let WINDOW_WIDTH = window.innerWidth;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    width: window.innerWidth,
   },
   toolbar: {
     display: "flex",
