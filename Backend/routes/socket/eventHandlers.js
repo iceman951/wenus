@@ -7,12 +7,10 @@ exports.createNotification = async (type, post_id) => {
   try {
     const query = { subscribedPosts: mongoose.Types.ObjectId(post_id) };
     let users = await User.find(query);
-    let post = await Post.find({ _id: post_id });
-    console.log(post[0].author);
+    let post = await Post.findOne({ _id: post_id });
     let notification;
     for (const user of users) {
-      if (user._id != post[0].author) {
-        console.log("yes", user._id);
+      if (JSON.stringify(user._id) != JSON.stringify(post.author)) {
         notification = new Notification({
           type: type,
           post: post_id,
