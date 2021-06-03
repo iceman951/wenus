@@ -29,9 +29,9 @@ export const getMyPost = (dispatch, skip) => {
   });
 };
 
-export const createPost = (dispatch, SentMessage, values, selectedTag) => {
+export const createPost = (dispatch, SentPost, values, selectedTag) => {
   Axios.post(`/posts`, values).then((res) => {
-    alertSuccessToast(res.message);
+    dispatch({type: 'UPDATE_USER', res})
     if (selectedTag === values.tag) {
       dispatch({ type: "RESET_POST" });
       getPosts(dispatch, selectedTag, 0, 0);
@@ -41,7 +41,8 @@ export const createPost = (dispatch, SentMessage, values, selectedTag) => {
         payload: { selectedTag: values.tag },
       });
     }
-    SentMessage()
+    alertSuccessToast(res.message);
+    SentPost(res.post_id)
   });
 };
 

@@ -47,7 +47,7 @@ const CreatePost = () => {
   const dispatch = useDispatch();
   const socket = useContext(SocketContext);
   const selectedTag = useSelector((state) => state.tag.selectedTag);
-  
+
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
@@ -57,7 +57,8 @@ const CreatePost = () => {
     });
   }, [dispatch, socket]);
 
-  const SentMessage = () => {
+  const SentPost = (post_id) => {
+    socket.emit("join-rooms", [post_id]);
     socket.emit("sent-post");
   };
 
@@ -68,7 +69,7 @@ const CreatePost = () => {
     },
     validationSchema: validationPostSchema,
     onSubmit: (values, actions) => {
-      createPost(dispatch, SentMessage, values, selectedTag);
+      createPost(dispatch, SentPost, values, selectedTag);
       handleCloseModal();
       actions.resetForm();
     },
