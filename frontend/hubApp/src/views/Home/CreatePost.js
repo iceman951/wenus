@@ -47,17 +47,18 @@ const CreatePost = () => {
   const dispatch = useDispatch();
   const socket = useContext(SocketContext);
   const selectedTag = useSelector((state) => state.tag.selectedTag);
-  
+
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     socket.on("new-post", () => {
-      // dispatch({ type: "COUNT_NEW_POST" });
+      dispatch({ type: "NEW_POST" });
       console.log("Have New Post");
     });
   }, [dispatch, socket]);
 
-  const SentMessage = () => {
+  const SentPost = (post_id) => {
+    socket.emit("join-rooms", [post_id]);
     socket.emit("sent-post");
   };
 
@@ -68,7 +69,7 @@ const CreatePost = () => {
     },
     validationSchema: validationPostSchema,
     onSubmit: (values, actions) => {
-      createPost(dispatch, SentMessage, values, selectedTag);
+      createPost(dispatch, SentPost, values, selectedTag);
       handleCloseModal();
       actions.resetForm();
     },
