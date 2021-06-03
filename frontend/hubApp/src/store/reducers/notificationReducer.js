@@ -1,12 +1,12 @@
 const initialState = {
-  notification: [],
+  notifications: [],
 };
 
 const notificationReducer = (state = initialState, action) => {
   switch (action.type) {
     case "FETCH_NOTIFICATION":
       return {
-        notification: action.res.notification,
+        notifications: action.res.notifications,
       };
     default:
       return state;

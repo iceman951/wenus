@@ -1,7 +1,7 @@
 import React from "react";
 import { Avatar, Box, Container, Grid, Typography } from "@material-ui/core";
 
-const Notification = () => {
+const Notification = ({ notification }) => {
   return (
     <>
       <Box component="div" whiteSpace="normal">
@@ -19,12 +19,21 @@ const Notification = () => {
             <Typography variant="body2" display="inline">
               NAME SURNAME{" "}
             </Typography>
-            <Typography
-              variant="caption"
-              style={{ overflowWrap: "break-word" }}
-            >
-              ได้แสดงความคิดเห็นในโพสต์ของคุณ
-            </Typography>
+            {notification?.type === "comment" ? (
+              <Typography
+                variant="caption"
+                style={{ overflowWrap: "break-word" }}
+              >
+                ได้แสดงความคิดเห็นในโพสต์ของคุณ
+              </Typography>
+            ) : (
+              <Typography
+                variant="caption"
+                style={{ overflowWrap: "break-word" }}
+              >
+                ได้กดถูกใจโพสต์ของคุณ
+              </Typography>
+            )}
             <Typography
               variant="caption"
               display="block"
