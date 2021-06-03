@@ -33,8 +33,16 @@ const useStyles = makeStyles((theme) => ({
   },
   menu: {
     marginTop: 50,
-    width: 300,
+    marginBottom: 20,
+    width: 360,
     alignItems: "center",
+    overflowY: 'scroll',
+    msOverflowStyle: "none",
+    overflow: "-moz-scrollbars-none",
+    scrollbarWidth: "none",
+    "&::-webkit-scrollbar": {
+      display: "none",
+    },
   },
   menuTitle: {
     paddingLeft: 15,
@@ -129,6 +137,12 @@ export default function NavBar({ onClickMenu }) {
               ใหม่
             </Typography>
             {/* .filter Read is false and .map call MenuItem */}
+            <MenuItem onClick={handleClose}>
+              <Notification />
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <Notification />
+            </MenuItem>
             <MenuItem onClick={handleClose}>
               <Notification />
             </MenuItem>
