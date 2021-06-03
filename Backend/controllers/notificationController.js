@@ -1,30 +1,22 @@
 const Notification = require("../models/notification");
 
-exports.create = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
-    const { type, post_id } = req.body;
+    const user_id = req.user._id;
+    let notifications = await Notification.find({ user: user_id });
 
-    let notification = new Notification({
-      type: type,
-      post: post_id,
-      user: req.user._id,
-    });
+    if (!notifications) {
+      const error = new Error("ไม่พบข้อมูลแจ้งเตือน");
+      error.statusCode = 404;
+      throw error;
+    }
 
-    await notification.save();
-
-    res.status(201).json({
+    res.status(200).json({
       success: true,
-      message: "เพิ่มการแจ้งเตือนเรียบร้อย",
+      message: "สำเร็จ",
+      data: notifications
     });
   } catch (error) {
     next(error);
   }
 };
-
-exports.show = async(req, res, next) => {
-    try {
-        
-    } catch (error) {
-        next(error);
-    }
-}

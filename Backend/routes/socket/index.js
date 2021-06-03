@@ -6,13 +6,13 @@ io.on("connection", (socket) => {
   socket.on("sent-post", () => {
     socket.broadcast.emit("new-post");
   });
-
+  
   socket.on("join-rooms", (rooms) => {
     socket.join(rooms);
   });
 
-  socket.on("sent-comment", (post_id) => {
-    event.createNotification("comment", post_id)
+  socket.on("sent-comment", (post_id, user_id) => {
+    event.createNotification("comment", post_id, user_id)
     socket.to(post_id).emit("new-comment");
   });
 

@@ -6,21 +6,22 @@ const writeFileAsync = promisify(fs.writeFile);
 
 const Post = require("../models/post");
 const User = require("../models/user");
+const mongoose = require("mongoose");
 
 exports.create = async (req, res, next) => {
   try {
     const { text, tag, image } = req.body;
     let user = await User.findById({ _id: req.user._id });
-    
+
     let post = new Post({
       text: text,
       tag: tag,
       author: req.user._id,
       // image: await saveImage(image)
     });
-    
+
     await post.save();
-    
+
     //user subscribe post
     user.subscribedPosts.push(post._id);
     await user.save();
@@ -28,7 +29,8 @@ exports.create = async (req, res, next) => {
     res.status(201).json({
       success: true,
       message: "เพิ่มโพสต์เรียบร้อย",
-      user: user
+      user: user,
+      post_id: post._id,
     });
   } catch (error) {
     next(error);
@@ -216,6 +218,9 @@ exports.delete = async (req, res, next) => {
     post.active = false;
     await post.save();
 
+    //unsubscribe post that inactive
+    unsubscribePost(post_id);
+
     res.status(200).json({
       success: true,
       message: "ลบสำเร็จ",
@@ -286,6 +291,16 @@ exports.like = async (req, res, next) => {
     next(error);
   }
 };
+
+async function unsubscribePost(post_id) {
+  const query = { subscribedPosts: mongoose.Types.ObjectId(post_id) };
+    let users = await User.find(query);
+
+    for (const user of users) {
+      user.subscribedPosts.pull(post_id);
+      await user.save();
+    }
+}
 
 async function saveImage(baseImage) {
   const projectPath = path.resolve("./");
