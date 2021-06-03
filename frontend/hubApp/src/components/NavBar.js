@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import SettingsIcon from "@material-ui/icons/Settings";
@@ -52,8 +52,8 @@ const useStyles = makeStyles((theme) => ({
   },
   btnIcon: {
     marginRight: 20,
-    backgroundColor: theme.palette.primary.main,    
-  }
+    backgroundColor: theme.palette.primary.main,
+  },
 }));
 export default function NavBar({ onClickMenu }) {
   const classes = useStyles();
@@ -65,6 +65,13 @@ export default function NavBar({ onClickMenu }) {
   const newPostNumber = useSelector((state) => state.post.newPostNumber);
   const isLoading = useSelector((state) => state.post.loading);
   const user = useSelector((state) => state.user.user);
+  const notifications = useSelector(
+    (state) => state.notification.notifications
+  );
+
+  useEffect(() => {
+    console.log(notifications);
+  }, [notifications]);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -116,7 +123,11 @@ export default function NavBar({ onClickMenu }) {
               height: 50,
             }}
           />
-          <IconButton aria-label="show new notifications" color="inherit" style={{padding: 5}}>
+          <IconButton
+            aria-label="show new notifications"
+            color="inherit"
+            style={{ padding: 5 }}
+          >
             <Badge badgeContent={newPostNumber} color="secondary">
               <NotificationsIcon onClick={handleNoti} />
             </Badge>
@@ -137,18 +148,11 @@ export default function NavBar({ onClickMenu }) {
               ใหม่
             </Typography>
             {/* .filter Read is false and .map call MenuItem */}
-            <MenuItem onClick={handleClose}>
-              <Notification />
-            </MenuItem>
-            <MenuItem onClick={handleClose}>
-              <Notification />
-            </MenuItem>
-            <MenuItem onClick={handleClose}>
-              <Notification />
-            </MenuItem>
-            <MenuItem onClick={handleClose}>
-              <Notification />
-            </MenuItem>
+            {notifications.map((notification) => (
+              <MenuItem key={notification._id} onClick={handleClose}>
+                <Notification notification={notification}/>
+              </MenuItem>
+            ))}
             <Typography variant="subtitle2" className={classes.menuTitle}>
               ก่อนหน้านี้
             </Typography>
@@ -160,7 +164,7 @@ export default function NavBar({ onClickMenu }) {
               <Notification />
             </MenuItem>
           </Menu>
-          <IconButton onClick={handleMenu} style={{padding: 5}}>
+          <IconButton onClick={handleMenu} style={{ padding: 5 }}>
             <SettingsIcon style={{ color: "white" }} />
           </IconButton>
           <Menu
@@ -176,12 +180,10 @@ export default function NavBar({ onClickMenu }) {
               บัญชีของคุณ
             </Typography>
             <MenuItem onClick={(handleClose, handleLogOut)}>
-              <Avatar className={classes.btnIcon} >
+              <Avatar className={classes.btnIcon}>
                 <MeetingRoomIcon />
               </Avatar>
-              <Typography variant="inherit">
-                ออกจากระบบ
-              </Typography>
+              <Typography variant="inherit">ออกจากระบบ</Typography>
             </MenuItem>
           </Menu>
         </Toolbar>
