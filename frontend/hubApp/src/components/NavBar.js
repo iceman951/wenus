@@ -11,7 +11,8 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 
 import { Logout } from "../store/actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
-import { Avatar, Badge, Chip, Menu, MenuItem } from "@material-ui/core";
+import { Avatar, Badge, Chip, Menu, MenuItem, Paper } from "@material-ui/core";
+import Notification from "./Notification";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    textAlign: 'left'
   },
 }));
 export default function NavBar({ onClickMenu }) {
@@ -32,6 +34,8 @@ export default function NavBar({ onClickMenu }) {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const [NotiAnchorEl, setNotiAnchorEl] = useState(null);
+  const openNoti = Boolean(NotiAnchorEl);
   const newPostNumber = useSelector((state) => state.post.newPostNumber);
   const isLoading = useSelector((state) => state.post.loading);
   const user = useSelector((state) => state.user.user);
@@ -40,8 +44,13 @@ export default function NavBar({ onClickMenu }) {
     setAnchorEl(event.currentTarget);
   };
 
+  const handleNoti = (event) => {
+    setNotiAnchorEl(event.currentTarget);
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
+    setNotiAnchorEl(null);
   };
 
   const handleLogOut = () => {
@@ -65,39 +74,50 @@ export default function NavBar({ onClickMenu }) {
           <Typography variant="h6" className={classes.title}>
             PSU HUB
           </Typography>
-
-          <IconButton aria-label="show new notifications" color="inherit">
-            <Badge badgeContent={newPostNumber} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
           <Chip
-            avatar={<Avatar />}
+            avatar={<Avatar style={{
+              width: 35,
+              height: 35,
+            }}/>}
             label={user.firstName}
-            onDelete={handleMenu}
-            deleteIcon={<SettingsIcon style={{color: 'white'}}/>}
             color="primary"
             style={{
               fontSize: 20,
               height: 50,
             }}
           />
+          <IconButton aria-label="show new notifications" color="inherit">
+            <Badge badgeContent={newPostNumber} color="secondary">
+              <NotificationsIcon onClick={handleNoti} />
+            </Badge>
+          </IconButton>
+          <Menu
+            id="noti-appbar"
+            anchorEl={NotiAnchorEl}
+            open={openNoti}
+            onClose={handleClose}
+            style={{
+              marginTop: 50,
+              alignItems: "center",
+            }}
+          >
+            <MenuItem onClick={handleClose}>
+              <Notification />
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <Notification />
+            </MenuItem>
+          </Menu>
+          <IconButton onClick={handleMenu}>
+            <SettingsIcon style={{ color: "white" }} />
+          </IconButton>
           <Menu
             id="menu-appbar"
             anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
             open={open}
             onClose={handleClose}
             style={{
-              marginTop: 40,
+              marginTop: 50,
             }}
           >
             <MenuItem onClick={(handleClose, handleLogOut)}>

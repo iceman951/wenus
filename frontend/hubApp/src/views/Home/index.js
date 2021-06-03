@@ -16,6 +16,7 @@ import Posts from "./Posts";
 import TagsBar from "./TagsBar";
 
 const drawerWidth = 200;
+let WINDOW_WIDTH = window.innerWidth;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    width: window.innerWidth,
   },
   toolbar: {
     display: "flex",
@@ -45,16 +45,18 @@ const Home = () => {
   const classes = useStyles();
   const socket = useContext(SocketContext);
   const newPostNumber = useSelector((state) => state.post.newPostNumber);
+  const user = useSelector((state) => state.user.user);
 
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     socket.on("connect", () => {
       console.log("Connected: ", socket.id);
+      socket.emit("join-rooms", user.subscribedPosts);
     });
 
     socket.on("new-comment", () => {
-      // console.log("new_comment")
+      console.log("new_comment")
     })
 
     socket.on("debug", (msg) =>{
