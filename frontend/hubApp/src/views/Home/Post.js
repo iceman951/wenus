@@ -182,7 +182,6 @@ const Post = ({ post }) => {
                     vertical: "top",
                     horizontal: "right",
                   }}
-                  keepMounted
                   open={open}
                   onClose={handleClose}
                   PaperProps={{
@@ -252,7 +251,13 @@ const Post = ({ post }) => {
             </>
           }
           subheader={
-            <NavLink to={`/post/${post._id}`}>
+            <NavLink
+              to={`/post/${post._id}`}
+              style={{
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
               {moment(post.createDate) > moment().subtract(1, "days")
                 ? `${moment(post.createDate).fromNow()}`
                 : `${moment(post.createDate).format(
