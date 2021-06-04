@@ -1,5 +1,7 @@
 import React from "react";
-import { Avatar, Box, Container, Grid, Typography } from "@material-ui/core";
+import { Avatar, Box, Grid, Typography } from "@material-ui/core";
+import moment from "moment";
+import "moment/locale/th";
 
 const Notification = ({ notification }) => {
   return (
@@ -39,7 +41,7 @@ const Notification = ({ notification }) => {
               display="block"
               style={{ color: "blue" }}
             >
-              ประมาณ 1 ชั่วโมงที่แล้ว
+              {moment(notification?.createDate).fromNow()}
             </Typography>
           </Grid>
         </Grid>

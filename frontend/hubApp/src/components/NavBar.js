@@ -62,7 +62,6 @@ export default function NavBar({ onClickMenu }) {
   const open = Boolean(anchorEl);
   const [NotiAnchorEl, setNotiAnchorEl] = useState(null);
   const openNoti = Boolean(NotiAnchorEl);
-  const newPostNumber = useSelector((state) => state.post.newPostNumber);
   const isLoading = useSelector((state) => state.post.loading);
   const user = useSelector((state) => state.user.user);
   const notifications = useSelector(
@@ -128,7 +127,7 @@ export default function NavBar({ onClickMenu }) {
             color="inherit"
             style={{ padding: 5 }}
           >
-            <Badge badgeContent={newPostNumber} color="secondary">
+            <Badge badgeContent={notifications?.length} color="secondary">
               <NotificationsIcon onClick={handleNoti} />
             </Badge>
           </IconButton>
