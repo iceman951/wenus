@@ -41,7 +41,8 @@ import moment from "moment";
 import "moment/locale/th";
 import { alertWarning } from "../../utils/sweetAlertConfirm";
 // socket
-import { socket, SocketContext } from "../../context/socket";
+import { socket } from "../../context/socket";
+import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -94,13 +95,16 @@ const Post = ({ post }) => {
     setNComment(post.comments.length);
   }, [current_user._id, post]);
 
+  const sentLikeSocket = (post_id, user_id) => {
+    socket.emit("sent-like", post_id, user_id);
+  };
   const handleClickLike = () => {
     if (liked) {
       setNLike(nLike - 1);
     } else {
       setNLike(nLike + 1);
     }
-    likePost(post._id);
+    likePost(post._id, current_user._id, sentLikeSocket);
     setLiked(!liked);
   };
 
@@ -181,7 +185,6 @@ const Post = ({ post }) => {
                     vertical: "top",
                     horizontal: "right",
                   }}
-                  keepMounted
                   open={open}
                   onClose={handleClose}
                   PaperProps={{
@@ -251,18 +254,30 @@ const Post = ({ post }) => {
             </>
           }
           subheader={
-            moment(post.createDate) > moment().subtract(1, "days")
-              ? `${moment(post.createDate).fromNow()}`
-              : `${moment(post.createDate).format(
-                  "วันddddที่ DD MMM YYYY เวลา HH:mm น."
-                )}`
+            <NavLink
+              to={`/post/${post._id}`}
+              style={{
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              {moment(post.createDate) > moment().subtract(1, "days")
+                ? `${moment(post.createDate).fromNow()}`
+                : `${moment(post.createDate).format(
+                    "วันddddที่ DD MMM YYYY เวลา HH:mm น."
+                  )}`}
+            </NavLink>
           }
         />
         <CardContent>
           <Typography
             paragraph
             variant="body1"
-            style={{ whiteSpace: 'pre-line', wordWrap: "break-word", textAlign: "left" }}
+            style={{
+              whiteSpace: "pre-line",
+              wordWrap: "break-word",
+              textAlign: "left",
+            }}
           >
             {post.text}
           </Typography>

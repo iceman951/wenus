@@ -47,9 +47,11 @@ export const createPost = (dispatch, SentPost, values, selectedTag) => {
   });
 };
 
-export const getPostById = (dispatch, id) => {
+export const getPostById = (dispatch, id, update) => {
   Axios.get(`posts/id/${id}`).then((res) => {
-    dispatch({ type: "UPDATE_POST", post: res.data });
+    update
+      ? dispatch({ type: "UPDATE_POST", post: res.data })
+      : dispatch({ type: "FETCH_ONE_POST", post: res.data });
   });
 };
 
@@ -66,7 +68,7 @@ export const deletePost = (dispatch, post, deletePostSocket) => {
 export const editPost = (dispatch, values) => {
   Axios.patch(`/posts`, values)
     .then((res) => {
-      getPostById(dispatch, values.post_id);
+      getPostById(dispatch, values.post_id, true);
       alertSuccessToast(res.message);
     })
     .catch((err) => {
@@ -74,9 +76,11 @@ export const editPost = (dispatch, values) => {
     });
 };
 
-export const likePost = (id) => {
-  const values = { post_id: id };
-  Axios.patch(`/posts/like`, values);
+export const likePost = (post_id, user_id, sentLikeSocket) => {
+  const values = { post_id: post_id };
+  Axios.patch(`/posts/like`, values).then((res) => {
+    sentLikeSocket(post_id, user_id);
+  });
 };
 export const createComment = (dispatch, joinRoom, notification, values) => {
   Axios.post(`/comments`, values)
@@ -84,7 +88,7 @@ export const createComment = (dispatch, joinRoom, notification, values) => {
       dispatch({ type: "UPDATE_USER", res });
       joinRoom(values.post_id);
       notification(values.post_id);
-      getPostById(dispatch, values.post_id);
+      getPostById(dispatch, values.post_id, true);
       alertSuccessToast(res.message);
     })
     .catch((err) => {

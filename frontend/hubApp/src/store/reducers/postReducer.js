@@ -23,6 +23,11 @@ const postReducer = (state = initState, action) => {
         posts: [...state.posts, ...data],
         loading: false,
       };
+    case "FETCH_ONE_POST":
+      return {
+        ...state,
+        posts: [action.post],
+      };
     case "NEXT_PAGE_POST":
       if (state.posts.length === 0 && state.skip < state.dbPostsLength) {
         return {
@@ -65,7 +70,7 @@ const postReducer = (state = initState, action) => {
       return {
         ...state,
         newPost: true,
-      }
+      };
     case "isLoading":
       return {
         ...state,

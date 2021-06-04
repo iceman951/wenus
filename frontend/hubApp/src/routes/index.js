@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import Home from "../views/Home/index";
 import Login from "../views/LoginPage";
 import Register from "../views/RegisterPage";
+import Post from "../views/PostPage";
 
 const Routing = () => {
   const loggedIn = useSelector((state) => state.user.loggedIn);
@@ -18,6 +19,7 @@ const Routing = () => {
         {loggedIn ? <Redirect to="/" /> : <Login />}
       </Route>
       <Route path="/register" component={Register} />
+      <Route path='/post/:id' component={Post} />
     </Switch>
   );
 };

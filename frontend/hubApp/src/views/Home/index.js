@@ -52,7 +52,7 @@ const Home = () => {
 
   useEffect(() => {
     getNotifications(dispatch);
-  }, []);
+  }, [dispatch]);
   useEffect(() => {
     socket.on("connect", () => {
       console.log("Connected: ", socket.id);
@@ -71,7 +71,7 @@ const Home = () => {
       // socket.emit('disconnect')
       // socket.disconnect();
     };
-  }, [socket]);
+  }, [dispatch, socket, user.subscribedPosts]);
 
   const toggleDrawer = (open) => {
     setDrawerOpen(open);

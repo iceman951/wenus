@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import {
@@ -10,12 +10,10 @@ import {
 } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { Login } from "../store/actions/userAction";
-import { SocketContext } from "../context/socket";
 
-function LoginForm({ setJwt }) {
+function LoginForm() {
   const dispatch = useDispatch();
-  const socket = useContext(SocketContext);
-  
+
   const validationSchema = yup.object({
     email: yup
       .string("Enter your email")
