@@ -1,5 +1,6 @@
 import Axios from "axios";
 import { alertSuccessToast } from "../../utils/sweetAlertToast";
+import { getNotifications } from "./notificationAction";
 
 export const getPosts = (dispatch, tag, skip, posts_length) => {
   dispatch({ type: "isLoading" });
@@ -31,7 +32,7 @@ export const getMyPost = (dispatch, skip) => {
 
 export const createPost = (dispatch, SentPost, values, selectedTag) => {
   Axios.post(`/posts`, values).then((res) => {
-    dispatch({type: 'UPDATE_USER', res})
+    dispatch({ type: "UPDATE_USER", res });
     if (selectedTag === values.tag) {
       dispatch({ type: "RESET_POST" });
       getPosts(dispatch, selectedTag, 0, 0);
@@ -42,7 +43,7 @@ export const createPost = (dispatch, SentPost, values, selectedTag) => {
       });
     }
     alertSuccessToast(res.message);
-    SentPost(res.post_id)
+    SentPost(res.post_id);
   });
 };
 
@@ -52,10 +53,12 @@ export const getPostById = (dispatch, id) => {
   });
 };
 
-export const deletePost = (dispatch, post) => {
+export const deletePost = (dispatch, post, deletePostSocket) => {
   const value = { data: { post_id: post._id } };
   Axios.delete(`/posts`, value).then((res) => {
     dispatch({ type: "DELETE_POST", post });
+    deletePostSocket(post._id);
+    getNotifications(dispatch);
     alertSuccessToast(res.message);
   });
 };
@@ -78,7 +81,7 @@ export const likePost = (id) => {
 export const createComment = (dispatch, joinRoom, notification, values) => {
   Axios.post(`/comments`, values)
     .then((res) => {
-      dispatch({type: 'UPDATE_USER', res})
+      dispatch({ type: "UPDATE_USER", res });
       joinRoom(values.post_id);
       notification(values.post_id);
       getPostById(dispatch, values.post_id);

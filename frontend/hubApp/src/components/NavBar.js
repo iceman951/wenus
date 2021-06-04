@@ -32,9 +32,17 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "left",
   },
   menu: {
-    marginTop: 50,
-    width: 300,
+    marginTop: 40,
+    marginBottom: 20,
+    // width: '20%',
     alignItems: "center",
+    overflowY: 'scroll',
+    msOverflowStyle: "none",
+    overflow: "-moz-scrollbars-none",
+    scrollbarWidth: "none",
+    "&::-webkit-scrollbar": {
+      display: "none",
+    },
   },
   menuTitle: {
     paddingLeft: 15,
@@ -43,8 +51,10 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   btnIcon: {
-    marginRight: 20,
+    marginRight: 15,
     backgroundColor: theme.palette.primary.main,
+    width: 30,
+    height: 30,
   },
 }));
 export default function NavBar({ onClickMenu }) {
@@ -54,7 +64,6 @@ export default function NavBar({ onClickMenu }) {
   const open = Boolean(anchorEl);
   const [NotiAnchorEl, setNotiAnchorEl] = useState(null);
   const openNoti = Boolean(NotiAnchorEl);
-  const newPostNumber = useSelector((state) => state.post.newPostNumber);
   const isLoading = useSelector((state) => state.post.loading);
   const user = useSelector((state) => state.user.user);
   const notifications = useSelector(
@@ -120,7 +129,7 @@ export default function NavBar({ onClickMenu }) {
             color="inherit"
             style={{ padding: 5 }}
           >
-            <Badge badgeContent={newPostNumber} color="secondary">
+            <Badge badgeContent={notifications?.length} color="secondary">
               <NotificationsIcon onClick={handleNoti} />
             </Badge>
           </IconButton>
@@ -131,6 +140,7 @@ export default function NavBar({ onClickMenu }) {
             onClose={handleClose}
             PaperProps={{
               className: classes.menu,
+              style: {width: '25%'}
             }}
           >
             <Typography variant="h6" className={classes.menuTitle}>
@@ -173,9 +183,9 @@ export default function NavBar({ onClickMenu }) {
             </Typography>
             <MenuItem onClick={(handleClose, handleLogOut)}>
               <Avatar className={classes.btnIcon}>
-                <MeetingRoomIcon />
+                <MeetingRoomIcon fontSize="small"/>
               </Avatar>
-              <Typography variant="inherit">ออกจากระบบ</Typography>
+              <Typography variant="body1">ออกจากระบบ</Typography>
             </MenuItem>
           </Menu>
         </Toolbar>
