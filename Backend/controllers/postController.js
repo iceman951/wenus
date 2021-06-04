@@ -6,6 +6,7 @@ const writeFileAsync = promisify(fs.writeFile);
 
 const Post = require("../models/post");
 const User = require("../models/user");
+const Notification = require("../models/notification");
 const mongoose = require("mongoose");
 
 exports.create = async (req, res, next) => {
@@ -220,6 +221,7 @@ exports.delete = async (req, res, next) => {
 
     //unsubscribe post that inactive
     unsubscribePost(post_id);
+    deactivateNotification(post_id);
 
     res.status(200).json({
       success: true,
@@ -291,6 +293,10 @@ exports.like = async (req, res, next) => {
     next(error);
   }
 };
+
+async function deactivateNotification(post_id) {
+  await Notification.updateMany({post: post_id}, {"active": false});
+}
 
 async function unsubscribePost(post_id) {
   const query = { subscribedPosts: mongoose.Types.ObjectId(post_id) };
