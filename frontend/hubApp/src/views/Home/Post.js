@@ -41,7 +41,8 @@ import moment from "moment";
 import "moment/locale/th";
 import { alertWarning } from "../../utils/sweetAlertConfirm";
 // socket
-import { socket, SocketContext } from "../../context/socket";
+import { socket } from "../../context/socket";
+import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -251,18 +252,24 @@ const Post = ({ post }) => {
             </>
           }
           subheader={
-            moment(post.createDate) > moment().subtract(1, "days")
-              ? `${moment(post.createDate).fromNow()}`
-              : `${moment(post.createDate).format(
-                  "วันddddที่ DD MMM YYYY เวลา HH:mm น."
-                )}`
+            <NavLink to={`/post/${post._id}`}>
+              {moment(post.createDate) > moment().subtract(1, "days")
+                ? `${moment(post.createDate).fromNow()}`
+                : `${moment(post.createDate).format(
+                    "วันddddที่ DD MMM YYYY เวลา HH:mm น."
+                  )}`}
+            </NavLink>
           }
         />
         <CardContent>
           <Typography
             paragraph
             variant="body1"
-            style={{ whiteSpace: 'pre-line', wordWrap: "break-word", textAlign: "left" }}
+            style={{
+              whiteSpace: "pre-line",
+              wordWrap: "break-word",
+              textAlign: "left",
+            }}
           >
             {post.text}
           </Typography>
