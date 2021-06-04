@@ -59,9 +59,8 @@ const Home = () => {
       socket.emit("join-rooms", user.subscribedPosts);
     });
 
-    socket.on("new-comment", () => {
+    socket.on("update-notifications", () => {
       getNotifications(dispatch);
-      console.log("new_comment");
     });
 
     socket.on("debug", (msg) => {

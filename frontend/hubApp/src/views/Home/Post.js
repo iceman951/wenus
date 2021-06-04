@@ -40,6 +40,8 @@ import PostForm from "../../forms/PostForm";
 import moment from "moment";
 import "moment/locale/th";
 import { alertWarning } from "../../utils/sweetAlertConfirm";
+// socket
+import { socket, SocketContext } from "../../context/socket";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -112,13 +114,16 @@ const Post = ({ post }) => {
     setAnchorEl(null);
   };
 
+  const deleteSocket = () => {
+    socket.emit("sent-delete-post");
+  };
   //Action
   const handleDeletePost = () => {
     handleClose();
     alertWarning({
       message: "คุณต้องการลบโพสต์ใช่ไหม?",
       onClickConfirm: () => {
-        deletePost(dispatch, post);
+        deletePost(dispatch, post, deleteSocket);
       },
     });
   };
@@ -331,7 +336,9 @@ const Post = ({ post }) => {
                 width: "30%",
                 padding: 0,
               }}
-              onClick={() => {setShowMore(true)}}
+              onClick={() => {
+                setShowMore(true);
+              }}
             >
               <Typography variant="caption">ดูความคิดเห็นก่อนหน้า</Typography>
             </Button>

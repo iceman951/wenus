@@ -52,9 +52,10 @@ export const getPostById = (dispatch, id) => {
   });
 };
 
-export const deletePost = (dispatch, post) => {
+export const deletePost = (dispatch, post, deleteSocket) => {
   const value = { data: { post_id: post._id } };
   Axios.delete(`/posts`, value).then((res) => {
+    deleteSocket();
     dispatch({ type: "DELETE_POST", post });
     alertSuccessToast(res.message);
   });
