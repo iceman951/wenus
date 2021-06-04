@@ -95,13 +95,16 @@ const Post = ({ post }) => {
     setNComment(post.comments.length);
   }, [current_user._id, post]);
 
+  const sentLikeSocket = (post_id) => {
+    socket.emit("sent-like", post_id);
+  };
   const handleClickLike = () => {
     if (liked) {
       setNLike(nLike - 1);
     } else {
       setNLike(nLike + 1);
     }
-    likePost(post._id);
+    likePost(post._id, sentLikeSocket);
     setLiked(!liked);
   };
 

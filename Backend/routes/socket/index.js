@@ -3,6 +3,7 @@ const event = require("./eventHandlers");
 // const User = require("../../models/user");
 
 io.on("connection", (socket) => {
+
   socket.on("sent-post", () => {
     socket.broadcast.emit("new-post");
   });
@@ -12,12 +13,17 @@ io.on("connection", (socket) => {
   });
 
   socket.on("sent-comment", (post_id, user_id) => {
-    event.createNotification("comment", post_id, user_id)
-    socket.to(post_id).emit("new-comment");
+    event.createCommentNotification("comment", post_id, user_id)
+    socket.to(post_id).emit("update-notifications");
   });
 
-  socket.on("sent-like", (post_id, user_id) => {
+  socket.on("sent-like", (post_id) => {
+    event.createLikeNotification("like", post_id)
+    socket.to(post_id).emit("update-notifications");
+  });
 
+  socket.on("sent-delete-post", (post_id) => {
+    socket.to(post_id).emit("update-notifications");
   });
 
 });
