@@ -33,7 +33,7 @@ const Notification = ({ notification }) => {
                 variant="caption"
                 style={{ overflowWrap: "break-word" }}
               >
-                ได้กดถูกใจโพสต์ของคุณ
+                ได้กดถูกใจโพสต์ของคุณ {notification?.likeAmount}
               </Typography>
             )}
             <Typography

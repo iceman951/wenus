@@ -74,9 +74,11 @@ export const editPost = (dispatch, values) => {
     });
 };
 
-export const likePost = (id) => {
-  const values = { post_id: id };
-  Axios.patch(`/posts/like`, values);
+export const likePost = (post_id, sentLikeSocket) => {
+  const values = { post_id: post_id };
+  Axios.patch(`/posts/like`, values).then((res) => {
+    sentLikeSocket(post_id);
+  });
 };
 export const createComment = (dispatch, joinRoom, notification, values) => {
   Axios.post(`/comments`, values)
