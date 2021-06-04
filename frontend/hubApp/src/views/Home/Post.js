@@ -114,8 +114,8 @@ const Post = ({ post }) => {
     setAnchorEl(null);
   };
 
-  const deleteSocket = () => {
-    socket.emit("sent-delete-post");
+  const deletePostSocket = (post_id) => {
+    socket.emit("sent-delete-post", post_id);
   };
   //Action
   const handleDeletePost = () => {
@@ -123,7 +123,7 @@ const Post = ({ post }) => {
     alertWarning({
       message: "คุณต้องการลบโพสต์ใช่ไหม?",
       onClickConfirm: () => {
-        deletePost(dispatch, post, deleteSocket);
+        deletePost(dispatch, post, deletePostSocket);
       },
     });
   };
