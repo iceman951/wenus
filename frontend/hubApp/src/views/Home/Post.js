@@ -257,7 +257,7 @@ const Post = ({ post }) => {
           <Typography
             paragraph
             variant="body1"
-            style={{ wordWrap: "break-word", textAlign: "left" }}
+            style={{ whiteSpace: 'pre-line', wordWrap: "break-word", textAlign: "left" }}
           >
             {post.text}
           </Typography>

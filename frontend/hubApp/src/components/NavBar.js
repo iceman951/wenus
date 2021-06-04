@@ -32,9 +32,9 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "left",
   },
   menu: {
-    marginTop: 50,
+    marginTop: 40,
     marginBottom: 20,
-    width: 360,
+    // width: '20%',
     alignItems: "center",
     overflowY: 'scroll',
     msOverflowStyle: "none",
@@ -51,8 +51,10 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   btnIcon: {
-    marginRight: 20,
+    marginRight: 15,
     backgroundColor: theme.palette.primary.main,
+    width: 30,
+    height: 30,
   },
 }));
 export default function NavBar({ onClickMenu }) {
@@ -138,6 +140,7 @@ export default function NavBar({ onClickMenu }) {
             onClose={handleClose}
             PaperProps={{
               className: classes.menu,
+              style: {width: '25%'}
             }}
           >
             <Typography variant="h6" className={classes.menuTitle}>
@@ -180,9 +183,9 @@ export default function NavBar({ onClickMenu }) {
             </Typography>
             <MenuItem onClick={(handleClose, handleLogOut)}>
               <Avatar className={classes.btnIcon}>
-                <MeetingRoomIcon />
+                <MeetingRoomIcon fontSize="small"/>
               </Avatar>
-              <Typography variant="inherit">ออกจากระบบ</Typography>
+              <Typography variant="body1">ออกจากระบบ</Typography>
             </MenuItem>
           </Menu>
         </Toolbar>

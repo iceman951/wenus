@@ -15,7 +15,7 @@ const Comment = ({ comment }) => {
   const text = {
     component: "span",
     variant: "body2",
-    style: { wordWrap: "break-word", textAlign: "left", marginLeft: 20 },
+    style: { whiteSpace: 'pre-line', wordWrap: "break-word", textAlign: "left", marginLeft: 20 },
   };
 
   return (
