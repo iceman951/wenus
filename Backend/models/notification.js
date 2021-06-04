@@ -11,6 +11,8 @@ const schema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Post",
     },
+    active: { type: Boolean, default: true},
+    likeAmount: {type: Number, defalut: 0},
     createDate: { type: Date, default: Date.now },
   },
   {
