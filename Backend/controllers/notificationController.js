@@ -3,7 +3,7 @@ const Notification = require("../models/notification");
 exports.show = async (req, res, next) => {
   try {
     const user_id = req.user._id;
-    let notifications = await Notification.find({ user: user_id });
+    let notifications = await Notification.find({ user: user_id }).sort("-createDate");
 
     if (!notifications) {
       const error = new Error("ไม่พบข้อมูลแจ้งเตือน");
@@ -14,7 +14,7 @@ exports.show = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "สำเร็จ",
-      data: notifications
+      notifications: notifications
     });
   } catch (error) {
     next(error);

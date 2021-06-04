@@ -16,8 +16,8 @@ io.on("connection", (socket) => {
     socket.to(post_id).emit("new-comment");
   });
 
-  socket.on("sent-like", (post_id) => {
-    
+  socket.on("sent-like", (post_id, user_id) => {
+
   });
 
 });
