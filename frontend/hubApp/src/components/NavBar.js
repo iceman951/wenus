@@ -19,6 +19,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import Notification from "./Notification";
+import { Link as RouterLink, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
 export default function NavBar({ onClickMenu }) {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [NotiAnchorEl, setNotiAnchorEl] = useState(null);
@@ -102,7 +104,15 @@ export default function NavBar({ onClickMenu }) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            PSU HUB
+            <RouterLink
+              to="/"
+              style={{
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              PSU HUB
+            </RouterLink>
           </Typography>
           <Chip
             avatar={
@@ -142,12 +152,13 @@ export default function NavBar({ onClickMenu }) {
             <Typography variant="h6" className={classes.menuTitle}>
               การแจ้งเตือน
             </Typography>
-            <Typography variant="subtitle2" className={classes.menuTitle}>
-              ใหม่
-            </Typography>
-            {/* .filter Read is false and .map call MenuItem */}
+            {notifications.length !== 0 && (
+              <Typography variant="subtitle2" className={classes.menuTitle}>
+                ใหม่
+              </Typography>
+            )}
             {notifications.map((notification) => (
-              <MenuItem key={notification._id} onClick={handleClose}>
+              <MenuItem key={notification._id} onClick={() => history.push(`/post/${notification.post}`)}>
                 <Notification notification={notification} />
               </MenuItem>
             ))}

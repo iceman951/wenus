@@ -58,7 +58,7 @@ export default function Posts() {
     <>
       {posts.map((post, i) => (
         <LazyLoad key={post._id} placeholder={<Loading />}>
-          <Post key={post._id} post={post} />
+          <Post key={post._id} post={post} isSingle={false} />
         </LazyLoad>
       ))}
       {isLoading && <Loading />}
