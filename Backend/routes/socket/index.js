@@ -1,6 +1,5 @@
 const io = require("socket.io")();
 const event = require("./eventHandlers");
-// const User = require("../../models/user");
 
 io.on("connection", (socket) => {
   socket.on("sent-post", () => {
@@ -25,9 +24,5 @@ io.on("connection", (socket) => {
     socket.to(post_id).emit("update-notifications");
   });
 });
-
-const debugSocket = (socket, msg) => {
-  socket.emit("debug", msg);
-};
 
 module.exports = io;

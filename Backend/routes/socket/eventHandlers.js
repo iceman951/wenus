@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 const User = require("../../models/user");
 const Notification = require("../../models/notification");
 const Post = require("../../models/post");
@@ -32,7 +32,7 @@ exports.createLikeNotification = async (type, post_id, user_id) => {
       type: type,
       post: post_id,
     });
-    if (!notification && (post.author != user_id)) {
+    if (!notification && post.author != user_id) {
       notification = new Notification({
         type: type,
         post: post_id,
@@ -46,6 +46,6 @@ exports.createLikeNotification = async (type, post_id, user_id) => {
     }
   } catch (error) {
     console.log(error);
-    return error
+    return error;
   }
 };
