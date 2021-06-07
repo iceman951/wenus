@@ -24,7 +24,7 @@ exports.show = async (req, res, next) => {
   }
 };
 
-exports.update = async (req, res, next) => {
+exports.setIsNotifyTrue = async (req, res, next) => {
   try {
     await Notification.updateMany(
       { user: req.user._id, isNotify: false },
@@ -40,7 +40,7 @@ exports.update = async (req, res, next) => {
   }
 };
 
-exports.read = async (req, res, next) => {
+exports.setIsReadTrue = async (req, res, next) => {
   try {
     const { notification_id } = req.body;
     await Notification.updateOne(

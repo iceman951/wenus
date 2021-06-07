@@ -6,9 +6,9 @@ const notificationController = require("../controllers/notificationController");
 router.get("/", notificationController.show);
 
 /* http://localhost:3000/notifications */
-router.patch("/", notificationController.update);
+router.patch("/", notificationController.setIsNotifyTrue);
 
 /* http://localhost:3000/notifications/update */
-router.patch("/read", notificationController.read);
+router.patch("/read", notificationController.setIsReadTrue);
 
 module.exports = router;

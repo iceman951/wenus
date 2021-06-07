@@ -45,7 +45,6 @@ exports.createLikeNotification = async (type, post_id, user_id) => {
       await notification.save();
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
