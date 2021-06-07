@@ -19,6 +19,11 @@ import {
   Typography,
 } from "@material-ui/core";
 import Notification from "./Notification";
+import {
+  showNotifications,
+  readNotification,
+} from "../store/actions/notificationAction";
+import { Link as RouterLink, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 20,
     // width: '20%',
     alignItems: "center",
-    overflowY: 'scroll',
+    overflowY: "scroll",
     msOverflowStyle: "none",
     overflow: "-moz-scrollbars-none",
     scrollbarWidth: "none",
@@ -60,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
 export default function NavBar({ onClickMenu }) {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [NotiAnchorEl, setNotiAnchorEl] = useState(null);
@@ -70,16 +76,17 @@ export default function NavBar({ onClickMenu }) {
     (state) => state.notification.notifications
   );
 
-  useEffect(() => {
-    console.log(notifications);
-  }, [notifications]);
-
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleNoti = (event) => {
+  const handleShowNotiButton = (event) => {
     setNotiAnchorEl(event.currentTarget);
+    showNotifications(dispatch);
+  };
+  const handleNoti = (notification) => {
+    history.push(`/post/${notification.post}`);
+    readNotification(dispatch, notification._id);
   };
 
   const handleClose = () => {
@@ -106,7 +113,15 @@ export default function NavBar({ onClickMenu }) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            PSU HUB
+            <RouterLink
+              to="/"
+              style={{
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              PSU HUB
+            </RouterLink>
           </Typography>
           <Chip
             avatar={
@@ -129,8 +144,11 @@ export default function NavBar({ onClickMenu }) {
             color="inherit"
             style={{ padding: 5 }}
           >
-            <Badge badgeContent={notifications?.length} color="secondary">
-              <NotificationsIcon onClick={handleNoti} />
+            <Badge
+              badgeContent={notifications?.filter((x) => !x.isNotify).length}
+              color="secondary"
+            >
+              <NotificationsIcon onClick={handleShowNotiButton} />
             </Badge>
           </IconButton>
           <Menu
@@ -140,19 +158,20 @@ export default function NavBar({ onClickMenu }) {
             onClose={handleClose}
             PaperProps={{
               className: classes.menu,
-              style: {width: '25%'}
+              style: { width: "25%" },
             }}
           >
             <Typography variant="h6" className={classes.menuTitle}>
               การแจ้งเตือน
             </Typography>
-            <Typography variant="subtitle2" className={classes.menuTitle}>
-              ใหม่
-            </Typography>
-            {/* .filter Read is false and .map call MenuItem */}
+            {notifications.length !== 0 && (
+              <Typography variant="subtitle2" className={classes.menuTitle}>
+                ใหม่
+              </Typography>
+            )}
             {notifications.map((notification) => (
-              <MenuItem key={notification._id} onClick={handleClose}>
-                <Notification notification={notification}/>
+              <MenuItem key={notification._id} onClick={() => handleNoti(notification)} selected={notification.isRead}>
+                <Notification notification={notification} />
               </MenuItem>
             ))}
             <Typography variant="subtitle2" className={classes.menuTitle}>
@@ -183,7 +202,7 @@ export default function NavBar({ onClickMenu }) {
             </Typography>
             <MenuItem onClick={(handleClose, handleLogOut)}>
               <Avatar className={classes.btnIcon}>
-                <MeetingRoomIcon fontSize="small"/>
+                <MeetingRoomIcon fontSize="small" />
               </Avatar>
               <Typography variant="body1">ออกจากระบบ</Typography>
             </MenuItem>

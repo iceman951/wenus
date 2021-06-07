@@ -72,14 +72,14 @@ const validationPostSchema = yup.object({
     .required("Text is required"),
 });
 
-const Post = ({ post }) => {
+const Post = ({ post, isSingle }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const current_user = useSelector((state) => state.user.user);
   const isAuthor = current_user._id === post.author._id;
 
-  const [expanded, setExpanded] = React.useState(false);
-  const [showMore, setShowMore] = React.useState(false);
+  const [expanded, setExpanded] = React.useState(isSingle);
+  const [showMore, setShowMore] = React.useState(isSingle);
 
   const handleCommentClick = () => {
     setExpanded(!expanded);
