@@ -5,3 +5,9 @@ export const getNotifications = (dispatch) => {
     dispatch({ type: "FETCH_NOTIFICATION", res });
   });
 };
+
+export const showNotifications = (dispatch) => {
+  Axios.patch(`/notifications/update`).then((res) => {
+    getNotifications(dispatch);
+  });
+};

@@ -19,6 +19,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import Notification from "./Notification";
+import { showNotifications } from "../store/actions/notificationAction";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -78,6 +79,7 @@ export default function NavBar({ onClickMenu }) {
 
   const handleNoti = (event) => {
     setNotiAnchorEl(event.currentTarget);
+    showNotifications(dispatch);
   };
 
   const handleClose = () => {
@@ -135,7 +137,7 @@ export default function NavBar({ onClickMenu }) {
             color="inherit"
             style={{ padding: 5 }}
           >
-            <Badge badgeContent={notifications?.length} color="secondary">
+            <Badge badgeContent={notifications?.filter(x => !x.isNotify).length} color="secondary">
               <NotificationsIcon onClick={handleNoti} />
             </Badge>
           </IconButton>
