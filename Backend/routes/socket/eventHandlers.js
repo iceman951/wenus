@@ -24,7 +24,7 @@ exports.createCommentNotification = async (type, post_id, user_id) => {
   }
 };
 
-exports.createLikeNotification = async (type, post_id) => {
+exports.createLikeNotification = async (type, post_id, user_id) => {
   try {
     let post = await Post.findById({ _id: post_id });
     let notification = await Notification.findOne({
@@ -40,8 +40,7 @@ exports.createLikeNotification = async (type, post_id) => {
         likeAmount: post.liked_users.length,
       });
       await notification.save();
-    } else {
-
+    } else if (notification) {
       notification.likeAmount = post.liked_users.length;
       await notification.save();
     }

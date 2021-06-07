@@ -11,9 +11,10 @@ const schema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Post",
     },
-    active: { type: Boolean, default: true},
-    isRead: { type: Boolean, defalut: false},
-    likeAmount: {type: Number, defalut: 0},
+    active: { type: Boolean, default: true },
+    isRead: { type: Boolean, default: false },
+    isNotify: { type: Boolean, default: false },
+    likeAmount: { type: Number, default: 0 },
     createDate: { type: Date, default: Date.now },
   },
   {

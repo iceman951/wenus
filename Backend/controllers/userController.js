@@ -4,7 +4,16 @@ const jwt = require("jsonwebtoken");
 const config = require("../config/index");
 
 exports.me = async (req, res, next) => {
-  const { _id, firstName, lastName, email, birthdate, faculty, createDate, subscribedPosts} = req.user;
+  const {
+    _id,
+    firstName,
+    lastName,
+    email,
+    birthdate,
+    faculty,
+    createDate,
+    subscribedPosts,
+  } = req.user;
 
   return res.status(200).json({
     user: {
@@ -15,10 +24,10 @@ exports.me = async (req, res, next) => {
       birthdate: birthdate,
       createDate: createDate,
       faculty: faculty,
-      subscribedPosts: subscribedPosts
-    }
-  })
-}
+      subscribedPosts: subscribedPosts,
+    },
+  });
+};
 
 exports.login = async (req, res, next) => {
   try {
@@ -63,8 +72,8 @@ exports.login = async (req, res, next) => {
         createDate: user.createDate,
         birthdate: user.birthdate,
         faculty: user.faculty,
-        subscribedPosts: user.subscribedPosts
-      }
+        subscribedPosts: user.subscribedPosts,
+      },
     });
   } catch (error) {
     next(error);

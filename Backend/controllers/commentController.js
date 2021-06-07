@@ -27,11 +27,11 @@ exports.create = async (req, res, next) => {
       user.subscribedPosts.push(post_id);
       await user.save();
     }
-    
+
     res.status(201).json({
       success: true,
       message: "เพิ่มคอมเมนต์เรียบร้อย",
-      user: user
+      user: user,
     });
   } catch (error) {
     next(error);
