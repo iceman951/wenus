@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
   menu: {
     marginTop: 40,
     marginBottom: 20,
+    padding: 0,
     // width: '20%',
     alignItems: "center",
     overflowY: "scroll",
@@ -164,26 +165,11 @@ export default function NavBar({ onClickMenu }) {
             <Typography variant="h6" className={classes.menuTitle}>
               การแจ้งเตือน
             </Typography>
-            {notifications.length !== 0 && (
-              <Typography variant="subtitle2" className={classes.menuTitle}>
-                ใหม่
-              </Typography>
-            )}
             {notifications.map((notification) => (
               <MenuItem key={notification._id} onClick={() => handleNoti(notification)} selected={notification.isRead}>
                 <Notification notification={notification} />
               </MenuItem>
             ))}
-            <Typography variant="subtitle2" className={classes.menuTitle}>
-              ก่อนหน้านี้
-            </Typography>
-            {/* .filter Read is false and .map call MenuItem */}
-            <MenuItem onClick={handleClose}>
-              <Notification />
-            </MenuItem>
-            <MenuItem onClick={handleClose}>
-              <Notification />
-            </MenuItem>
           </Menu>
           <IconButton onClick={handleMenu} style={{ padding: 5 }}>
             <SettingsIcon style={{ color: "white" }} />
