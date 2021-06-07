@@ -163,9 +163,7 @@ exports.showMine = async (req, res, next) => {
 exports.showByTag = async (req, res, next) => {
   try {
     let skip = req.params.skip ? Number(req.params.skip) : 0;
-    const tag = req.params.tag;
-    const length = req.params.length;
-
+    const { tag, length } = req.params;
     const newLength = await Post.find({ tag: tag }).countDocuments();
     if (length != 0 && newLength - length >= 0) {
       skip += newLength - length;
