@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 const User = require("../../models/user");
 const Notification = require("../../models/notification");
 const Post = require("../../models/post");
@@ -24,7 +24,7 @@ exports.createCommentNotification = async (type, post_id, user_id) => {
   }
 };
 
-exports.createLikeNotification = async (type, post_id) => {
+exports.createLikeNotification = async (type, post_id, user_id) => {
   try {
     let post = await Post.findById({ _id: post_id });
     let notification = await Notification.findOne({
@@ -32,7 +32,7 @@ exports.createLikeNotification = async (type, post_id) => {
       type: type,
       post: post_id,
     });
-    if (!notification && (post.author != user_id)) {
+    if (!notification && post.author != user_id) {
       notification = new Notification({
         type: type,
         post: post_id,
@@ -40,13 +40,11 @@ exports.createLikeNotification = async (type, post_id) => {
         likeAmount: post.liked_users.length,
       });
       await notification.save();
-    } else {
-
+    } else if (notification) {
       notification.likeAmount = post.liked_users.length;
       await notification.save();
     }
   } catch (error) {
-    console.log(error);
-    return error
+    return error;
   }
 };

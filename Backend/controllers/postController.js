@@ -163,9 +163,7 @@ exports.showMine = async (req, res, next) => {
 exports.showByTag = async (req, res, next) => {
   try {
     let skip = req.params.skip ? Number(req.params.skip) : 0;
-    const tag = req.params.tag;
-    const length = req.params.length;
-
+    const { tag, length } = req.params;
     const newLength = await Post.find({ tag: tag }).countDocuments();
     if (length != 0 && newLength - length >= 0) {
       skip += newLength - length;
@@ -263,7 +261,7 @@ exports.edit = async (req, res, next) => {
 exports.like = async (req, res, next) => {
   try {
     const { post_id } = req.body;
-    const user_id = req.user.id;
+    const user_id = req.user._id;
 
     let post = await Post.findById({ _id: post_id });
 
@@ -295,17 +293,17 @@ exports.like = async (req, res, next) => {
 };
 
 async function deactivateNotification(post_id) {
-  await Notification.updateMany({post: post_id}, {"active": false});
+  await Notification.updateMany({ post: post_id }, { active: false });
 }
 
 async function unsubscribePost(post_id) {
   const query = { subscribedPosts: mongoose.Types.ObjectId(post_id) };
-    let users = await User.find(query);
+  let users = await User.find(query);
 
-    for (const user of users) {
-      user.subscribedPosts.pull(post_id);
-      await user.save();
-    }
+  for (const user of users) {
+    user.subscribedPosts.pull(post_id);
+    await user.save();
+  }
 }
 
 async function saveImage(baseImage) {
