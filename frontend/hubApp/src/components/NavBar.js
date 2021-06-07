@@ -19,7 +19,10 @@ import {
   Typography,
 } from "@material-ui/core";
 import Notification from "./Notification";
-import { showNotifications } from "../store/actions/notificationAction";
+import {
+  showNotifications,
+  readNotification,
+} from "../store/actions/notificationAction";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -77,9 +80,13 @@ export default function NavBar({ onClickMenu }) {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleNoti = (event) => {
+  const handleShowNotiButton = (event) => {
     setNotiAnchorEl(event.currentTarget);
     showNotifications(dispatch);
+  };
+  const handleNoti = (notification) => {
+    history.push(`/post/${notification.post}`);
+    readNotification(dispatch, notification._id);
   };
 
   const handleClose = () => {
@@ -137,8 +144,11 @@ export default function NavBar({ onClickMenu }) {
             color="inherit"
             style={{ padding: 5 }}
           >
-            <Badge badgeContent={notifications?.filter(x => !x.isNotify).length} color="secondary">
-              <NotificationsIcon onClick={handleNoti} />
+            <Badge
+              badgeContent={notifications?.filter((x) => !x.isNotify).length}
+              color="secondary"
+            >
+              <NotificationsIcon onClick={handleShowNotiButton} />
             </Badge>
           </IconButton>
           <Menu
@@ -160,7 +170,7 @@ export default function NavBar({ onClickMenu }) {
               </Typography>
             )}
             {notifications.map((notification) => (
-              <MenuItem key={notification._id} onClick={() => history.push(`/post/${notification.post}`)}>
+              <MenuItem key={notification._id} onClick={() => handleNoti(notification)} selected={notification.isRead}>
                 <Notification notification={notification} />
               </MenuItem>
             ))}
