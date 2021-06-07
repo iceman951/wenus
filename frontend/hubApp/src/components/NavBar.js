@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 20,
     // width: '20%',
     alignItems: "center",
-    overflowY: 'scroll',
+    overflowY: "scroll",
     msOverflowStyle: "none",
     overflow: "-moz-scrollbars-none",
     scrollbarWidth: "none",
@@ -69,10 +69,6 @@ export default function NavBar({ onClickMenu }) {
   const notifications = useSelector(
     (state) => state.notification.notifications
   );
-
-  useEffect(() => {
-    console.log(notifications);
-  }, [notifications]);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -140,7 +136,7 @@ export default function NavBar({ onClickMenu }) {
             onClose={handleClose}
             PaperProps={{
               className: classes.menu,
-              style: {width: '25%'}
+              style: { width: "25%" },
             }}
           >
             <Typography variant="h6" className={classes.menuTitle}>
@@ -152,7 +148,7 @@ export default function NavBar({ onClickMenu }) {
             {/* .filter Read is false and .map call MenuItem */}
             {notifications.map((notification) => (
               <MenuItem key={notification._id} onClick={handleClose}>
-                <Notification notification={notification}/>
+                <Notification notification={notification} />
               </MenuItem>
             ))}
             <Typography variant="subtitle2" className={classes.menuTitle}>
@@ -183,7 +179,7 @@ export default function NavBar({ onClickMenu }) {
             </Typography>
             <MenuItem onClick={(handleClose, handleLogOut)}>
               <Avatar className={classes.btnIcon}>
-                <MeetingRoomIcon fontSize="small"/>
+                <MeetingRoomIcon fontSize="small" />
               </Avatar>
               <Typography variant="body1">ออกจากระบบ</Typography>
             </MenuItem>
