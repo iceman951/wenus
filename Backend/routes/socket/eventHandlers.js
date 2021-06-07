@@ -32,7 +32,7 @@ exports.createLikeNotification = async (type, post_id) => {
       type: type,
       post: post_id,
     });
-    if (!notification) {
+    if (!notification && (post.author != user_id)) {
       notification = new Notification({
         type: type,
         post: post_id,
@@ -41,10 +41,12 @@ exports.createLikeNotification = async (type, post_id) => {
       });
       await notification.save();
     } else {
+
       notification.likeAmount = post.liked_users.length;
       await notification.save();
     }
   } catch (error) {
-    return error;
+    console.log(error);
+    return error
   }
 };
