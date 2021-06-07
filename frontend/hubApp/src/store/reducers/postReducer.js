@@ -27,6 +27,7 @@ const postReducer = (state = initState, action) => {
       return {
         ...state,
         posts: [action.post],
+        loading: false,
       };
     case "NEXT_PAGE_POST":
       if (state.posts.length === 0 && state.skip < state.dbPostsLength) {
