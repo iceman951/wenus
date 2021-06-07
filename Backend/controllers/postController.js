@@ -63,6 +63,7 @@ exports.show = async (req, res, next) => {
         select: "_id firstName lastName",
       })
       .populate({ path: "liked_users", select: "_id firstName lastName" });
+
     if (!posts) {
       const error = new Error("ไม่พบข้อมูลโพสต์");
       error.statusCode = 404;
@@ -241,9 +242,8 @@ exports.edit = async (req, res, next) => {
       error.statusCode = 404;
       throw error;
     }
-    post.text = text;
-    await post.save();
-    // await post.updateOne({text: text});
+
+    await post.updateOne({ text: text });
 
     if (post.nModified === 0) {
       throw new Error("ไม่สามารถอัปเดตข้อมูลได้");
