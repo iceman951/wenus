@@ -270,10 +270,8 @@ exports.like = async (req, res, next) => {
       error.statusCode = 404;
       throw error;
     }
-
-    let user = post.liked_users.find((user) => {
-      return user._id == user_id;
-    });
+    
+    let user = post.liked_users.includes(user_id)
 
     if (!user) {
       post.liked_users.push(user_id);
