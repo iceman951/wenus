@@ -5,23 +5,30 @@ import {
   ListItemAvatar,
   ListItemText,
   ListItem,
+  useTheme,
 } from "@material-ui/core/";
 // Redux
 import { useSelector } from "react-redux";
 
 const Comment = ({ comment }) => {
+  const theme = useTheme();
   const current_user = useSelector((state) => state.user.user);
   const isAuthor = current_user._id === comment.author._id;
   const text = {
     component: "span",
     variant: "body2",
-    style: { whiteSpace: 'pre-line', wordWrap: "break-word", textAlign: "left", marginLeft: 20 },
+    style: {
+      whiteSpace: "pre-line",
+      wordWrap: "break-word",
+      textAlign: "left",
+      marginLeft: 20,
+    },
   };
 
   return (
     <ListItem alignItems="flex-start" style={{ marginBottom: 5 }}>
       <ListItemAvatar>
-        <Avatar style={{ backgroundColor: isAuthor && "red" }} />
+        <Avatar style={{ background: isAuthor && theme.palette.background.main }} />
       </ListItemAvatar>
       <ListItemText
         primary={`${comment.author.firstName} ${comment.author.lastName}`}

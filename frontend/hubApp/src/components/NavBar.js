@@ -29,7 +29,7 @@ import Logo from "./Logo";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    background: `linear-gradient(-30deg, ${theme.palette.primary.main} 30%, ${theme.palette.secondary.main} 90%)`,
+    background: theme.palette.background.main,
   },
   menu: {
     marginTop: 40,

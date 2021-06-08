@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
   },
   avatar: {
-    backgroundColor: red[500],
+    background: theme.palette.background.main,
   },
 }));
 

@@ -10,27 +10,37 @@ var theme = createMuiTheme({
   palette: {
     background: {
       default: '#303030',
+      main: `linear-gradient(-30deg, #F2994A 30%, #F2C94C 90%)`,
       paper: '#3B3B3B',
+
     },
     primary: {
       light: "#EB90CD",
-      main: "#E675C1",
+      main: "#F2994A",
       dark: "#A15187",
       contrastText: "#FFF",
     },
     secondary: {
       light: "#74A7F5",
-      main: "#5292F3",
+      main: "#F2C94C",
       dark: "#3966AA",
       contrastText: "#FFF",
     },
+  },
+  common: {
+    black: '#000',
+    white: '#fff',
   },
   typography: {
     fontFamily: ["KanitRegular"].join(","),
     fontSize: 18,
     h4: {
       fontFamily: ["KanitExtraBold"].join(","),
-    }
+    },
+    allVariants: {
+      color: "#303030"
+    },
+
   },
 });
 theme = responsiveFontSizes(theme);

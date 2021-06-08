@@ -20,6 +20,7 @@ import {
   List,
   Divider,
   Chip,
+  useTheme,
 } from "@material-ui/core/";
 // Icon
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -54,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 30,
     padding: theme.spacing(2, 2, 1),
     marginBottom: theme.spacing(2),
+    backgroundColor: theme.common.white,
   },
   post_title: {
     textAlign: "left",
@@ -73,6 +75,7 @@ const validationPostSchema = yup.object({
 });
 
 const Post = ({ post, isSingle }) => {
+  const theme = useTheme();
   const dispatch = useDispatch();
   const classes = useStyles();
   const current_user = useSelector((state) => state.user.user);
@@ -162,7 +165,7 @@ const Post = ({ post, isSingle }) => {
       <Card className={classes.post}>
         <CardHeader
           className={classes.post_title}
-          avatar={<Avatar style={{ backgroundColor: isAuthor ? "red" : "" }} />}
+          avatar={<Avatar style={{background: isAuthor ? theme.palette.background.main : "" }} />}
           action={
             isAuthor && (
               <>
@@ -303,7 +306,7 @@ const Post = ({ post, isSingle }) => {
         />
         <CardActions style={{ padding: 0 }}>
           <Button
-            color={liked ? "secondary" : "default"}
+            color={liked ? "primary" : "default"}
             fullWidth
             onClick={() => handleClickLike()}
           >
