@@ -23,13 +23,16 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    backgroundColor: theme.palette.background.default,
+    minHeight: window.innerHeight,
+    overflowX: "hidden",
   },
   drawer: {
     width: drawerWidth,
   },
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor: theme.palette.primary.dark,
+    backgroundColor: theme.palette.background.paper,
   },
   content: {
     flexGrow: 1,
@@ -78,18 +81,7 @@ const Home = () => {
   };
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(/assets/images/bg1.jpg)`,
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundAttachment: "fixed",
-        minHeight: window.innerHeight,
-        overflowX: "hidden",
-      }}
-      className={classes.root}
-    >
+    <div className={classes.root}>
       <NavBar onClickMenu={toggleDrawer} />
       <Drawer
         className={classes.drawer}

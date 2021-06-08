@@ -23,24 +23,18 @@ import {
   showNotifications,
   readNotification,
 } from "../store/actions/notificationAction";
-import { Link as RouterLink, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import Logo from "./Logo";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-  },
-  title: {
-    flexGrow: 1,
-    textAlign: "left",
+    background: `linear-gradient(-30deg, ${theme.palette.primary.main} 30%, ${theme.palette.secondary.main} 90%)`,
   },
   menu: {
     marginTop: 40,
     marginBottom: 20,
     padding: 0,
-    // width: '20%',
     alignItems: "center",
     overflowY: "scroll",
     msOverflowStyle: "none",
@@ -100,101 +94,103 @@ export default function NavBar({ onClickMenu }) {
   };
 
   return (
-    <div className={classes.root}>
-      <AppBar className={classes.appBar}>
-        <Toolbar>
+    <AppBar className={classes.root}>
+      <Toolbar>
+        {onClickMenu ? (
           <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
             aria-label="menu"
+            className={classes.menuButton}
+            edge="start"
+            color="inherit"
             onClick={() => onClickMenu(true)}
             disabled={isLoading}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            <RouterLink
-              to="/"
+        ) : (
+          <></>
+        )}
+        <Logo />
+        <Chip
+          avatar={
+            <Avatar
               style={{
-                color: "inherit",
-                textDecoration: "none",
+                width: 40,
+                height: 40,
               }}
-            >
-              PSU HUB
-            </RouterLink>
+            />
+          }
+          label={user.firstName}
+          style={{
+            color: "white",
+            fontSize: 24,
+            fontFamily: "KanitExtraBold",
+            height: 50,
+            borderColor: "white",
+            borderRadius: 50,
+            borderWidth: 2,
+            backgroundColor: "rgba(255,255,255,0.4)",
+          }}
+          variant="outlined"
+        />
+        <IconButton
+          aria-label="show new notifications"
+          color="inherit"
+          style={{ padding: 5 }}
+        >
+          <Badge
+            badgeContent={notifications?.filter((x) => !x.isNotify).length}
+            color="secondary"
+          >
+            <NotificationsIcon onClick={handleShowNotiButton} />
+          </Badge>
+        </IconButton>
+        <Menu
+          id="noti-appbar"
+          anchorEl={NotiAnchorEl}
+          open={openNoti}
+          onClose={handleClose}
+          PaperProps={{
+            className: classes.menu,
+            style: { width: "25%" },
+          }}
+        >
+          <Typography variant="h6" className={classes.menuTitle}>
+            การแจ้งเตือน
           </Typography>
-          <Chip
-            avatar={
-              <Avatar
-                style={{
-                  width: 30,
-                  height: 30,
-                }}
-              />
-            }
-            label={user.firstName}
-            color="primary"
-            style={{
-              fontSize: 20,
-              height: 50,
-            }}
-          />
-          <IconButton
-            aria-label="show new notifications"
-            color="inherit"
-            style={{ padding: 5 }}
-          >
-            <Badge
-              badgeContent={notifications?.filter((x) => !x.isNotify).length}
-              color="secondary"
+          {notifications.map((notification) => (
+            <MenuItem
+              key={notification._id}
+              onClick={() => handleNoti(notification)}
+              selected={notification.isRead}
             >
-              <NotificationsIcon onClick={handleShowNotiButton} />
-            </Badge>
-          </IconButton>
-          <Menu
-            id="noti-appbar"
-            anchorEl={NotiAnchorEl}
-            open={openNoti}
-            onClose={handleClose}
-            PaperProps={{
-              className: classes.menu,
-              style: { width: "25%" },
-            }}
-          >
-            <Typography variant="h6" className={classes.menuTitle}>
-              การแจ้งเตือน
-            </Typography>
-            {notifications.map((notification) => (
-              <MenuItem key={notification._id} onClick={() => handleNoti(notification)} selected={notification.isRead}>
-                <Notification notification={notification} />
-              </MenuItem>
-            ))}
-          </Menu>
-          <IconButton onClick={handleMenu} style={{ padding: 5 }}>
-            <SettingsIcon style={{ color: "white" }} />
-          </IconButton>
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            PaperProps={{
-              className: classes.menu,
-            }}
-          >
-            <Typography variant="h6" className={classes.menuTitle}>
-              บัญชีของคุณ
-            </Typography>
-            <MenuItem onClick={(handleClose, handleLogOut)}>
-              <Avatar className={classes.btnIcon}>
-                <MeetingRoomIcon fontSize="small" />
-              </Avatar>
-              <Typography variant="body1">ออกจากระบบ</Typography>
+              <Notification notification={notification} />
             </MenuItem>
-          </Menu>
-        </Toolbar>
-      </AppBar>
-    </div>
+          ))}
+        </Menu>
+        <IconButton onClick={handleMenu} style={{ padding: 5 }}>
+          <SettingsIcon style={{ color: "white" }} />
+        </IconButton>
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          PaperProps={{
+            className: classes.menu,
+          }}
+        >
+          <Typography variant="h6" className={classes.menuTitle}>
+            บัญชีของคุณ
+          </Typography>
+          <MenuItem onClick={(handleClose, handleLogOut)}>
+            <Avatar className={classes.btnIcon}>
+              <MeetingRoomIcon fontSize="small" />
+            </Avatar>
+            <Typography variant="body1">ออกจากระบบ</Typography>
+          </MenuItem>
+        </Menu>
+      </Toolbar>
+    </AppBar>
   );
 }
