@@ -9,7 +9,6 @@ import {
   Typography,
   Button,
   Hidden,
-  makeStyles,
 } from "@material-ui/core";
 
 import LoginForm from "../../forms/LoginForm";
@@ -37,7 +36,7 @@ export default function LoginPage() {
             </Grid>
             <Grid container justify="center" style={{ marginBottom: "3%" }}>
               <Grid item xs={6}>
-                <Card variant="outlined" >
+                <Card variant="outlined">
                   <CardContent>
                     <Typography variant="h4">LOGIN</Typography>
                     <Divider />

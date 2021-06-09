@@ -1,46 +1,41 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import {
   Container,
-  Drawer,
+  // Drawer,
   makeStyles,
-  Toolbar,
-  IconButton,
+  // Toolbar,
+  // IconButton,
 } from "@material-ui/core";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+// import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { useDispatch, useSelector } from "react-redux";
 import { SocketContext } from "../../context/socket";
 import NewPostBar from "./NewPostBar";
-import NavBar from "../../components/NavBar";
+// import NavBar from "../../components/NavBar";
 import CreatePost from "./CreatePost";
 import Posts from "./Posts";
-import TagsBar from "./TagsBar";
+// import TagsBar from "./TagsBar";
 import { getNotifications } from "../../store/actions/notificationAction";
 
-const drawerWidth = 200;
+// const drawerWidth = 200;
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    backgroundColor: theme.palette.background.default,
-    minHeight: window.innerHeight,
-    overflowX: "hidden",
-  },
-  drawer: {
-    width: drawerWidth,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-    backgroundColor: theme.palette.background.default,
-  },
+  // root: {
+  //   display: "flex",
+  //   flexDirection: "column",
+  //   alignItems: "center",
+  //   backgroundColor: theme.palette.background.default,
+  //   minHeight: window.innerHeight,
+  //   overflowX: "hidden",
+  // },
+  // drawer: {
+  //   width: drawerWidth,
+  // },
+  // drawerPaper: {
+  //   width: drawerWidth,
+  //   backgroundColor: theme.palette.background.default,
+  // },
   content: {
     flexGrow: 1,
-  },
-  toolbar: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
   },
 }));
 
@@ -51,7 +46,7 @@ const Home = () => {
   const newPost = useSelector((state) => state.post.newPost);
   const user = useSelector((state) => state.user.user);
 
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  // const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     getNotifications(dispatch);
@@ -76,14 +71,15 @@ const Home = () => {
     };
   }, [dispatch, socket, user.subscribedPosts]);
 
-  const toggleDrawer = (open) => {
-    setDrawerOpen(open);
-  };
+  // const toggleDrawer = (open) => {
+  //   setDrawerOpen(open);
+  // };
 
   return (
-    <div className={classes.root}>
-      <NavBar onClickMenu={toggleDrawer} />
-      <Drawer
+    <>
+    {/* <div className={classes.root}> */}
+      {/* <NavBar onClickMenu={toggleDrawer} /> */}
+      {/* <Drawer
         className={classes.drawer}
         anchor="left"
         open={drawerOpen}
@@ -102,15 +98,14 @@ const Home = () => {
           </IconButton>
         </Toolbar>
         <TagsBar onClick={toggleDrawer} />
-      </Drawer>
-
+      </Drawer> */}
       <Container className={classes.content}>
-        <Toolbar />
         <CreatePost />
         <Posts />
       </Container>
       {newPost && <NewPostBar />}
-    </div>
+    {/* </div> */}
+    </>
   );
 };
 

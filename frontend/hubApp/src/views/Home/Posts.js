@@ -40,7 +40,6 @@ export default function Posts() {
         }
       }
     };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
@@ -56,7 +55,7 @@ export default function Posts() {
 
   return (
     <>
-      {posts.map((post, i) => (
+      {posts.map((post) => (
         <LazyLoad key={post._id} placeholder={<Loading />}>
           <Post key={post._id} post={post} isSingle={false} />
         </LazyLoad>

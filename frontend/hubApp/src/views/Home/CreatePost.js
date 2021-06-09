@@ -10,7 +10,6 @@ import {
   CardContent,
   Container,
 } from "@material-ui/core/";
-import { red } from "@material-ui/core/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost } from "../../store/actions/postAction";
 import PostForm from "../../forms/PostForm";
