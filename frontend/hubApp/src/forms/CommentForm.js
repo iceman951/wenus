@@ -9,6 +9,7 @@ import {
   TextField,
   makeStyles,
   Avatar,
+  useTheme,
 } from "@material-ui/core/";
 import { SocketContext } from "../context/socket";
 
@@ -43,17 +44,17 @@ const validationPostSchema = yup.object({
 });
 
 export default function CommentForm({ post_id }) {
+  const theme = useTheme();
   const dispatch = useDispatch();
   const classes = useStyles();
   const socket = useContext(SocketContext);
-  const user = useSelector((state) => state.user.user)
+  const user = useSelector((state) => state.user.user);
 
   const joinRoom = (post_id) => {
     socket.emit("join-rooms", [post_id]);
   };
   const notification = (post_id) => {
     socket.emit("sent-comment", post_id, user._id);
-    // (socket);
   };
   const formik = useFormik({
     initialValues: {
@@ -68,7 +69,7 @@ export default function CommentForm({ post_id }) {
   });
   return (
     <Container className={classes.root}>
-      <Avatar style={{ backgroundColor: "red" }}></Avatar>
+      <Avatar style={{ background: theme.palette.background.main }}></Avatar>
       <form
         onSubmit={formik.handleSubmit}
         style={{ marginBottom: 10, width: "100%" }}

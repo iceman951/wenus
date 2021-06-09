@@ -4,7 +4,7 @@ import Navbar from "../../components/NavBar";
 
 const useStyle = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.default,
     display: "flex",
     height: "100%",
     overflow: "hidden",
@@ -23,7 +23,7 @@ const useStyle = makeStyles((theme) => ({
   },
   content: {
     flex: "1 1 auto",
-    height: "100%",
+    minHeight: window.innerHeight - 64,
     overflow: "auto",
   },
 }));

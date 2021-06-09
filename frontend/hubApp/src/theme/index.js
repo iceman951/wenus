@@ -1,41 +1,36 @@
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core';
 
 var theme = createMuiTheme({
-    palette: {
-      background: {
-        default: '#303030',
-        paper: '#424242',
-      },
-      primary: {
-        light: "#EB90CD",
-        main: "#fbc02d",
-        dark: "#A15187",
-        contrastText: "#FFF",
-      },
-      secondary: {
-        light: "#74A7F5",
-        main: "#00bcd4",
-        dark: "#3966AA",
-        contrastText: "#FFF",
-      },
+  palette: {
+    background: {
+      default: '#484848',
+      main: `linear-gradient(-30deg, #F2994A 30%, #F2C94C 90%)`,
+      paper: '#fff',
     },
-    typography: {
-      fontFamily: ["KanitRegular"].join(","),
-      fontSize: 18,
-      allVariants: {
-        color: 'white',
-      },
-      h4: {
-        fontFamily: ["KanitExtraBold"].join(","),
-      },
-      subtitle2: {
-        color: 'gray',
-      },
-      caption: {
-        color: 'gray',
-      }
+    primary: {
+      light: "#ffca79",
+      main: "#F2994A",
+      dark: "#bb6a1b",
+      contrastText: "#FFF",
     },
-  });
-  theme = responsiveFontSizes(theme);
+    secondary: {
+      light: "#fffc7d",
+      main: "#F2C94C",
+      dark: "#bc9914",
+      contrastText: "#FFF",
+    },
+  },
+  typography: {
+    fontFamily: ["KanitRegular"].join(","),
+    fontSize: 18,
+    h4: {
+      fontFamily: ["KanitExtraBold"].join(","),
+    },
+    allVariants: {
+      color: "#303030"
+    },
+  },
+});
+theme = responsiveFontSizes(theme);
 
 export default theme;

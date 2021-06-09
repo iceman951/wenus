@@ -29,7 +29,7 @@ import Logo from "./Logo";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    background: `linear-gradient(-30deg, ${theme.palette.primary.main} 30%, ${theme.palette.secondary.main} 90%)`,
+    background: theme.palette.background.main,
   },
   menu: {
     marginTop: 40,
@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
     "&::-webkit-scrollbar": {
       display: "none",
     },
+    backgroundColor: theme.palette.common.white,
   },
   menuTitle: {
     paddingLeft: 15,
@@ -80,7 +81,7 @@ export default function NavBar({ onClickMenu }) {
     showNotifications(dispatch);
   };
   const handleNoti = (notification) => {
-    navigate(`app/post/${notification.post}`);
+    navigate(`/app/post/${notification.post}`);
     readNotification(dispatch, notification._id);
   };
 
