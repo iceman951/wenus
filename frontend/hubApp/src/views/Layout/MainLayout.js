@@ -1,6 +1,8 @@
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Box, makeStyles } from "@material-ui/core/";
 import Navbar from "../../components/NavBar";
+import TagsSideBar from "../../components/TagsSideBar";
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -30,10 +32,15 @@ const useStyle = makeStyles((theme) => ({
 
 const MainLayout = () => {
   const classes = useStyle();
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   return (
     <Box className={classes.root}>
-      <Navbar />
+      <Navbar onClickMenu={() => setDrawerOpen(true)} />
+      <TagsSideBar
+        onClickClose={() => setDrawerOpen(false)}
+        openDrawer={isDrawerOpen}
+      />
       <Box className={classes.wrapper}>
         <Box className={classes.container}>
           <Box className={classes.content}>
