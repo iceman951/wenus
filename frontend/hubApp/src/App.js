@@ -9,27 +9,23 @@ import { SocketContext, socket } from "./context/socket";
 var theme = createMuiTheme({
   palette: {
     background: {
-      default: '#303030',
+      default: '#484848',
       main: `linear-gradient(-30deg, #F2994A 30%, #F2C94C 90%)`,
-      paper: '#3B3B3B',
+      paper: '#fff',
 
     },
     primary: {
-      light: "#EB90CD",
+      light: "#ffca79",
       main: "#F2994A",
-      dark: "#A15187",
+      dark: "#bb6a1b",
       contrastText: "#FFF",
     },
     secondary: {
-      light: "#74A7F5",
+      light: "#fffc7d",
       main: "#F2C94C",
-      dark: "#3966AA",
+      dark: "#bc9914",
       contrastText: "#FFF",
     },
-  },
-  common: {
-    black: '#000',
-    white: '#fff',
   },
   typography: {
     fontFamily: ["KanitRegular"].join(","),

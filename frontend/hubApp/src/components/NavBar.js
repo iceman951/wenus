@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
     "&::-webkit-scrollbar": {
       display: "none",
     },
+    backgroundColor: theme.palette.common.white,
   },
   menuTitle: {
     paddingLeft: 15,

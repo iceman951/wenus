@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 30,
     padding: theme.spacing(2, 2, 1),
     marginBottom: theme.spacing(2),
-    backgroundColor: theme.common.white,
+    backgroundColor: theme.palette.common.white,
   },
   post_title: {
     textAlign: "left",
