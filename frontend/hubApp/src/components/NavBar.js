@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import SettingsIcon from "@material-ui/icons/Settings";
@@ -23,7 +23,7 @@ import {
   showNotifications,
   readNotification,
 } from "../store/actions/notificationAction";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Logo from "./Logo";
 
 const useStyles = makeStyles((theme) => ({
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 export default function NavBar({ onClickMenu }) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [NotiAnchorEl, setNotiAnchorEl] = useState(null);
@@ -80,7 +80,7 @@ export default function NavBar({ onClickMenu }) {
     showNotifications(dispatch);
   };
   const handleNoti = (notification) => {
-    history.push(`/post/${notification.post}`);
+    navigate(`app/post/${notification.post}`);
     readNotification(dispatch, notification._id);
   };
 

@@ -1,27 +1,29 @@
 import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
-
 import Home from "../views/Home/index";
 import Login from "../views/LoginPage";
 import Register from "../views/RegisterPage";
 import Post from "../views/PostPage";
+import MainLayout from '../views/Layout/MainLayout'
+import { Navigate, Outlet } from "react-router-dom";
 
-const Routing = () => {
-  const loggedIn = useSelector((state) => state.user.loggedIn);
+const routes = (isLoggedIn) => ([
+  {
+    path: "/",
+    element: !isLoggedIn? <Outlet /> : <Navigate to='/app'/>,
+    children: [
+      { path: "login", element: <Login /> },
+      { path: "register", element: <Register /> },
+      { path: '/', element: <Navigate to="/login"/>}
+    ],
+  },
+  {
+    path: "/app",
+    element: isLoggedIn? <MainLayout /> : <Navigate to='/login' />,
+    children: [
+      { path: "/", element: <Home /> },
+      { path: "post/:id", element: <Post /> },
+    ]
+  },
+]);
 
-  return (
-    <Switch>
-      <Route exact path="/">
-        {loggedIn ? <Home /> : <Redirect to="/Login" />}
-      </Route>
-      <Route path="/Login" component={Login}>
-        {loggedIn ? <Redirect to="/" /> : <Login />}
-      </Route>
-      <Route path="/register" component={Register} />
-      <Route path='/post/:id' component={Post} />
-    </Switch>
-  );
-};
-
-export default Routing;
+export default routes;

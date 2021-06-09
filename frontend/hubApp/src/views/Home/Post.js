@@ -255,7 +255,7 @@ const Post = ({ post, isSingle }) => {
           }
           subheader={
             <NavLink
-              to={`/post/${post._id}`}
+              to={`/app/post/${post._id}`}
               style={{
                 color: "inherit",
                 textDecoration: "none",
