@@ -52,7 +52,6 @@ const CreatePost = () => {
   useEffect(() => {
     socket.on("new-post", () => {
       dispatch({ type: "NEW_POST" });
-      console.log("Have New Post");
     });
   }, [dispatch, socket]);
 

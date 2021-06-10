@@ -25,17 +25,18 @@ const Home = () => {
   }, [dispatch]);
   useEffect(() => {
     socket.on("connect", () => {
-      console.log("Connected: ", socket.id);
       socket.emit("join-rooms", user.subscribedPosts);
     });
 
     socket.on("update-notifications", () => {
       getNotifications(dispatch);
     });
-
-    socket.on("debug", (msg) => {
-      console.log("debugSocket", msg);
-    });
+    
+    // ========= Socket Debug ==============
+    // socket.on("debug", (msg) => {
+    //   console.log("debugSocket", msg);
+    // });
+    // =====================================
 
     return () => {
       socket.disconnect();

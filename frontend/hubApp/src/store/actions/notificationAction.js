@@ -13,7 +13,6 @@ export const showNotifications = (dispatch) => {
 };
 
 export const readNotification = (dispatch, notification_id) => {
-  console.log(notification_id);
   Axios.patch(`/notifications/read`, { notification_id: notification_id }).then(
     (res) => {
       getNotifications(dispatch);
