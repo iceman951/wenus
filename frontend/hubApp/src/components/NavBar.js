@@ -1,12 +1,6 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import MenuIcon from "@material-ui/icons/Menu";
-import SettingsIcon from "@material-ui/icons/Settings";
-import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-
-import { Logout } from "../store/actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -17,14 +11,19 @@ import {
   Menu,
   MenuItem,
   Typography,
+  makeStyles,
 } from "@material-ui/core";
-import Notification from "./Notification";
+import MenuIcon from "@material-ui/icons/Menu";
+import SettingsIcon from "@material-ui/icons/Settings";
+import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
+import NotificationsIcon from "@material-ui/icons/Notifications";
 import {
   showNotifications,
   readNotification,
 } from "../store/actions/notificationAction";
-import { useNavigate } from "react-router-dom";
+import { Logout } from "../store/actions/userAction";
 import Logo from "./Logo";
+import Notification from "./Notification";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -103,7 +102,7 @@ export default function NavBar({ onClickMenu }) {
             className={classes.menuButton}
             edge="start"
             color="inherit"
-            onClick={() => onClickMenu(true)}
+            onClick={() => onClickMenu()}
             disabled={isLoading}
           >
             <MenuIcon />

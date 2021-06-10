@@ -27,6 +27,7 @@ export default function Posts() {
         ? getMyPost(dispatch, skip)
         : getPosts(dispatch, selectedTag, skip, dbPostsLength);
     }
+  // eslint-disable-next-line
   }, [dispatch, skip, dbPostsLength]);
   //Load new post at bottom When scrolling
   useEffect(() => {
