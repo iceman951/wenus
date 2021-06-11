@@ -151,12 +151,13 @@ export default function NavBar({ onClickMenu }) {
           aria-label="show new notifications"
           color="inherit"
           style={{ padding: 5 }}
+          onClick={handleShowNotifications}
         >
           <Badge
             badgeContent={notifications?.filter((x) => !x.isNotify).length}
             color="secondary"
           >
-            <NotificationsIcon onClick={handleShowNotifications} />
+            <NotificationsIcon/>
           </Badge>
         </IconButton>
         <Menu
