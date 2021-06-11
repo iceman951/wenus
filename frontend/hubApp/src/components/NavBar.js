@@ -181,7 +181,6 @@ export default function NavBar({ onClickMenu }) {
                   handleClickNotification(notification);
                   handleClose();
                 }}
-                selected={notification.isRead}
               >
                 <Notification notification={notification} />
               </MenuItem>
