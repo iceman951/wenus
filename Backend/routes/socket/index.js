@@ -4,12 +4,10 @@ const event = require("./eventHandlers");
 io.on("connection", (socket) => {
   socket.on("sent-post", () => {
     socket.broadcast.emit("new-post");
-    console.log("sent-post");
   });
 
   socket.on("join-rooms", (rooms) => {
     socket.join(rooms);
-    console.log("join-rooms");
   });
 
   socket.on("sent-comment", (post_id, user_id) => {
