@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 40,
     marginBottom: 20,
     padding: 0,
+    paddingRight: 17,
     alignItems: "center",
     overflowY: "scroll",
     msOverflowStyle: "none",
@@ -151,12 +152,13 @@ export default function NavBar({ onClickMenu }) {
           aria-label="show new notifications"
           color="inherit"
           style={{ padding: 5 }}
+          onClick={handleShowNotifications}
         >
           <Badge
             badgeContent={notifications?.filter((x) => !x.isNotify).length}
             color="secondary"
           >
-            <NotificationsIcon onClick={handleShowNotifications} />
+            <NotificationsIcon/>
           </Badge>
         </IconButton>
         <Menu
@@ -166,7 +168,7 @@ export default function NavBar({ onClickMenu }) {
           onClose={handleClose}
           PaperProps={{
             className: classes.menu,
-            style: { width: "25%" },
+            style: { width: 320 },
           }}
         >
           <Typography variant="h6" className={classes.menuTitle}>
@@ -180,7 +182,6 @@ export default function NavBar({ onClickMenu }) {
                   handleClickNotification(notification);
                   handleClose();
                 }}
-                selected={notification.isRead}
               >
                 <Notification notification={notification} />
               </MenuItem>
