@@ -33,7 +33,7 @@ const Notification = ({ notification }) => {
               <MessageIcon fontSize="small" />
             </Avatar>
           ) : (
-            <Avatar className={classes.avtIcon}>
+            <Avatar className={classes.avtIcon} style={{backgroundColor: notification.isRead && "gray"}}>
               <ThumbUpIcon fontSize="small" />
             </Avatar>
           )}
