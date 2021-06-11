@@ -176,7 +176,10 @@ export default function NavBar({ onClickMenu }) {
             notifications.map((notification) => (
               <MenuItem
                 key={notification._id}
-                onClick={() => handleClickNotification(notification)}
+                onClick={() => {
+                  handleClickNotification(notification);
+                  handleClose();
+                }}
                 selected={notification.isRead}
               >
                 <Notification notification={notification} />
