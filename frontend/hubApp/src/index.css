@@ -26,3 +26,7 @@ code {
     url("./fonts/Kanit/Kanit-ExtraBold.ttf") format("truetype");
   font-weight: bold;
 }
+
+.swal2-container {
+  top: 64px !important; 
+}

@@ -91,6 +91,7 @@ const CreatePost = () => {
               <Button
                 variant="contained"
                 disableElevation
+                disableRipple
                 onClick={handleOpenModal}
                 fullWidth
                 style={{

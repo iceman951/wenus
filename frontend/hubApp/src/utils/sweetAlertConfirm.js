@@ -10,9 +10,9 @@ const ConfirmWarning = Swal.mixin({
   iconColor: "red",
 });
 
-export const alertWarning = ({ message, onClickConfirm }) => {
+export const alertWarning = ({ message, onClickButton }) => {
   ConfirmWarning.fire({
     icon: "warning",
     title: message,
-  }).then(onClickConfirm);
+  }).then((res) => onClickButton(res));
 };

@@ -15,28 +15,34 @@ const Comment = ({ comment }) => {
   const current_user = useSelector((state) => state.user.user);
   const isAuthor = current_user._id === comment.author._id;
   const text = {
-    component: "span",
     variant: "body2",
     style: {
       whiteSpace: "pre-line",
       wordWrap: "break-word",
       textAlign: "left",
       marginLeft: 20,
+      color: 'black',
+      fontSize: 18,
     },
   };
 
   return (
-    <ListItem alignItems="flex-start" style={{ marginBottom: 5 }}>
+    <ListItem
+      alignItems="flex-start"
+      style={{ marginBottom: 5, paddingTop: 0, paddingBottom: 0 }}
+    >
       <ListItemAvatar>
-        <Avatar style={{ background: isAuthor && theme.palette.background.main }} />
+        <Avatar
+          style={{ background: isAuthor && theme.palette.background.main }}
+        />
       </ListItemAvatar>
       <ListItemText
         primary={`${comment.author.firstName} ${comment.author.lastName}`}
-        primaryTypographyProps={{ variant: "body2", style: { marginLeft: 20 } }}
+        primaryTypographyProps={text}
         secondary={comment.text}
         secondaryTypographyProps={text}
         style={{
-          backgroundColor: "rgba(0,0,0,0.1)",
+          backgroundColor: "rgba(0,0,0,0.05)",
           borderRadius: 20,
           padding: 5,
         }}

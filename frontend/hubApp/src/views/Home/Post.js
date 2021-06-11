@@ -129,8 +129,8 @@ const Post = ({ post, isSingle }) => {
     handleClose();
     alertWarning({
       message: "คุณต้องการลบโพสต์ใช่ไหม?",
-      onClickConfirm: () => {
-        deletePost(dispatch, post, deletePostSocket);
+      onClickButton: (res) => {
+        if (res.isConfirmed) deletePost(dispatch, post, deletePostSocket);
       },
     });
   };
@@ -165,7 +165,13 @@ const Post = ({ post, isSingle }) => {
       <Card className={classes.post}>
         <CardHeader
           className={classes.post_title}
-          avatar={<Avatar style={{background: isAuthor ? theme.palette.background.main : "" }} />}
+          avatar={
+            <Avatar
+              style={{
+                background: isAuthor ? theme.palette.background.main : "",
+              }}
+            />
+          }
           action={
             isAuthor && (
               <>
@@ -240,18 +246,13 @@ const Post = ({ post, isSingle }) => {
               >{`${post.author.firstName} ${post.author.lastName}`}</Typography>
               <Chip
                 size="small"
-                icon={
-                  <LocalOfferIcon
-                    style={{
-                      color: "gray",
-                    }}
-                  />
-                }
+                icon={<LocalOfferIcon />}
                 label={post.tag}
                 style={{
                   padding: 10,
                   marginBottom: 5,
                   marginLeft: 5,
+                  backgroundColor: theme.palette.primary.light,
                 }}
               />
             </>
@@ -284,21 +285,21 @@ const Post = ({ post, isSingle }) => {
           >
             {post.text}
           </Typography>
-          <Container className={classes.numbar}>
-            {nLike !== 0 ? (
-              <Typography variant="caption">ถูกใจ: {nLike}</Typography>
-            ) : (
-              <Typography />
-            )}
-            {nComment !== 0 ? (
-              <Typography variant="caption">
-                ความคิดเห็น: {nComment} รายการ
-              </Typography>
-            ) : (
-              <Typography />
-            )}
-          </Container>
         </CardContent>
+        <Container className={classes.numbar}>
+          {nLike !== 0 ? (
+            <Typography variant="caption">ถูกใจ: {nLike}</Typography>
+          ) : (
+            <Typography />
+          )}
+          {nComment !== 0 ? (
+            <Typography variant="caption">
+              ความคิดเห็น: {nComment} รายการ
+            </Typography>
+          ) : (
+            <Typography />
+          )}
+        </Container>
         <Divider
           style={{
             margin: "1%",

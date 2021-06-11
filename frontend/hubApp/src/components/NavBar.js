@@ -12,6 +12,7 @@ import {
   MenuItem,
   Typography,
   makeStyles,
+  Button,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import SettingsIcon from "@material-ui/icons/Settings";
@@ -45,16 +46,27 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.common.white,
   },
   menuTitle: {
-    paddingLeft: 15,
+    paddingLeft: theme.spacing(2),
   },
   menuButton: {
     marginRight: theme.spacing(2),
   },
   btnIcon: {
-    marginRight: 15,
-    backgroundColor: theme.palette.primary.main,
-    width: 30,
-    height: 30,
+    marginRight: theme.spacing(1.5),
+    background: theme.palette.background.main,
+    color: theme.palette.background.default,
+    width: 35,
+    height: 35,
+  },
+  userChip: {
+    color: "white",
+    fontSize: 20,
+    fontFamily: "KanitExtraBold",
+    height: 45,
+    borderColor: "white",
+    borderRadius: 30,
+    borderWidth: 3,
+    backgroundColor: "rgba(255,255,255,0.3)",
   },
 }));
 export default function NavBar({ onClickMenu }) {
@@ -75,11 +87,11 @@ export default function NavBar({ onClickMenu }) {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleShowNotiButton = (event) => {
+  const handleShowNotifications = (event) => {
     setNotiAnchorEl(event.currentTarget);
     showNotifications(dispatch);
   };
-  const handleNoti = (notification) => {
+  const handleClickNotification = (notification) => {
     navigate(`/app/post/${notification.post}`);
     readNotification(dispatch, notification._id);
   };
@@ -91,6 +103,10 @@ export default function NavBar({ onClickMenu }) {
 
   const handleLogOut = () => {
     Logout(dispatch);
+  };
+
+  const handleOnClickLogo = () => {
+    dispatch({ type: "RESET_POST" });
   };
 
   return (
@@ -110,27 +126,25 @@ export default function NavBar({ onClickMenu }) {
         ) : (
           <></>
         )}
-        <Logo />
+        <Button
+          disableRipple
+          onClick={() => handleOnClickLogo()}
+          style={{ backgroundColor: "transparent", flexGrow: 1 }}
+        >
+          <Logo />
+        </Button>
         <Chip
           avatar={
             <Avatar
+              className={classes.btnIcon}
               style={{
-                width: 40,
-                height: 40,
+                width: 35,
+                height: 35,
               }}
             />
           }
           label={user.firstName}
-          style={{
-            color: "white",
-            fontSize: 24,
-            fontFamily: "KanitExtraBold",
-            height: 50,
-            borderColor: "white",
-            borderRadius: 50,
-            borderWidth: 2,
-            backgroundColor: "rgba(255,255,255,0.4)",
-          }}
+          className={classes.userChip}
           variant="outlined"
         />
         <IconButton
@@ -142,7 +156,7 @@ export default function NavBar({ onClickMenu }) {
             badgeContent={notifications?.filter((x) => !x.isNotify).length}
             color="secondary"
           >
-            <NotificationsIcon onClick={handleShowNotiButton} />
+            <NotificationsIcon onClick={handleShowNotifications} />
           </Badge>
         </IconButton>
         <Menu
@@ -158,15 +172,24 @@ export default function NavBar({ onClickMenu }) {
           <Typography variant="h6" className={classes.menuTitle}>
             การแจ้งเตือน
           </Typography>
-          {notifications.map((notification) => (
-            <MenuItem
-              key={notification._id}
-              onClick={() => handleNoti(notification)}
-              selected={notification.isRead}
+          {notifications.length > 0 ? (
+            notifications.map((notification) => (
+              <MenuItem
+                key={notification._id}
+                onClick={() => handleClickNotification(notification)}
+                selected={notification.isRead}
+              >
+                <Notification notification={notification} />
+              </MenuItem>
+            ))
+          ) : (
+            <Typography
+              variant="body2"
+              style={{ textAlign: "center", color: "gray" }}
             >
-              <Notification notification={notification} />
-            </MenuItem>
-          ))}
+              ไม่มีการแจ้งเตือน
+            </Typography>
+          )}
         </Menu>
         <IconButton onClick={handleMenu} style={{ padding: 5 }}>
           <SettingsIcon style={{ color: "white" }} />

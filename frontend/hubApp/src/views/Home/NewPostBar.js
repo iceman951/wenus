@@ -5,7 +5,7 @@ import {
   Paper,
   Typography,
   Container,
-  Toolbar,
+  Button,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyPost, getPosts } from "../../store/actions/postAction";
@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     backgroundColor: theme.palette.secondary.main,
     borderRadius: "0px 0px 15px 15px",
     paddingLeft: 20,
@@ -29,15 +30,19 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 20,
     zIndex: theme.zIndex.drawer,
   },
+  btn: {
+    padding: 0,
+    backgroundColor: "transparent",
+  },
 }));
 
 const NewPostBar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const selectedTag = useSelector(state => state.tag.selectedTag)
+  const selectedTag = useSelector((state) => state.tag.selectedTag);
 
   const handleClick = () => {
-    dispatch({type: "RESET_POST"});
+    dispatch({ type: "RESET_POST" });
     selectedTag === "ฉัน"
       ? getMyPost(dispatch, 0)
       : getPosts(dispatch, selectedTag, 0, 0);
@@ -45,11 +50,16 @@ const NewPostBar = () => {
 
   return (
     <Container className={classes.root}>
-      <Toolbar />
-      <Paper className={classes.newPostBar} onClick={() => handleClick()}>
-        <Typography>มีโพสต์ใหม่</Typography>
-        <ExpandLessIcon />
-      </Paper>
+      <Button
+        disableRipple
+        className={classes.btn}
+        onClick={() => handleClick()}
+      >
+        <Paper className={classes.newPostBar}>
+          <Typography>มีโพสต์ใหม่</Typography>
+          <ExpandLessIcon fontSize="small" />
+        </Paper>
+      </Button>
     </Container>
   );
 };

@@ -6,6 +6,7 @@ import NewPostBar from "./NewPostBar";
 import CreatePost from "./CreatePost";
 import Posts from "./Posts";
 import { getNotifications } from "../../store/actions/notificationAction";
+import { getPostById } from "../../store/actions/postAction";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -31,7 +32,14 @@ const Home = () => {
     socket.on("update-notifications", () => {
       getNotifications(dispatch);
     });
-    
+
+    socket.on("new-comment", (post_id) => {
+      getPostById(dispatch, post_id, true);
+    });
+
+    socket.on("new-like", (post_id) => {
+      getPostById(dispatch, post_id, true);
+    });
     // ========= Socket Debug ==============
     // socket.on("debug", (msg) => {
     //   console.log("debugSocket", msg);
@@ -39,7 +47,7 @@ const Home = () => {
     // =====================================
 
     return () => {
-      socket.disconnect();
+      // socket.disconnect();
     };
   }, [dispatch, socket, user.subscribedPosts]);
 

@@ -1,11 +1,11 @@
-import { createMuiTheme, responsiveFontSizes } from '@material-ui/core';
+import { createMuiTheme, responsiveFontSizes } from "@material-ui/core";
 
 var theme = createMuiTheme({
   palette: {
     background: {
-      default: '#484848',
+      default: "#484848",
       main: `linear-gradient(-30deg, #F2994A 30%, #F2C94C 90%)`,
-      paper: '#fff',
+      paper: "#fff",
     },
     primary: {
       light: "#ffca79",
@@ -26,8 +26,11 @@ var theme = createMuiTheme({
     h4: {
       fontFamily: ["KanitExtraBold"].join(","),
     },
+    caption: {
+      color: "gray",
+    },
     allVariants: {
-      color: "#303030"
+      color: "#303030",
     },
   },
 });

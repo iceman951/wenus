@@ -20,16 +20,17 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
   },
   paper: {
-    // backgroundColor: theme.palette.background.paper,
-    backgroundColor: "rgba(0,0,0,0.1)",
+    display: "flex",
+    alignItems: 'center',
+    backgroundColor: "rgba(0,0,0,0.05)",
     borderRadius: "25px",
     marginLeft: theme.spacing(2),
     padding: theme.spacing(0, 2, 0),
-  },
-  typography: {
-    color: "#fff",
+    minHeight: 40,
   },
   input: {
+    fontSize: 18,
+    padding: 0,
     "&&&:before": {
       borderBottom: "none",
     },
@@ -79,7 +80,6 @@ export default function CommentForm({ post_id }) {
             id={`comment-${post_id}`}
             InputProps={{ className: classes.input }}
             placeholder="แสดงความคิดเห็น......"
-            size="small"
             multiline
             fullWidth
             value={formik.values.text}

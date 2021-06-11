@@ -24,7 +24,10 @@ const useStyle = makeStyles((theme) => ({
     overflow: "hidden",
   },
   content: {
+    display: "flex",
     flex: "1 1 auto",
+    flexDirection: "column",
+    alignItems: "center",
     minHeight: window.innerHeight - 64,
     overflow: "auto",
   },
@@ -43,7 +46,7 @@ const MainLayout = () => {
       />
       <Box className={classes.wrapper}>
         <Box className={classes.container}>
-          <Box className={classes.content}>
+          <Box id="content" className={classes.content}>
             <Outlet />
           </Box>
         </Box>
