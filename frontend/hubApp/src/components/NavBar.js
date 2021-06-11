@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 40,
     marginBottom: 20,
     padding: 0,
+    paddingRight: 17,
     alignItems: "center",
     overflowY: "scroll",
     msOverflowStyle: "none",
@@ -167,7 +168,7 @@ export default function NavBar({ onClickMenu }) {
           onClose={handleClose}
           PaperProps={{
             className: classes.menu,
-            style: { width: "25%" },
+            style: { width: 320 },
           }}
         >
           <Typography variant="h6" className={classes.menuTitle}>

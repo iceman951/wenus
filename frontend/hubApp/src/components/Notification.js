@@ -29,7 +29,7 @@ const Notification = ({ notification }) => {
       >
         <Grid item>
           {notification?.type === "comment" ? (
-            <Avatar className={classes.avtIcon}>
+            <Avatar className={classes.avtIcon} style={{backgroundColor: notification.isRead && "gray"}}>
               <MessageIcon fontSize="small" />
             </Avatar>
           ) : (
